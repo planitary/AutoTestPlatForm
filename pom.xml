@@ -26,6 +26,7 @@
         <java.version>17</java.version>
         <mysql-connector-java.version>8.0.30</mysql-connector-java.version>
         <mybatis-plus-boot-starter.version>3.4.2</mybatis-plus-boot-starter.version>
+        <fastjson.version>1.2.83</fastjson.version>
     </properties>
 
     <dependencies>
