@@ -52,4 +52,14 @@ public class PtResult<T> {
         return ptResult;
     }
 
+    // 错误调用的接口返回
+    public static <T> PtResult<T> error(String message,String code,String traceId){
+        PtResult<T> ptResult = new PtResult<>();
+        ptResult.data = null;
+        ptResult.errMsg = message;
+        ptResult.code = code;
+        ptResult.traceId = traceId;
+        return ptResult;
+    }
+
 }
