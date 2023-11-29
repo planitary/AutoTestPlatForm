@@ -6,6 +6,7 @@
     <modules>
         <module>at-model</module>
         <module>at-base</module>
+        <module>at-service</module>
     </modules>
 
     <parent>
