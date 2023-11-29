@@ -26,5 +26,6 @@ public class PublicFillObjectHandler implements MetaObjectHandler {
     public void updateFill(MetaObject metaObject) {
         log.info("公共字段填充，事件:update");
         metaObject.setValue("updateTime", LocalDateTime.now());
+
     }
 }
