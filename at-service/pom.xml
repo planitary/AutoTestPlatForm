@@ -10,26 +10,29 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>at-service</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.planitary</groupId>
+            <artifactId>at-model</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.planitary</groupId>
+            <artifactId>at-base</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
-
-    <dependencies>
-        <!-- MySQL 驱动 -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- mybatis plus的依赖 -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-
-    </dependencies>
 
 </project>
