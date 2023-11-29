@@ -29,7 +29,6 @@ public class GlobalExceptionHandler {
     public PtResult<Object> doXueChengPlusException(ATPlatformException e){
         log.error("捕获异常:{}",e.getMessage());
         String traceId = MDC.get("traceId");
-        e.printStackTrace();
         String errMessage = e.getMessage();
         String errCode = e.getErrCode();
         return PtResult.error(errMessage,errCode,traceId);
