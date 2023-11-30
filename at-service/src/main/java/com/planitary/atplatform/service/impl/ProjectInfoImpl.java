@@ -10,12 +10,12 @@ import com.planitary.atplatform.mapper.ATTestProjectMapper;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
 import com.planitary.atplatform.model.po.ATTestProject;
 import com.planitary.atplatform.service.ProjectInfoService;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -38,9 +38,13 @@ public class ProjectInfoImpl implements ProjectInfoService {
     public PageResult<ATTestProject> queryProjectList(PageParams pageParams, QueryProjectDTO queryProjectDTO) {
         LambdaQueryWrapper<ATTestProject> atTestProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
         // 拼接查询条件
-        atTestProjectLambdaQueryWrapper.eq(ATTestProject::getProjectName,queryProjectDTO.getProjectName())
-                .like(StringUtils.isNotEmpty(queryProjectDTO.getInterfaceName()),ATTestProject::getInterfaceName,queryProjectDTO.getInterfaceName())
-                .eq(ATTestProject::getInterfaceUrl,queryProjectDTO.getInterfaceUrl());
+        atTestProjectLambdaQueryWrapper.like(StringUtils.isNotEmpty(queryProjectDTO.getProjectName()),
+                ATTestProject::getProjectName,queryProjectDTO.getProjectName());
+        atTestProjectLambdaQueryWrapper.like(StringUtils.isNotEmpty(queryProjectDTO.getInterfaceName()),
+                ATTestProject::getInterfaceName,queryProjectDTO.getInterfaceName());
+
+        atTestProjectLambdaQueryWrapper.eq(StringUtils.isNotEmpty(queryProjectDTO.getInterfaceUrl()),
+                ATTestProject::getInterfaceUrl,queryProjectDTO.getInterfaceUrl());
 
         // 分页参数
         long pageNo = pageParams.getPageNo();

@@ -2,6 +2,11 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/test?useUnicode=true&charactetEncoding=utf-8
+      url: jdbc:mysql://localhost:3306/ATPlatform?useUnicode=true&charactetEncoding=utf-8
       username: root
-      password: abc123!@#
+      password: zgdlpp0302.
+
+# mybatis-plus日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
