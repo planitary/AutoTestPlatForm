@@ -5,14 +5,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
-import com.planitary.atplatform.base.handle.PageParams;
+import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.mapper.ATTestProjectMapper;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
 import com.planitary.atplatform.model.po.ATTestProject;
 import com.planitary.atplatform.service.ProjectInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -55,10 +54,11 @@ public class ProjectInfoImpl implements ProjectInfoService {
 
         Page<ATTestProject> page = new Page<>(pageNo,pageSize);
         // 分页查询
-        Page<ATTestProject> projectPage = atTestProjectMapper.selectPage(page, atTestProjectLambdaQueryWrapper);
+        Page<ATTestProject> projectPage = atTestProjectMapper.selectPage(page,atTestProjectLambdaQueryWrapper);
         // 数据列表
         List<ATTestProject> records = projectPage.getRecords();
         long total = projectPage.getTotal();
+        log.info("查询到的记录总数:{}",total);
         return new PageResult<>(records,total,pageNo,pageNo,SUCCESS_CODE);
     }
 }

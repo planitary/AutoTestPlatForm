@@ -10,6 +10,7 @@ package com.planitary.atplatform.base.customResult;
  */
 
 import lombok.Data;
+import org.slf4j.MDC;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,12 +54,12 @@ public class PtResult<T> {
     }
 
     // 错误调用的接口返回
-    public static <T> PtResult<T> error(String message,String code,String traceId){
+    public static <T> PtResult<T> error(String message,String code){
         PtResult<T> ptResult = new PtResult<>();
         ptResult.data = null;
         ptResult.errMsg = message;
         ptResult.code = code;
-        ptResult.traceId = traceId;
+        ptResult.traceId = MDC.get("traceId");
         return ptResult;
     }
 

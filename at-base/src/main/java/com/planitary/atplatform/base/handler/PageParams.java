@@ -1,4 +1,4 @@
-package com.planitary.atplatform.base.handle;
+package com.planitary.atplatform.base.handler;
 
 /**
  * @Author：planitary

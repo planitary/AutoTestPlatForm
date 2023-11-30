@@ -29,19 +29,18 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)       // 抛出异常后状态码返回500
     public PtResult<Object> doATPlatformException(ATPlatformException e){
         log.error("捕获自定义异常:{}",e.getMessage());
-        String traceId = MDC.get("traceId");
         String errMessage = e.getMessage();
         String errCode = e.getErrCode();
-        return PtResult.error(errMessage,errCode,traceId);
+        return PtResult.error(errMessage,errCode);
     }
     // 捕获不可预知的异常
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public PtResult<Object> doRuntimeException(RuntimeException e){
         log.error("捕获系统异常:{}",e.getMessage());
-        String traceId = MDC.get("traceId");
+//        String traceId = MDC.get("traceId");
         String errMessage = e.getMessage();
-        return PtResult.error(errMessage,ExceptionEnum.SYSTEM_ERROR.getErrCode(), traceId);
+        return PtResult.error(errMessage,ExceptionEnum.SYSTEM_ERROR.getErrCode());
     }
 
     // 父类异常
@@ -49,8 +48,8 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public PtResult<Object> doException(Exception e){
         log.error("父类异常:{}",e.getMessage());
-        String traceId = MDC.get("traceId");
+//        String traceId = MDC.get("traceId");
         String errMessage = e.getMessage();
-        return PtResult.error(errMessage,ExceptionEnum.SYSTEM_ERROR.getErrCode(), traceId);
+        return PtResult.error(errMessage,ExceptionEnum.SYSTEM_ERROR.getErrCode());
     }
 }
