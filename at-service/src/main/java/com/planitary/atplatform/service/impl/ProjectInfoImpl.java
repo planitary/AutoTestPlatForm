@@ -4,14 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
+import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.mapper.ATTestProjectMapper;
+import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
 import com.planitary.atplatform.model.po.ATTestProject;
 import com.planitary.atplatform.service.ProjectInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,6 +32,8 @@ import java.util.List;
 @Slf4j
 public class ProjectInfoImpl implements ProjectInfoService {
     private final String SUCCESS_CODE = "200";
+
+    private final Integer INIT_VERSION = 1;
 
     @Resource
     ATTestProjectMapper atTestProjectMapper;
@@ -60,5 +65,25 @@ public class ProjectInfoImpl implements ProjectInfoService {
         long total = projectPage.getTotal();
         log.info("查询到的记录总数:{}",total);
         return new PageResult<>(records,total,pageNo,pageNo,SUCCESS_CODE);
+    }
+
+    @Override
+    public void insertProject(AddProjectDTO addProjectDTO) {
+        int currentVersion = INIT_VERSION;
+        // 拷贝相同值
+        ATTestProject atTestProject = new ATTestProject();
+        BeanUtils.copyProperties(addProjectDTO,atTestProject);
+        atTestProject.setVersion(currentVersion);
+        atTestProject.setCreateUser("zane");
+        atTestProject.setUpdateUser("zane");
+        int insertCount = atTestProjectMapper.insert(atTestProject);
+        if (insertCount <= 0){
+            log.error("执行失败:{}",ExceptionEnum.INSERT_FAILED.getErrMessage());
+            ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);
+        }
+        log.info("插入成功");
+//        //  插入后更新版本号
+//        currentVersion ++;
+
     }
 }

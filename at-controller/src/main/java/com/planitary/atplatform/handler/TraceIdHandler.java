@@ -35,7 +35,6 @@ public class TraceIdHandler implements HandlerInterceptor {
 
         // 将 Trace ID 放入 MDC
         MDC.put("traceId", traceId);
-        log.info("traceId:{}",traceId);
 
         return true;
     }

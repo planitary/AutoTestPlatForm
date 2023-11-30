@@ -23,7 +23,14 @@ public enum ExceptionEnum {
     PAGINATION_ERROR("分页异常","-2000"),
     PAGINATION_QUERY_ERROR("分页查询异常","-2001"),
     PAGINATION_PARAM_ERROR("分页参数异常","-2002"),
-    PAGINATION_INTERNAL_ERROR("分页内部异常","-2003");
+    PAGINATION_INTERNAL_ERROR("分页内部异常","-2003"),
+
+    // db相关异常
+    QUERY_ERROR("查询异常","-3000"),
+    INSERT_FAILED("插入失败","-3001"),
+    UPDATE_FAILED("更新失败","-3002"),
+    DELETE_FAILED("删除失败","-3003"),
+    CONNECTION_FAILED("数据库链接异常","-3009");
 
     private final String errMessage;
     private final String errCode;

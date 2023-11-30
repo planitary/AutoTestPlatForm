@@ -48,8 +48,8 @@ public class PtResult<T> {
     // 成功调用的接口返回
     public static <T> PtResult<T> success(T object){
         PtResult<T> ptResult = new PtResult<>();
-        ptResult.data = object;
-        ptResult.code = "0";
+        ptResult.setData(object);
+        ptResult.setCode("0");
         return ptResult;
     }
 
