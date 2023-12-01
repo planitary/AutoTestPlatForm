@@ -8,60 +8,51 @@ import java.time.LocalDateTime;
 /**
  * @Author：planitary
  * @Package：com.planitary.atplatform.model.po
- * @name：ATTestProject
- * @Date：2023/11/28 9:44 下午
- * @Filename：ATTestProject
- * @description：  test_project实体类
+ * @name：ATTestInterfaceInfo
+ * @Date：2023/12/1 10:29 下午
+ * @Filename：ATTestInterfaceInfo
+ * @description：
  */
 @Data
-@TableName("at_test_project")
-public class ATTestProject {
-    /**
-     * 主键
-     */
+@TableName("at_test_interface_info")
+public class ATTestInterfaceInfo {
+
     @TableId(value = "id",type = IdType.AUTO)
-    private Long id;
+    private Integer id;
 
     /**
-     * 项目名
+     * 接口id
      */
-    private String projectName;
+    private String interfaceId;
 
     /**
-     * 项目前缀url
+     * 接口名
      */
-    private String projectUrl;
+    private String interfaceString;
 
     /**
-     * 项目id
+     * 接口url
      */
+    private String interfaceUrl;
 
+    /**
+     * 项目id，外键id
+     */
     private String projectId;
 
-    /**
-     * 版本号
-     */
     private Integer version;
 
-    /**
-     * 备注
-     */
-    private String remark;
-
-    /**
-     * 删除标记位
-     */
     @TableLogic
-    private int isDelete;
+    private Integer isDelete;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-
     private String createUser;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
-
     private String updateUser;
+
+
 
 }

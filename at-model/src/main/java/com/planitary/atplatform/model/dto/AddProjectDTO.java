@@ -13,6 +13,6 @@ import lombok.Data;
 @Data
 public class AddProjectDTO {
     private String projectName;
-    private String interfaceUrl;
-    private String interfaceName;
+    private String projectUrl;
+    private String projectId;
 }

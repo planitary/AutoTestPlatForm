@@ -44,11 +44,11 @@ public class ProjectInfoImpl implements ProjectInfoService {
         // 拼接查询条件
         atTestProjectLambdaQueryWrapper.like(StringUtils.isNotEmpty(queryProjectDTO.getProjectName()),
                 ATTestProject::getProjectName,queryProjectDTO.getProjectName());
-        atTestProjectLambdaQueryWrapper.like(StringUtils.isNotEmpty(queryProjectDTO.getInterfaceName()),
-                ATTestProject::getInterfaceName,queryProjectDTO.getInterfaceName());
+        atTestProjectLambdaQueryWrapper.like(StringUtils.isNotEmpty(queryProjectDTO.getProjectUrl()),
+                ATTestProject::getProjectUrl,queryProjectDTO.getProjectUrl());
 
-        atTestProjectLambdaQueryWrapper.eq(StringUtils.isNotEmpty(queryProjectDTO.getInterfaceUrl()),
-                ATTestProject::getInterfaceUrl,queryProjectDTO.getInterfaceUrl());
+        atTestProjectLambdaQueryWrapper.eq(StringUtils.isNotEmpty(queryProjectDTO.getProjectId()),
+                ATTestProject::getProjectId,queryProjectDTO.getProjectId());
 
         // 分页参数
         long pageNo = pageParams.getPageNo();

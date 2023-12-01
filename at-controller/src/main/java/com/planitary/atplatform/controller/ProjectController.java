@@ -3,6 +3,7 @@ package com.planitary.atplatform.controller;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.handler.PageParams;
+import com.planitary.atplatform.base.utils.GeneralIdGenerator;
 import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
 import com.planitary.atplatform.model.po.ATTestProject;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @Author：planitary
@@ -46,9 +48,10 @@ public class ProjectController {
     @PostMapping("/project/addProject")
     public PtResult<?> addProject(){
         AddProjectDTO addProjectDTO = new AddProjectDTO();
-        addProjectDTO.setProjectName("hahaha2");
-        addProjectDTO.setInterfaceName("查询2");
-        addProjectDTO.setInterfaceUrl("/get/list2");
+        addProjectDTO.setProjectName("test_baga");
+        String projectId = GeneralIdGenerator.generateId();
+        addProjectDTO.setProjectId(projectId);
+        addProjectDTO.setProjectUrl("/cornerstone");
         projectInfoService.insertProject(addProjectDTO);
         Map<String,String> resMap = new HashMap<>();
         resMap.put("msg","success");

@@ -19,6 +19,6 @@ import lombok.ToString;
 @ToString
 public class QueryProjectDTO {
     private String projectName;
-    private String interfaceName;
-    private String interfaceUrl;
+    private String projectUrl;
+    private String projectId;
 }
