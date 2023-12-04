@@ -37,7 +37,8 @@ public class PreMockLogin {
 
     /**
      * 预登录拿到token
-     * @return map,keySet:accessToken,tokenType,refreshToken,userStatus;
+     * @return map
+     * keySet:accessToken,tokenType,refreshToken,userStatus;
      */
     private static Map<String,String> getToken(){
         Map<String,String> map = new HashMap<>();
