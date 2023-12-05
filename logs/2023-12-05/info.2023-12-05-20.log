@@ -1,0 +1,650 @@
+2023-12-01 23:22:34,058 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2051] -  - {dataSource-1} closing ...
+2023-12-01 23:22:34,058 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2051] -  - {dataSource-1} closing ...
+2023-12-01 23:22:34,066 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2124] -  - {dataSource-1} closed
+2023-12-01 23:22:34,066 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2124] -  - {dataSource-1} closed
+2023-12-01 23:22:57,131 DEBUG [background-preinit][LoggerProviders.java:152] -  - Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+2023-12-01 23:22:57,131 DEBUG [background-preinit][LoggerProviders.java:152] -  - Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+2023-12-01 23:22:57,136 INFO [background-preinit][Version.java:21] -  - HV000001: Hibernate Validator 6.2.5.Final
+2023-12-01 23:22:57,136 INFO [background-preinit][Version.java:21] -  - HV000001: Hibernate Validator 6.2.5.Final
+2023-12-01 23:22:57,144 DEBUG [background-preinit][ValidationXmlParser.java:120] -  - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2023-12-01 23:22:57,144 DEBUG [background-preinit][ValidationXmlParser.java:120] -  - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2023-12-01 23:22:57,146 DEBUG [background-preinit][ResourceLoaderHelper.java:60] -  - Trying to load META-INF/validation.xml via TCCL
+2023-12-01 23:22:57,146 DEBUG [background-preinit][ResourceLoaderHelper.java:60] -  - Trying to load META-INF/validation.xml via TCCL
+2023-12-01 23:22:57,146 DEBUG [background-preinit][ResourceLoaderHelper.java:66] -  - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2023-12-01 23:22:57,146 DEBUG [background-preinit][ResourceLoaderHelper.java:66] -  - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2023-12-01 23:22:57,147 DEBUG [background-preinit][ValidationXmlParser.java:127] -  - No META-INF/validation.xml found. Using annotation based configuration only.
+2023-12-01 23:22:57,147 DEBUG [background-preinit][ValidationXmlParser.java:127] -  - No META-INF/validation.xml found. Using annotation based configuration only.
+2023-12-01 23:22:57,151 DEBUG [background-preinit][TraversableResolvers.java:60] -  - Cannot find javax.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2023-12-01 23:22:57,151 DEBUG [background-preinit][TraversableResolvers.java:60] -  - Cannot find javax.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2023-12-01 23:22:57,171 DEBUG [background-preinit][ResourceBundleMessageInterpolator.java:172] -  - Loaded expression factory via original TCCL
+2023-12-01 23:22:57,171 DEBUG [background-preinit][ResourceBundleMessageInterpolator.java:172] -  - Loaded expression factory via original TCCL
+2023-12-01 23:22:57,172 INFO [main][StartupInfoLogger.java:55] -  - Starting ATPlatformApplication using Java 17.0.2 on zhangmuxindeMacBook-Pro.local with PID 78143 (/Users/zhangmuxin/Desktop/AutoTestPlatform/at-controller/target/classes started by zhangmuxin in /Users/zhangmuxin/Desktop/AutoTestPlatform)
+2023-12-01 23:22:57,172 INFO [main][StartupInfoLogger.java:55] -  - Starting ATPlatformApplication using Java 17.0.2 on zhangmuxindeMacBook-Pro.local with PID 78143 (/Users/zhangmuxin/Desktop/AutoTestPlatform/at-controller/target/classes started by zhangmuxin in /Users/zhangmuxin/Desktop/AutoTestPlatform)
+2023-12-01 23:22:57,175 DEBUG [main][StartupInfoLogger.java:56] -  - Running with Spring Boot v2.7.6, Spring v5.3.24
+2023-12-01 23:22:57,175 DEBUG [main][StartupInfoLogger.java:56] -  - Running with Spring Boot v2.7.6, Spring v5.3.24
+2023-12-01 23:22:57,176 INFO [main][SpringApplication.java:631] -  - No active profile set, falling back to 1 default profile: "default"
+2023-12-01 23:22:57,176 INFO [main][SpringApplication.java:631] -  - No active profile set, falling back to 1 default profile: "default"
+2023-12-01 23:22:57,252 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:345] -  - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2023-12-01 23:22:57,252 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:345] -  - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2023-12-01 23:22:57,256 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:420] -  - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2023-12-01 23:22:57,256 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:420] -  - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2023-12-01 23:22:57,256 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:421] -  - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2023-12-01 23:22:57,256 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:421] -  - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2023-12-01 23:22:57,257 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:422] -  - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2023-12-01 23:22:57,257 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:422] -  - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2023-12-01 23:22:57,257 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:423] -  - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2023-12-01 23:22:57,257 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:423] -  - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2023-12-01 23:22:57,257 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:424] -  - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2023-12-01 23:22:57,257 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:424] -  - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2023-12-01 23:22:57,724 DEBUG [main][MybatisPlusAutoConfiguration.java:278] -  - Searching for mappers annotated with @Mapper
+2023-12-01 23:22:57,724 DEBUG [main][MybatisPlusAutoConfiguration.java:278] -  - Searching for mappers annotated with @Mapper
+2023-12-01 23:22:57,725 DEBUG [main][MybatisPlusAutoConfiguration.java:282] -  - Using auto-configuration base package 'com.planitary'
+2023-12-01 23:22:57,725 DEBUG [main][MybatisPlusAutoConfiguration.java:282] -  - Using auto-configuration base package 'com.planitary'
+2023-12-01 23:22:57,808 DEBUG [main][LogFactory.java:105] -  - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+2023-12-01 23:22:57,808 DEBUG [main][LogFactory.java:105] -  - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+2023-12-01 23:22:57,813 DEBUG [main][ClassPathScanningCandidateComponentProvider.java:435] -  - Identified candidate component class: file [/Users/zhangmuxin/Desktop/AutoTestPlatform/at-model/target/classes/com/planitary/atplatform/mapper/ATTestInterfaceInfoMapper.class]
+2023-12-01 23:22:57,813 DEBUG [main][ClassPathScanningCandidateComponentProvider.java:435] -  - Identified candidate component class: file [/Users/zhangmuxin/Desktop/AutoTestPlatform/at-model/target/classes/com/planitary/atplatform/mapper/ATTestInterfaceInfoMapper.class]
+2023-12-01 23:22:57,813 DEBUG [main][ClassPathScanningCandidateComponentProvider.java:435] -  - Identified candidate component class: file [/Users/zhangmuxin/Desktop/AutoTestPlatform/at-model/target/classes/com/planitary/atplatform/mapper/ATTestProjectMapper.class]
+2023-12-01 23:22:57,813 DEBUG [main][ClassPathScanningCandidateComponentProvider.java:435] -  - Identified candidate component class: file [/Users/zhangmuxin/Desktop/AutoTestPlatform/at-model/target/classes/com/planitary/atplatform/mapper/ATTestProjectMapper.class]
+2023-12-01 23:22:57,814 DEBUG [main][Logger.java:49] -  - Creating MapperFactoryBean with name 'ATTestInterfaceInfoMapper' and 'com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper' mapperInterface
+2023-12-01 23:22:57,814 DEBUG [main][Logger.java:49] -  - Creating MapperFactoryBean with name 'ATTestInterfaceInfoMapper' and 'com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper' mapperInterface
+2023-12-01 23:22:57,815 DEBUG [main][Logger.java:49] -  - Enabling autowire by type for MapperFactoryBean with name 'ATTestInterfaceInfoMapper'.
+2023-12-01 23:22:57,815 DEBUG [main][Logger.java:49] -  - Enabling autowire by type for MapperFactoryBean with name 'ATTestInterfaceInfoMapper'.
+2023-12-01 23:22:57,815 DEBUG [main][Logger.java:49] -  - Creating MapperFactoryBean with name 'ATTestProjectMapper' and 'com.planitary.atplatform.mapper.ATTestProjectMapper' mapperInterface
+2023-12-01 23:22:57,815 DEBUG [main][Logger.java:49] -  - Creating MapperFactoryBean with name 'ATTestProjectMapper' and 'com.planitary.atplatform.mapper.ATTestProjectMapper' mapperInterface
+2023-12-01 23:22:57,816 DEBUG [main][Logger.java:49] -  - Enabling autowire by type for MapperFactoryBean with name 'ATTestProjectMapper'.
+2023-12-01 23:22:57,816 DEBUG [main][Logger.java:49] -  - Enabling autowire by type for MapperFactoryBean with name 'ATTestProjectMapper'.
+2023-12-01 23:22:58,132 INFO [main][TomcatWebServer.java:108] -  - Tomcat initialized with port(s): 8080 (http)
+2023-12-01 23:22:58,132 INFO [main][TomcatWebServer.java:108] -  - Tomcat initialized with port(s): 8080 (http)
+2023-12-01 23:22:58,139 INFO [main][DirectJDKLog.java:173] -  - Initializing ProtocolHandler ["http-nio-8080"]
+2023-12-01 23:22:58,139 INFO [main][DirectJDKLog.java:173] -  - Initializing ProtocolHandler ["http-nio-8080"]
+2023-12-01 23:22:58,140 INFO [main][DirectJDKLog.java:173] -  - Starting service [Tomcat]
+2023-12-01 23:22:58,140 INFO [main][DirectJDKLog.java:173] -  - Starting service [Tomcat]
+2023-12-01 23:22:58,140 INFO [main][DirectJDKLog.java:173] -  - Starting Servlet engine: [Apache Tomcat/9.0.69]
+2023-12-01 23:22:58,140 INFO [main][DirectJDKLog.java:173] -  - Starting Servlet engine: [Apache Tomcat/9.0.69]
+2023-12-01 23:22:58,204 INFO [main][DirectJDKLog.java:173] -  - Initializing Spring embedded WebApplicationContext
+2023-12-01 23:22:58,204 INFO [main][DirectJDKLog.java:173] -  - Initializing Spring embedded WebApplicationContext
+2023-12-01 23:22:58,205 INFO [main][ServletWebServerApplicationContext.java:292] -  - Root WebApplicationContext: initialization completed in 981 ms
+2023-12-01 23:22:58,205 INFO [main][ServletWebServerApplicationContext.java:292] -  - Root WebApplicationContext: initialization completed in 981 ms
+2023-12-01 23:22:58,319 INFO [main][DruidDataSourceAutoConfigure.java:55] -  - Init DruidDataSource
+2023-12-01 23:22:58,319 INFO [main][DruidDataSourceAutoConfigure.java:55] -  - Init DruidDataSource
+2023-12-01 23:22:58,439 INFO [main][DruidDataSource.java:972] -  - {dataSource-1} inited
+2023-12-01 23:22:58,439 INFO [main][DruidDataSource.java:972] -  - {dataSource-1} inited
+2023-12-01 23:22:58,553 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.insert
+2023-12-01 23:22:58,553 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.insert
+2023-12-01 23:22:58,558 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.delete
+2023-12-01 23:22:58,558 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.delete
+2023-12-01 23:22:58,561 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteByMap
+2023-12-01 23:22:58,561 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteByMap
+2023-12-01 23:22:58,578 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteById
+2023-12-01 23:22:58,578 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteById
+2023-12-01 23:22:58,580 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteBatchIds
+2023-12-01 23:22:58,580 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteBatchIds
+2023-12-01 23:22:58,584 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.update
+2023-12-01 23:22:58,584 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.update
+2023-12-01 23:22:58,586 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.updateById
+2023-12-01 23:22:58,586 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.updateById
+2023-12-01 23:22:58,587 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectById
+2023-12-01 23:22:58,587 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectById
+2023-12-01 23:22:58,588 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectBatchIds
+2023-12-01 23:22:58,588 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectBatchIds
+2023-12-01 23:22:58,590 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectByMap
+2023-12-01 23:22:58,590 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectByMap
+2023-12-01 23:22:58,593 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectOne
+2023-12-01 23:22:58,593 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectOne
+2023-12-01 23:22:58,595 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectCount
+2023-12-01 23:22:58,595 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectCount
+2023-12-01 23:22:58,598 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectMaps
+2023-12-01 23:22:58,598 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectMaps
+2023-12-01 23:22:58,601 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectMapsPage
+2023-12-01 23:22:58,601 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectMapsPage
+2023-12-01 23:22:58,603 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectObjs
+2023-12-01 23:22:58,603 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectObjs
+2023-12-01 23:22:58,605 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectList
+2023-12-01 23:22:58,605 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectList
+2023-12-01 23:22:58,607 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectPage
+2023-12-01 23:22:58,607 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectPage
+2023-12-01 23:22:58,617 DEBUG [main][ResourceBundleMessageInterpolator.java:172] -  - Loaded expression factory via original TCCL
+2023-12-01 23:22:58,617 DEBUG [main][ResourceBundleMessageInterpolator.java:172] -  - Loaded expression factory via original TCCL
+2023-12-01 23:22:58,620 DEBUG [main][AbstractConfigurationImpl.java:174] -  - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+2023-12-01 23:22:58,620 DEBUG [main][AbstractConfigurationImpl.java:174] -  - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+2023-12-01 23:22:58,621 DEBUG [main][AbstractConfigurationImpl.java:206] -  - Setting custom ConstraintValidatorFactory of type org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory
+2023-12-01 23:22:58,621 DEBUG [main][AbstractConfigurationImpl.java:206] -  - Setting custom ConstraintValidatorFactory of type org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory
+2023-12-01 23:22:58,621 DEBUG [main][AbstractConfigurationImpl.java:220] -  - Setting custom ParameterNameProvider of type org.springframework.validation.beanvalidation.LocalValidatorFactoryBean$1
+2023-12-01 23:22:58,621 DEBUG [main][AbstractConfigurationImpl.java:220] -  - Setting custom ParameterNameProvider of type org.springframework.validation.beanvalidation.LocalValidatorFactoryBean$1
+2023-12-01 23:22:58,622 DEBUG [main][ValidationXmlParser.java:120] -  - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2023-12-01 23:22:58,622 DEBUG [main][ValidationXmlParser.java:120] -  - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2023-12-01 23:22:58,622 DEBUG [main][ResourceLoaderHelper.java:53] -  - Trying to load META-INF/validation.xml via user class loader
+2023-12-01 23:22:58,622 DEBUG [main][ResourceLoaderHelper.java:53] -  - Trying to load META-INF/validation.xml via user class loader
+2023-12-01 23:22:58,623 DEBUG [main][ResourceLoaderHelper.java:60] -  - Trying to load META-INF/validation.xml via TCCL
+2023-12-01 23:22:58,623 DEBUG [main][ResourceLoaderHelper.java:60] -  - Trying to load META-INF/validation.xml via TCCL
+2023-12-01 23:22:58,623 DEBUG [main][ResourceLoaderHelper.java:66] -  - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2023-12-01 23:22:58,623 DEBUG [main][ResourceLoaderHelper.java:66] -  - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2023-12-01 23:22:58,623 DEBUG [main][ValidationXmlParser.java:127] -  - No META-INF/validation.xml found. Using annotation based configuration only.
+2023-12-01 23:22:58,623 DEBUG [main][ValidationXmlParser.java:127] -  - No META-INF/validation.xml found. Using annotation based configuration only.
+2023-12-01 23:22:58,624 DEBUG [main][TraversableResolvers.java:60] -  - Cannot find javax.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2023-12-01 23:22:58,624 DEBUG [main][TraversableResolvers.java:60] -  - Cannot find javax.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2023-12-01 23:22:58,625 DEBUG [main][ValidatorFactoryConfigurationHelper.java:345] -  - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2023-12-01 23:22:58,625 DEBUG [main][ValidatorFactoryConfigurationHelper.java:345] -  - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2023-12-01 23:22:58,626 DEBUG [main][ValidatorFactoryConfigurationHelper.java:420] -  - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2023-12-01 23:22:58,626 DEBUG [main][ValidatorFactoryConfigurationHelper.java:420] -  - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2023-12-01 23:22:58,626 DEBUG [main][ValidatorFactoryConfigurationHelper.java:421] -  - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2023-12-01 23:22:58,626 DEBUG [main][ValidatorFactoryConfigurationHelper.java:421] -  - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2023-12-01 23:22:58,626 DEBUG [main][ValidatorFactoryConfigurationHelper.java:422] -  - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2023-12-01 23:22:58,626 DEBUG [main][ValidatorFactoryConfigurationHelper.java:422] -  - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2023-12-01 23:22:58,627 DEBUG [main][ValidatorFactoryConfigurationHelper.java:423] -  - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2023-12-01 23:22:58,627 DEBUG [main][ValidatorFactoryConfigurationHelper.java:423] -  - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2023-12-01 23:22:58,627 DEBUG [main][ValidatorFactoryConfigurationHelper.java:424] -  - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2023-12-01 23:22:58,627 DEBUG [main][ValidatorFactoryConfigurationHelper.java:424] -  - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2023-12-01 23:22:58,812 DEBUG [main][AbstractHandlerMethodMapping.java:295] -  - 
+	c.p.a.c.ProjectController:
+	{GET [/project/projectList]}: getProjectList(PageParams,QueryProjectDTO)
+	{ [/mock/projectList]}: getProjectMock(PageParams)
+	{POST [/project/addProject]}: addProject()
+2023-12-01 23:22:58,812 DEBUG [main][AbstractHandlerMethodMapping.java:295] -  - 
+	c.p.a.c.ProjectController:
+	{GET [/project/projectList]}: getProjectList(PageParams,QueryProjectDTO)
+	{ [/mock/projectList]}: getProjectMock(PageParams)
+	{POST [/project/addProject]}: addProject()
+2023-12-01 23:22:58,816 DEBUG [main][AbstractHandlerMethodMapping.java:295] -  - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ [/error]}: error(HttpServletRequest)
+	{ [/error], produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2023-12-01 23:22:58,816 DEBUG [main][AbstractHandlerMethodMapping.java:295] -  - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ [/error]}: error(HttpServletRequest)
+	{ [/error], produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2023-12-01 23:22:58,822 DEBUG [main][AbstractDetectingUrlHandlerMapping.java:86] -  - 'beanNameHandlerMapping' {}
+2023-12-01 23:22:58,822 DEBUG [main][AbstractDetectingUrlHandlerMapping.java:86] -  - 'beanNameHandlerMapping' {}
+2023-12-01 23:22:58,838 DEBUG [main][SimpleUrlHandlerMapping.java:177] -  - 'resourceHandlerMapping' {/webjars/**=ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]], /**=ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]}
+2023-12-01 23:22:58,838 DEBUG [main][SimpleUrlHandlerMapping.java:177] -  - 'resourceHandlerMapping' {/webjars/**=ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]], /**=ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]}
+2023-12-01 23:22:58,872 DEBUG [main][MybatisPlusAutoConfiguration.java:314] -  - Not found configuration for registering mapper bean using @MapperScan, MapperFactoryBean and MapperScannerConfigurer.
+2023-12-01 23:22:58,872 DEBUG [main][MybatisPlusAutoConfiguration.java:314] -  - Not found configuration for registering mapper bean using @MapperScan, MapperFactoryBean and MapperScannerConfigurer.
+2023-12-01 23:22:58,935 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.insert
+2023-12-01 23:22:58,935 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.insert
+2023-12-01 23:22:58,937 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.delete
+2023-12-01 23:22:58,937 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.delete
+2023-12-01 23:22:58,939 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteByMap
+2023-12-01 23:22:58,939 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteByMap
+2023-12-01 23:22:58,940 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteById
+2023-12-01 23:22:58,940 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteById
+2023-12-01 23:22:58,941 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteBatchIds
+2023-12-01 23:22:58,941 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteBatchIds
+2023-12-01 23:22:58,943 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.update
+2023-12-01 23:22:58,943 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.update
+2023-12-01 23:22:58,945 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.updateById
+2023-12-01 23:22:58,945 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.updateById
+2023-12-01 23:22:58,946 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectById
+2023-12-01 23:22:58,946 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectById
+2023-12-01 23:22:58,947 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectBatchIds
+2023-12-01 23:22:58,947 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectBatchIds
+2023-12-01 23:22:58,948 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectByMap
+2023-12-01 23:22:58,948 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectByMap
+2023-12-01 23:22:58,950 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectOne
+2023-12-01 23:22:58,950 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectOne
+2023-12-01 23:22:58,952 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectCount
+2023-12-01 23:22:58,952 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectCount
+2023-12-01 23:22:58,955 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectMaps
+2023-12-01 23:22:58,955 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectMaps
+2023-12-01 23:22:58,958 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectMapsPage
+2023-12-01 23:22:58,958 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectMapsPage
+2023-12-01 23:22:58,960 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectObjs
+2023-12-01 23:22:58,960 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectObjs
+2023-12-01 23:22:58,961 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectList
+2023-12-01 23:22:58,961 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectList
+2023-12-01 23:22:58,963 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectPage
+2023-12-01 23:22:58,963 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectPage
+2023-12-01 23:22:58,985 INFO [main][DirectJDKLog.java:173] -  - Starting ProtocolHandler ["http-nio-8080"]
+2023-12-01 23:22:58,985 INFO [main][DirectJDKLog.java:173] -  - Starting ProtocolHandler ["http-nio-8080"]
+2023-12-01 23:22:58,998 INFO [main][TomcatWebServer.java:220] -  - Tomcat started on port(s): 8080 (http) with context path ''
+2023-12-01 23:22:58,998 INFO [main][TomcatWebServer.java:220] -  - Tomcat started on port(s): 8080 (http) with context path ''
+2023-12-01 23:22:59,008 INFO [main][StartupInfoLogger.java:61] -  - Started ATPlatformApplication in 2.383 seconds (JVM running for 3.64)
+2023-12-01 23:22:59,008 INFO [main][StartupInfoLogger.java:61] -  - Started ATPlatformApplication in 2.383 seconds (JVM running for 3.64)
+2023-12-01 23:23:05,931 INFO [http-nio-8080-exec-1][DirectJDKLog.java:173] -  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-01 23:23:05,931 INFO [http-nio-8080-exec-1][DirectJDKLog.java:173] -  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-01 23:23:05,932 INFO [http-nio-8080-exec-1][FrameworkServlet.java:525] -  - Initializing Servlet 'dispatcherServlet'
+2023-12-01 23:23:05,932 INFO [http-nio-8080-exec-1][FrameworkServlet.java:525] -  - Initializing Servlet 'dispatcherServlet'
+2023-12-01 23:23:05,932 INFO [http-nio-8080-exec-1][FrameworkServlet.java:547] -  - Completed initialization in 0 ms
+2023-12-01 23:23:05,932 INFO [http-nio-8080-exec-1][FrameworkServlet.java:547] -  - Completed initialization in 0 ms
+2023-12-01 23:23:05,986 INFO [http-nio-8080-exec-1][PublicFillObjectHandler.java:19] - bbe1161a-9104-4a72-b510-be37cdc1e516 - 公共字段填充，事件:insert
+2023-12-01 23:23:05,986 INFO [http-nio-8080-exec-1][PublicFillObjectHandler.java:19] - bbe1161a-9104-4a72-b510-be37cdc1e516 - 公共字段填充，事件:insert
+2023-12-01 23:23:06,294 INFO [http-nio-8080-exec-1][ProjectInfoImpl.java:84] - bbe1161a-9104-4a72-b510-be37cdc1e516 - 插入成功
+2023-12-01 23:23:06,294 INFO [http-nio-8080-exec-1][ProjectInfoImpl.java:84] - bbe1161a-9104-4a72-b510-be37cdc1e516 - 插入成功
+2023-12-01 23:23:18,873 INFO [http-nio-8080-exec-3][PublicFillObjectHandler.java:19] - bb4092ab-78d9-482b-84cc-0953d5368b47 - 公共字段填充，事件:insert
+2023-12-01 23:23:18,873 INFO [http-nio-8080-exec-3][PublicFillObjectHandler.java:19] - bb4092ab-78d9-482b-84cc-0953d5368b47 - 公共字段填充，事件:insert
+2023-12-01 23:23:18,924 ERROR [http-nio-8080-exec-3][GlobalExceptionHandler.java:40] - bb4092ab-78d9-482b-84cc-0953d5368b47 - 捕获系统异常:
+### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'hahaha2' for key 'at_test_project.at_test_project_project_name_uindex'
+### The error may exist in com/planitary/atplatform/mapper/ATTestProjectMapper.java (best guess)
+### The error may involve com.planitary.atplatform.mapper.ATTestProjectMapper.insert-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO at_test_project  ( project_name, project_url, project_id, version,  is_delete, create_time, create_user, update_time, update_user )  VALUES  ( ?, ?, ?, ?,  ?, ?, ?, ?, ? )
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'hahaha2' for key 'at_test_project.at_test_project_project_name_uindex'
+; Duplicate entry 'hahaha2' for key 'at_test_project.at_test_project_project_name_uindex'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'hahaha2' for key 'at_test_project.at_test_project_project_name_uindex'
+2023-12-01 23:23:18,924 ERROR [http-nio-8080-exec-3][GlobalExceptionHandler.java:40] - bb4092ab-78d9-482b-84cc-0953d5368b47 - 捕获系统异常:
+### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'hahaha2' for key 'at_test_project.at_test_project_project_name_uindex'
+### The error may exist in com/planitary/atplatform/mapper/ATTestProjectMapper.java (best guess)
+### The error may involve com.planitary.atplatform.mapper.ATTestProjectMapper.insert-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO at_test_project  ( project_name, project_url, project_id, version,  is_delete, create_time, create_user, update_time, update_user )  VALUES  ( ?, ?, ?, ?,  ?, ?, ?, ?, ? )
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'hahaha2' for key 'at_test_project.at_test_project_project_name_uindex'
+; Duplicate entry 'hahaha2' for key 'at_test_project.at_test_project_project_name_uindex'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'hahaha2' for key 'at_test_project.at_test_project_project_name_uindex'
+2023-12-01 23:23:54,427 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2051] -  - {dataSource-1} closing ...
+2023-12-01 23:23:54,427 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2051] -  - {dataSource-1} closing ...
+2023-12-01 23:23:54,433 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2124] -  - {dataSource-1} closed
+2023-12-01 23:23:54,433 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2124] -  - {dataSource-1} closed
+2023-12-01 23:23:59,097 DEBUG [background-preinit][LoggerProviders.java:152] -  - Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+2023-12-01 23:23:59,097 DEBUG [background-preinit][LoggerProviders.java:152] -  - Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+2023-12-01 23:23:59,102 INFO [background-preinit][Version.java:21] -  - HV000001: Hibernate Validator 6.2.5.Final
+2023-12-01 23:23:59,102 INFO [background-preinit][Version.java:21] -  - HV000001: Hibernate Validator 6.2.5.Final
+2023-12-01 23:23:59,107 DEBUG [background-preinit][ValidationXmlParser.java:120] -  - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2023-12-01 23:23:59,107 DEBUG [background-preinit][ValidationXmlParser.java:120] -  - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2023-12-01 23:23:59,108 DEBUG [background-preinit][ResourceLoaderHelper.java:60] -  - Trying to load META-INF/validation.xml via TCCL
+2023-12-01 23:23:59,108 DEBUG [background-preinit][ResourceLoaderHelper.java:60] -  - Trying to load META-INF/validation.xml via TCCL
+2023-12-01 23:23:59,109 DEBUG [background-preinit][ResourceLoaderHelper.java:66] -  - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2023-12-01 23:23:59,109 DEBUG [background-preinit][ResourceLoaderHelper.java:66] -  - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2023-12-01 23:23:59,109 DEBUG [background-preinit][ValidationXmlParser.java:127] -  - No META-INF/validation.xml found. Using annotation based configuration only.
+2023-12-01 23:23:59,109 DEBUG [background-preinit][ValidationXmlParser.java:127] -  - No META-INF/validation.xml found. Using annotation based configuration only.
+2023-12-01 23:23:59,112 DEBUG [background-preinit][TraversableResolvers.java:60] -  - Cannot find javax.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2023-12-01 23:23:59,112 DEBUG [background-preinit][TraversableResolvers.java:60] -  - Cannot find javax.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2023-12-01 23:23:59,131 DEBUG [background-preinit][ResourceBundleMessageInterpolator.java:172] -  - Loaded expression factory via original TCCL
+2023-12-01 23:23:59,131 DEBUG [background-preinit][ResourceBundleMessageInterpolator.java:172] -  - Loaded expression factory via original TCCL
+2023-12-01 23:23:59,131 INFO [main][StartupInfoLogger.java:55] -  - Starting ATPlatformApplication using Java 17.0.2 on zhangmuxindeMacBook-Pro.local with PID 78346 (/Users/zhangmuxin/Desktop/AutoTestPlatform/at-controller/target/classes started by zhangmuxin in /Users/zhangmuxin/Desktop/AutoTestPlatform)
+2023-12-01 23:23:59,131 INFO [main][StartupInfoLogger.java:55] -  - Starting ATPlatformApplication using Java 17.0.2 on zhangmuxindeMacBook-Pro.local with PID 78346 (/Users/zhangmuxin/Desktop/AutoTestPlatform/at-controller/target/classes started by zhangmuxin in /Users/zhangmuxin/Desktop/AutoTestPlatform)
+2023-12-01 23:23:59,134 DEBUG [main][StartupInfoLogger.java:56] -  - Running with Spring Boot v2.7.6, Spring v5.3.24
+2023-12-01 23:23:59,134 DEBUG [main][StartupInfoLogger.java:56] -  - Running with Spring Boot v2.7.6, Spring v5.3.24
+2023-12-01 23:23:59,135 INFO [main][SpringApplication.java:631] -  - No active profile set, falling back to 1 default profile: "default"
+2023-12-01 23:23:59,135 INFO [main][SpringApplication.java:631] -  - No active profile set, falling back to 1 default profile: "default"
+2023-12-01 23:23:59,230 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:345] -  - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2023-12-01 23:23:59,230 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:345] -  - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2023-12-01 23:23:59,234 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:420] -  - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2023-12-01 23:23:59,234 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:420] -  - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2023-12-01 23:23:59,235 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:421] -  - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2023-12-01 23:23:59,235 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:421] -  - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2023-12-01 23:23:59,235 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:422] -  - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2023-12-01 23:23:59,235 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:422] -  - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2023-12-01 23:23:59,236 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:423] -  - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2023-12-01 23:23:59,236 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:423] -  - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2023-12-01 23:23:59,238 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:424] -  - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2023-12-01 23:23:59,238 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:424] -  - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2023-12-01 23:23:59,693 DEBUG [main][MybatisPlusAutoConfiguration.java:278] -  - Searching for mappers annotated with @Mapper
+2023-12-01 23:23:59,693 DEBUG [main][MybatisPlusAutoConfiguration.java:278] -  - Searching for mappers annotated with @Mapper
+2023-12-01 23:23:59,695 DEBUG [main][MybatisPlusAutoConfiguration.java:282] -  - Using auto-configuration base package 'com.planitary'
+2023-12-01 23:23:59,695 DEBUG [main][MybatisPlusAutoConfiguration.java:282] -  - Using auto-configuration base package 'com.planitary'
+2023-12-01 23:23:59,793 DEBUG [main][LogFactory.java:105] -  - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+2023-12-01 23:23:59,793 DEBUG [main][LogFactory.java:105] -  - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+2023-12-01 23:23:59,798 DEBUG [main][ClassPathScanningCandidateComponentProvider.java:435] -  - Identified candidate component class: file [/Users/zhangmuxin/Desktop/AutoTestPlatform/at-model/target/classes/com/planitary/atplatform/mapper/ATTestInterfaceInfoMapper.class]
+2023-12-01 23:23:59,798 DEBUG [main][ClassPathScanningCandidateComponentProvider.java:435] -  - Identified candidate component class: file [/Users/zhangmuxin/Desktop/AutoTestPlatform/at-model/target/classes/com/planitary/atplatform/mapper/ATTestInterfaceInfoMapper.class]
+2023-12-01 23:23:59,799 DEBUG [main][ClassPathScanningCandidateComponentProvider.java:435] -  - Identified candidate component class: file [/Users/zhangmuxin/Desktop/AutoTestPlatform/at-model/target/classes/com/planitary/atplatform/mapper/ATTestProjectMapper.class]
+2023-12-01 23:23:59,799 DEBUG [main][ClassPathScanningCandidateComponentProvider.java:435] -  - Identified candidate component class: file [/Users/zhangmuxin/Desktop/AutoTestPlatform/at-model/target/classes/com/planitary/atplatform/mapper/ATTestProjectMapper.class]
+2023-12-01 23:23:59,800 DEBUG [main][Logger.java:49] -  - Creating MapperFactoryBean with name 'ATTestInterfaceInfoMapper' and 'com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper' mapperInterface
+2023-12-01 23:23:59,800 DEBUG [main][Logger.java:49] -  - Creating MapperFactoryBean with name 'ATTestInterfaceInfoMapper' and 'com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper' mapperInterface
+2023-12-01 23:23:59,801 DEBUG [main][Logger.java:49] -  - Enabling autowire by type for MapperFactoryBean with name 'ATTestInterfaceInfoMapper'.
+2023-12-01 23:23:59,801 DEBUG [main][Logger.java:49] -  - Enabling autowire by type for MapperFactoryBean with name 'ATTestInterfaceInfoMapper'.
+2023-12-01 23:23:59,802 DEBUG [main][Logger.java:49] -  - Creating MapperFactoryBean with name 'ATTestProjectMapper' and 'com.planitary.atplatform.mapper.ATTestProjectMapper' mapperInterface
+2023-12-01 23:23:59,802 DEBUG [main][Logger.java:49] -  - Creating MapperFactoryBean with name 'ATTestProjectMapper' and 'com.planitary.atplatform.mapper.ATTestProjectMapper' mapperInterface
+2023-12-01 23:23:59,802 DEBUG [main][Logger.java:49] -  - Enabling autowire by type for MapperFactoryBean with name 'ATTestProjectMapper'.
+2023-12-01 23:23:59,802 DEBUG [main][Logger.java:49] -  - Enabling autowire by type for MapperFactoryBean with name 'ATTestProjectMapper'.
+2023-12-01 23:24:00,117 INFO [main][TomcatWebServer.java:108] -  - Tomcat initialized with port(s): 8080 (http)
+2023-12-01 23:24:00,117 INFO [main][TomcatWebServer.java:108] -  - Tomcat initialized with port(s): 8080 (http)
+2023-12-01 23:24:00,124 INFO [main][DirectJDKLog.java:173] -  - Initializing ProtocolHandler ["http-nio-8080"]
+2023-12-01 23:24:00,124 INFO [main][DirectJDKLog.java:173] -  - Initializing ProtocolHandler ["http-nio-8080"]
+2023-12-01 23:24:00,125 INFO [main][DirectJDKLog.java:173] -  - Starting service [Tomcat]
+2023-12-01 23:24:00,125 INFO [main][DirectJDKLog.java:173] -  - Starting service [Tomcat]
+2023-12-01 23:24:00,125 INFO [main][DirectJDKLog.java:173] -  - Starting Servlet engine: [Apache Tomcat/9.0.69]
+2023-12-01 23:24:00,125 INFO [main][DirectJDKLog.java:173] -  - Starting Servlet engine: [Apache Tomcat/9.0.69]
+2023-12-01 23:24:00,188 INFO [main][DirectJDKLog.java:173] -  - Initializing Spring embedded WebApplicationContext
+2023-12-01 23:24:00,188 INFO [main][DirectJDKLog.java:173] -  - Initializing Spring embedded WebApplicationContext
+2023-12-01 23:24:00,188 INFO [main][ServletWebServerApplicationContext.java:292] -  - Root WebApplicationContext: initialization completed in 1002 ms
+2023-12-01 23:24:00,188 INFO [main][ServletWebServerApplicationContext.java:292] -  - Root WebApplicationContext: initialization completed in 1002 ms
+2023-12-01 23:24:00,298 INFO [main][DruidDataSourceAutoConfigure.java:55] -  - Init DruidDataSource
+2023-12-01 23:24:00,298 INFO [main][DruidDataSourceAutoConfigure.java:55] -  - Init DruidDataSource
+2023-12-01 23:24:00,398 INFO [main][DruidDataSource.java:972] -  - {dataSource-1} inited
+2023-12-01 23:24:00,398 INFO [main][DruidDataSource.java:972] -  - {dataSource-1} inited
+2023-12-01 23:24:00,502 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.insert
+2023-12-01 23:24:00,502 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.insert
+2023-12-01 23:24:00,509 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.delete
+2023-12-01 23:24:00,509 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.delete
+2023-12-01 23:24:00,512 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteByMap
+2023-12-01 23:24:00,512 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteByMap
+2023-12-01 23:24:00,529 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteById
+2023-12-01 23:24:00,529 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteById
+2023-12-01 23:24:00,531 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteBatchIds
+2023-12-01 23:24:00,531 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteBatchIds
+2023-12-01 23:24:00,535 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.update
+2023-12-01 23:24:00,535 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.update
+2023-12-01 23:24:00,537 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.updateById
+2023-12-01 23:24:00,537 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.updateById
+2023-12-01 23:24:00,538 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectById
+2023-12-01 23:24:00,538 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectById
+2023-12-01 23:24:00,540 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectBatchIds
+2023-12-01 23:24:00,540 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectBatchIds
+2023-12-01 23:24:00,542 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectByMap
+2023-12-01 23:24:00,542 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectByMap
+2023-12-01 23:24:00,545 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectOne
+2023-12-01 23:24:00,545 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectOne
+2023-12-01 23:24:00,547 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectCount
+2023-12-01 23:24:00,547 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectCount
+2023-12-01 23:24:00,549 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectMaps
+2023-12-01 23:24:00,549 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectMaps
+2023-12-01 23:24:00,552 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectMapsPage
+2023-12-01 23:24:00,552 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectMapsPage
+2023-12-01 23:24:00,554 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectObjs
+2023-12-01 23:24:00,554 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectObjs
+2023-12-01 23:24:00,556 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectList
+2023-12-01 23:24:00,556 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectList
+2023-12-01 23:24:00,558 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectPage
+2023-12-01 23:24:00,558 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectPage
+2023-12-01 23:24:00,569 DEBUG [main][ResourceBundleMessageInterpolator.java:172] -  - Loaded expression factory via original TCCL
+2023-12-01 23:24:00,569 DEBUG [main][ResourceBundleMessageInterpolator.java:172] -  - Loaded expression factory via original TCCL
+2023-12-01 23:24:00,573 DEBUG [main][AbstractConfigurationImpl.java:174] -  - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+2023-12-01 23:24:00,573 DEBUG [main][AbstractConfigurationImpl.java:174] -  - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+2023-12-01 23:24:00,573 DEBUG [main][AbstractConfigurationImpl.java:206] -  - Setting custom ConstraintValidatorFactory of type org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory
+2023-12-01 23:24:00,573 DEBUG [main][AbstractConfigurationImpl.java:206] -  - Setting custom ConstraintValidatorFactory of type org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory
+2023-12-01 23:24:00,574 DEBUG [main][AbstractConfigurationImpl.java:220] -  - Setting custom ParameterNameProvider of type org.springframework.validation.beanvalidation.LocalValidatorFactoryBean$1
+2023-12-01 23:24:00,574 DEBUG [main][AbstractConfigurationImpl.java:220] -  - Setting custom ParameterNameProvider of type org.springframework.validation.beanvalidation.LocalValidatorFactoryBean$1
+2023-12-01 23:24:00,575 DEBUG [main][ValidationXmlParser.java:120] -  - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2023-12-01 23:24:00,575 DEBUG [main][ValidationXmlParser.java:120] -  - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2023-12-01 23:24:00,575 DEBUG [main][ResourceLoaderHelper.java:53] -  - Trying to load META-INF/validation.xml via user class loader
+2023-12-01 23:24:00,575 DEBUG [main][ResourceLoaderHelper.java:53] -  - Trying to load META-INF/validation.xml via user class loader
+2023-12-01 23:24:00,576 DEBUG [main][ResourceLoaderHelper.java:60] -  - Trying to load META-INF/validation.xml via TCCL
+2023-12-01 23:24:00,576 DEBUG [main][ResourceLoaderHelper.java:60] -  - Trying to load META-INF/validation.xml via TCCL
+2023-12-01 23:24:00,576 DEBUG [main][ResourceLoaderHelper.java:66] -  - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2023-12-01 23:24:00,576 DEBUG [main][ResourceLoaderHelper.java:66] -  - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2023-12-01 23:24:00,576 DEBUG [main][ValidationXmlParser.java:127] -  - No META-INF/validation.xml found. Using annotation based configuration only.
+2023-12-01 23:24:00,576 DEBUG [main][ValidationXmlParser.java:127] -  - No META-INF/validation.xml found. Using annotation based configuration only.
+2023-12-01 23:24:00,577 DEBUG [main][TraversableResolvers.java:60] -  - Cannot find javax.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2023-12-01 23:24:00,577 DEBUG [main][TraversableResolvers.java:60] -  - Cannot find javax.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2023-12-01 23:24:00,578 DEBUG [main][ValidatorFactoryConfigurationHelper.java:345] -  - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2023-12-01 23:24:00,578 DEBUG [main][ValidatorFactoryConfigurationHelper.java:345] -  - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2023-12-01 23:24:00,579 DEBUG [main][ValidatorFactoryConfigurationHelper.java:420] -  - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2023-12-01 23:24:00,579 DEBUG [main][ValidatorFactoryConfigurationHelper.java:420] -  - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2023-12-01 23:24:00,579 DEBUG [main][ValidatorFactoryConfigurationHelper.java:421] -  - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2023-12-01 23:24:00,579 DEBUG [main][ValidatorFactoryConfigurationHelper.java:421] -  - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2023-12-01 23:24:00,580 DEBUG [main][ValidatorFactoryConfigurationHelper.java:422] -  - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2023-12-01 23:24:00,580 DEBUG [main][ValidatorFactoryConfigurationHelper.java:422] -  - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2023-12-01 23:24:00,580 DEBUG [main][ValidatorFactoryConfigurationHelper.java:423] -  - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2023-12-01 23:24:00,580 DEBUG [main][ValidatorFactoryConfigurationHelper.java:423] -  - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2023-12-01 23:24:00,580 DEBUG [main][ValidatorFactoryConfigurationHelper.java:424] -  - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2023-12-01 23:24:00,580 DEBUG [main][ValidatorFactoryConfigurationHelper.java:424] -  - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2023-12-01 23:24:00,777 DEBUG [main][AbstractHandlerMethodMapping.java:295] -  - 
+	c.p.a.c.ProjectController:
+	{GET [/project/projectList]}: getProjectList(PageParams,QueryProjectDTO)
+	{ [/mock/projectList]}: getProjectMock(PageParams)
+	{POST [/project/addProject]}: addProject()
+2023-12-01 23:24:00,777 DEBUG [main][AbstractHandlerMethodMapping.java:295] -  - 
+	c.p.a.c.ProjectController:
+	{GET [/project/projectList]}: getProjectList(PageParams,QueryProjectDTO)
+	{ [/mock/projectList]}: getProjectMock(PageParams)
+	{POST [/project/addProject]}: addProject()
+2023-12-01 23:24:00,781 DEBUG [main][AbstractHandlerMethodMapping.java:295] -  - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ [/error]}: error(HttpServletRequest)
+	{ [/error], produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2023-12-01 23:24:00,781 DEBUG [main][AbstractHandlerMethodMapping.java:295] -  - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ [/error]}: error(HttpServletRequest)
+	{ [/error], produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2023-12-01 23:24:00,789 DEBUG [main][AbstractDetectingUrlHandlerMapping.java:86] -  - 'beanNameHandlerMapping' {}
+2023-12-01 23:24:00,789 DEBUG [main][AbstractDetectingUrlHandlerMapping.java:86] -  - 'beanNameHandlerMapping' {}
+2023-12-01 23:24:00,805 DEBUG [main][SimpleUrlHandlerMapping.java:177] -  - 'resourceHandlerMapping' {/webjars/**=ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]], /**=ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]}
+2023-12-01 23:24:00,805 DEBUG [main][SimpleUrlHandlerMapping.java:177] -  - 'resourceHandlerMapping' {/webjars/**=ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]], /**=ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]}
+2023-12-01 23:24:00,841 DEBUG [main][MybatisPlusAutoConfiguration.java:314] -  - Not found configuration for registering mapper bean using @MapperScan, MapperFactoryBean and MapperScannerConfigurer.
+2023-12-01 23:24:00,841 DEBUG [main][MybatisPlusAutoConfiguration.java:314] -  - Not found configuration for registering mapper bean using @MapperScan, MapperFactoryBean and MapperScannerConfigurer.
+2023-12-01 23:24:00,912 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.insert
+2023-12-01 23:24:00,912 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.insert
+2023-12-01 23:24:00,914 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.delete
+2023-12-01 23:24:00,914 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.delete
+2023-12-01 23:24:00,916 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteByMap
+2023-12-01 23:24:00,916 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteByMap
+2023-12-01 23:24:00,917 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteById
+2023-12-01 23:24:00,917 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteById
+2023-12-01 23:24:00,919 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteBatchIds
+2023-12-01 23:24:00,919 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteBatchIds
+2023-12-01 23:24:00,921 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.update
+2023-12-01 23:24:00,921 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.update
+2023-12-01 23:24:00,923 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.updateById
+2023-12-01 23:24:00,923 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.updateById
+2023-12-01 23:24:00,924 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectById
+2023-12-01 23:24:00,924 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectById
+2023-12-01 23:24:00,925 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectBatchIds
+2023-12-01 23:24:00,925 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectBatchIds
+2023-12-01 23:24:00,927 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectByMap
+2023-12-01 23:24:00,927 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectByMap
+2023-12-01 23:24:00,929 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectOne
+2023-12-01 23:24:00,929 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectOne
+2023-12-01 23:24:00,931 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectCount
+2023-12-01 23:24:00,931 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectCount
+2023-12-01 23:24:00,932 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectMaps
+2023-12-01 23:24:00,932 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectMaps
+2023-12-01 23:24:00,934 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectMapsPage
+2023-12-01 23:24:00,934 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectMapsPage
+2023-12-01 23:24:00,936 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectObjs
+2023-12-01 23:24:00,936 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectObjs
+2023-12-01 23:24:00,938 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectList
+2023-12-01 23:24:00,938 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectList
+2023-12-01 23:24:00,940 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectPage
+2023-12-01 23:24:00,940 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectPage
+2023-12-01 23:24:00,960 INFO [main][DirectJDKLog.java:173] -  - Starting ProtocolHandler ["http-nio-8080"]
+2023-12-01 23:24:00,960 INFO [main][DirectJDKLog.java:173] -  - Starting ProtocolHandler ["http-nio-8080"]
+2023-12-01 23:24:00,973 INFO [main][TomcatWebServer.java:220] -  - Tomcat started on port(s): 8080 (http) with context path ''
+2023-12-01 23:24:00,973 INFO [main][TomcatWebServer.java:220] -  - Tomcat started on port(s): 8080 (http) with context path ''
+2023-12-01 23:24:00,986 INFO [main][StartupInfoLogger.java:61] -  - Started ATPlatformApplication in 2.281 seconds (JVM running for 3.276)
+2023-12-01 23:24:00,986 INFO [main][StartupInfoLogger.java:61] -  - Started ATPlatformApplication in 2.281 seconds (JVM running for 3.276)
+2023-12-01 23:24:08,567 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2051] -  - {dataSource-1} closing ...
+2023-12-01 23:24:08,567 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2051] -  - {dataSource-1} closing ...
+2023-12-01 23:24:08,568 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2124] -  - {dataSource-1} closed
+2023-12-01 23:24:08,568 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2124] -  - {dataSource-1} closed
+2023-12-01 23:24:13,354 DEBUG [background-preinit][LoggerProviders.java:152] -  - Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+2023-12-01 23:24:13,354 DEBUG [background-preinit][LoggerProviders.java:152] -  - Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+2023-12-01 23:24:13,359 INFO [background-preinit][Version.java:21] -  - HV000001: Hibernate Validator 6.2.5.Final
+2023-12-01 23:24:13,359 INFO [background-preinit][Version.java:21] -  - HV000001: Hibernate Validator 6.2.5.Final
+2023-12-01 23:24:13,364 DEBUG [background-preinit][ValidationXmlParser.java:120] -  - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2023-12-01 23:24:13,364 DEBUG [background-preinit][ValidationXmlParser.java:120] -  - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2023-12-01 23:24:13,366 DEBUG [background-preinit][ResourceLoaderHelper.java:60] -  - Trying to load META-INF/validation.xml via TCCL
+2023-12-01 23:24:13,366 DEBUG [background-preinit][ResourceLoaderHelper.java:60] -  - Trying to load META-INF/validation.xml via TCCL
+2023-12-01 23:24:13,367 DEBUG [background-preinit][ResourceLoaderHelper.java:66] -  - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2023-12-01 23:24:13,367 DEBUG [background-preinit][ResourceLoaderHelper.java:66] -  - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2023-12-01 23:24:13,368 DEBUG [background-preinit][ValidationXmlParser.java:127] -  - No META-INF/validation.xml found. Using annotation based configuration only.
+2023-12-01 23:24:13,368 DEBUG [background-preinit][ValidationXmlParser.java:127] -  - No META-INF/validation.xml found. Using annotation based configuration only.
+2023-12-01 23:24:13,371 DEBUG [background-preinit][TraversableResolvers.java:60] -  - Cannot find javax.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2023-12-01 23:24:13,371 DEBUG [background-preinit][TraversableResolvers.java:60] -  - Cannot find javax.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2023-12-01 23:24:13,386 DEBUG [background-preinit][ResourceBundleMessageInterpolator.java:172] -  - Loaded expression factory via original TCCL
+2023-12-01 23:24:13,386 DEBUG [background-preinit][ResourceBundleMessageInterpolator.java:172] -  - Loaded expression factory via original TCCL
+2023-12-01 23:24:13,387 INFO [main][StartupInfoLogger.java:55] -  - Starting ATPlatformApplication using Java 17.0.2 on zhangmuxindeMacBook-Pro.local with PID 78398 (/Users/zhangmuxin/Desktop/AutoTestPlatform/at-controller/target/classes started by zhangmuxin in /Users/zhangmuxin/Desktop/AutoTestPlatform)
+2023-12-01 23:24:13,387 INFO [main][StartupInfoLogger.java:55] -  - Starting ATPlatformApplication using Java 17.0.2 on zhangmuxindeMacBook-Pro.local with PID 78398 (/Users/zhangmuxin/Desktop/AutoTestPlatform/at-controller/target/classes started by zhangmuxin in /Users/zhangmuxin/Desktop/AutoTestPlatform)
+2023-12-01 23:24:13,390 DEBUG [main][StartupInfoLogger.java:56] -  - Running with Spring Boot v2.7.6, Spring v5.3.24
+2023-12-01 23:24:13,390 DEBUG [main][StartupInfoLogger.java:56] -  - Running with Spring Boot v2.7.6, Spring v5.3.24
+2023-12-01 23:24:13,390 INFO [main][SpringApplication.java:631] -  - No active profile set, falling back to 1 default profile: "default"
+2023-12-01 23:24:13,390 INFO [main][SpringApplication.java:631] -  - No active profile set, falling back to 1 default profile: "default"
+2023-12-01 23:24:13,459 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:345] -  - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2023-12-01 23:24:13,459 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:345] -  - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2023-12-01 23:24:13,462 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:420] -  - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2023-12-01 23:24:13,462 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:420] -  - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2023-12-01 23:24:13,463 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:421] -  - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2023-12-01 23:24:13,463 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:421] -  - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2023-12-01 23:24:13,463 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:422] -  - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2023-12-01 23:24:13,463 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:422] -  - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2023-12-01 23:24:13,464 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:423] -  - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2023-12-01 23:24:13,464 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:423] -  - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2023-12-01 23:24:13,464 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:424] -  - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2023-12-01 23:24:13,464 DEBUG [background-preinit][ValidatorFactoryConfigurationHelper.java:424] -  - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2023-12-01 23:24:13,867 DEBUG [main][MybatisPlusAutoConfiguration.java:278] -  - Searching for mappers annotated with @Mapper
+2023-12-01 23:24:13,867 DEBUG [main][MybatisPlusAutoConfiguration.java:278] -  - Searching for mappers annotated with @Mapper
+2023-12-01 23:24:13,868 DEBUG [main][MybatisPlusAutoConfiguration.java:282] -  - Using auto-configuration base package 'com.planitary'
+2023-12-01 23:24:13,868 DEBUG [main][MybatisPlusAutoConfiguration.java:282] -  - Using auto-configuration base package 'com.planitary'
+2023-12-01 23:24:13,964 DEBUG [main][LogFactory.java:105] -  - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+2023-12-01 23:24:13,964 DEBUG [main][LogFactory.java:105] -  - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+2023-12-01 23:24:13,970 DEBUG [main][ClassPathScanningCandidateComponentProvider.java:435] -  - Identified candidate component class: file [/Users/zhangmuxin/Desktop/AutoTestPlatform/at-model/target/classes/com/planitary/atplatform/mapper/ATTestInterfaceInfoMapper.class]
+2023-12-01 23:24:13,970 DEBUG [main][ClassPathScanningCandidateComponentProvider.java:435] -  - Identified candidate component class: file [/Users/zhangmuxin/Desktop/AutoTestPlatform/at-model/target/classes/com/planitary/atplatform/mapper/ATTestInterfaceInfoMapper.class]
+2023-12-01 23:24:13,970 DEBUG [main][ClassPathScanningCandidateComponentProvider.java:435] -  - Identified candidate component class: file [/Users/zhangmuxin/Desktop/AutoTestPlatform/at-model/target/classes/com/planitary/atplatform/mapper/ATTestProjectMapper.class]
+2023-12-01 23:24:13,970 DEBUG [main][ClassPathScanningCandidateComponentProvider.java:435] -  - Identified candidate component class: file [/Users/zhangmuxin/Desktop/AutoTestPlatform/at-model/target/classes/com/planitary/atplatform/mapper/ATTestProjectMapper.class]
+2023-12-01 23:24:13,971 DEBUG [main][Logger.java:49] -  - Creating MapperFactoryBean with name 'ATTestInterfaceInfoMapper' and 'com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper' mapperInterface
+2023-12-01 23:24:13,971 DEBUG [main][Logger.java:49] -  - Creating MapperFactoryBean with name 'ATTestInterfaceInfoMapper' and 'com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper' mapperInterface
+2023-12-01 23:24:13,972 DEBUG [main][Logger.java:49] -  - Enabling autowire by type for MapperFactoryBean with name 'ATTestInterfaceInfoMapper'.
+2023-12-01 23:24:13,972 DEBUG [main][Logger.java:49] -  - Enabling autowire by type for MapperFactoryBean with name 'ATTestInterfaceInfoMapper'.
+2023-12-01 23:24:13,973 DEBUG [main][Logger.java:49] -  - Creating MapperFactoryBean with name 'ATTestProjectMapper' and 'com.planitary.atplatform.mapper.ATTestProjectMapper' mapperInterface
+2023-12-01 23:24:13,973 DEBUG [main][Logger.java:49] -  - Creating MapperFactoryBean with name 'ATTestProjectMapper' and 'com.planitary.atplatform.mapper.ATTestProjectMapper' mapperInterface
+2023-12-01 23:24:13,973 DEBUG [main][Logger.java:49] -  - Enabling autowire by type for MapperFactoryBean with name 'ATTestProjectMapper'.
+2023-12-01 23:24:13,973 DEBUG [main][Logger.java:49] -  - Enabling autowire by type for MapperFactoryBean with name 'ATTestProjectMapper'.
+2023-12-01 23:24:14,273 INFO [main][TomcatWebServer.java:108] -  - Tomcat initialized with port(s): 8080 (http)
+2023-12-01 23:24:14,273 INFO [main][TomcatWebServer.java:108] -  - Tomcat initialized with port(s): 8080 (http)
+2023-12-01 23:24:14,281 INFO [main][DirectJDKLog.java:173] -  - Initializing ProtocolHandler ["http-nio-8080"]
+2023-12-01 23:24:14,281 INFO [main][DirectJDKLog.java:173] -  - Initializing ProtocolHandler ["http-nio-8080"]
+2023-12-01 23:24:14,282 INFO [main][DirectJDKLog.java:173] -  - Starting service [Tomcat]
+2023-12-01 23:24:14,282 INFO [main][DirectJDKLog.java:173] -  - Starting service [Tomcat]
+2023-12-01 23:24:14,282 INFO [main][DirectJDKLog.java:173] -  - Starting Servlet engine: [Apache Tomcat/9.0.69]
+2023-12-01 23:24:14,282 INFO [main][DirectJDKLog.java:173] -  - Starting Servlet engine: [Apache Tomcat/9.0.69]
+2023-12-01 23:24:14,347 INFO [main][DirectJDKLog.java:173] -  - Initializing Spring embedded WebApplicationContext
+2023-12-01 23:24:14,347 INFO [main][DirectJDKLog.java:173] -  - Initializing Spring embedded WebApplicationContext
+2023-12-01 23:24:14,348 INFO [main][ServletWebServerApplicationContext.java:292] -  - Root WebApplicationContext: initialization completed in 920 ms
+2023-12-01 23:24:14,348 INFO [main][ServletWebServerApplicationContext.java:292] -  - Root WebApplicationContext: initialization completed in 920 ms
+2023-12-01 23:24:14,442 INFO [main][DruidDataSourceAutoConfigure.java:55] -  - Init DruidDataSource
+2023-12-01 23:24:14,442 INFO [main][DruidDataSourceAutoConfigure.java:55] -  - Init DruidDataSource
+2023-12-01 23:24:14,542 INFO [main][DruidDataSource.java:972] -  - {dataSource-1} inited
+2023-12-01 23:24:14,542 INFO [main][DruidDataSource.java:972] -  - {dataSource-1} inited
+2023-12-01 23:24:14,642 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.insert
+2023-12-01 23:24:14,642 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.insert
+2023-12-01 23:24:14,646 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.delete
+2023-12-01 23:24:14,646 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.delete
+2023-12-01 23:24:14,649 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteByMap
+2023-12-01 23:24:14,649 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteByMap
+2023-12-01 23:24:14,660 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteById
+2023-12-01 23:24:14,660 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteById
+2023-12-01 23:24:14,662 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteBatchIds
+2023-12-01 23:24:14,662 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.deleteBatchIds
+2023-12-01 23:24:14,666 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.update
+2023-12-01 23:24:14,666 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.update
+2023-12-01 23:24:14,668 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.updateById
+2023-12-01 23:24:14,668 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.updateById
+2023-12-01 23:24:14,669 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectById
+2023-12-01 23:24:14,669 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectById
+2023-12-01 23:24:14,671 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectBatchIds
+2023-12-01 23:24:14,671 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectBatchIds
+2023-12-01 23:24:14,673 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectByMap
+2023-12-01 23:24:14,673 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectByMap
+2023-12-01 23:24:14,675 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectOne
+2023-12-01 23:24:14,675 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectOne
+2023-12-01 23:24:14,678 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectCount
+2023-12-01 23:24:14,678 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectCount
+2023-12-01 23:24:14,680 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectMaps
+2023-12-01 23:24:14,680 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectMaps
+2023-12-01 23:24:14,682 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectMapsPage
+2023-12-01 23:24:14,682 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectMapsPage
+2023-12-01 23:24:14,685 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectObjs
+2023-12-01 23:24:14,685 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectObjs
+2023-12-01 23:24:14,687 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectList
+2023-12-01 23:24:14,687 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectList
+2023-12-01 23:24:14,690 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectPage
+2023-12-01 23:24:14,690 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestProjectMapper.selectPage
+2023-12-01 23:24:14,702 DEBUG [main][ResourceBundleMessageInterpolator.java:172] -  - Loaded expression factory via original TCCL
+2023-12-01 23:24:14,702 DEBUG [main][ResourceBundleMessageInterpolator.java:172] -  - Loaded expression factory via original TCCL
+2023-12-01 23:24:14,705 DEBUG [main][AbstractConfigurationImpl.java:174] -  - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+2023-12-01 23:24:14,705 DEBUG [main][AbstractConfigurationImpl.java:174] -  - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+2023-12-01 23:24:14,706 DEBUG [main][AbstractConfigurationImpl.java:206] -  - Setting custom ConstraintValidatorFactory of type org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory
+2023-12-01 23:24:14,706 DEBUG [main][AbstractConfigurationImpl.java:206] -  - Setting custom ConstraintValidatorFactory of type org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory
+2023-12-01 23:24:14,706 DEBUG [main][AbstractConfigurationImpl.java:220] -  - Setting custom ParameterNameProvider of type org.springframework.validation.beanvalidation.LocalValidatorFactoryBean$1
+2023-12-01 23:24:14,706 DEBUG [main][AbstractConfigurationImpl.java:220] -  - Setting custom ParameterNameProvider of type org.springframework.validation.beanvalidation.LocalValidatorFactoryBean$1
+2023-12-01 23:24:14,707 DEBUG [main][ValidationXmlParser.java:120] -  - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2023-12-01 23:24:14,707 DEBUG [main][ValidationXmlParser.java:120] -  - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2023-12-01 23:24:14,707 DEBUG [main][ResourceLoaderHelper.java:53] -  - Trying to load META-INF/validation.xml via user class loader
+2023-12-01 23:24:14,707 DEBUG [main][ResourceLoaderHelper.java:53] -  - Trying to load META-INF/validation.xml via user class loader
+2023-12-01 23:24:14,707 DEBUG [main][ResourceLoaderHelper.java:60] -  - Trying to load META-INF/validation.xml via TCCL
+2023-12-01 23:24:14,707 DEBUG [main][ResourceLoaderHelper.java:60] -  - Trying to load META-INF/validation.xml via TCCL
+2023-12-01 23:24:14,708 DEBUG [main][ResourceLoaderHelper.java:66] -  - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2023-12-01 23:24:14,708 DEBUG [main][ResourceLoaderHelper.java:66] -  - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2023-12-01 23:24:14,708 DEBUG [main][ValidationXmlParser.java:127] -  - No META-INF/validation.xml found. Using annotation based configuration only.
+2023-12-01 23:24:14,708 DEBUG [main][ValidationXmlParser.java:127] -  - No META-INF/validation.xml found. Using annotation based configuration only.
+2023-12-01 23:24:14,709 DEBUG [main][TraversableResolvers.java:60] -  - Cannot find javax.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2023-12-01 23:24:14,709 DEBUG [main][TraversableResolvers.java:60] -  - Cannot find javax.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2023-12-01 23:24:14,710 DEBUG [main][ValidatorFactoryConfigurationHelper.java:345] -  - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2023-12-01 23:24:14,710 DEBUG [main][ValidatorFactoryConfigurationHelper.java:345] -  - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2023-12-01 23:24:14,710 DEBUG [main][ValidatorFactoryConfigurationHelper.java:420] -  - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2023-12-01 23:24:14,710 DEBUG [main][ValidatorFactoryConfigurationHelper.java:420] -  - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2023-12-01 23:24:14,711 DEBUG [main][ValidatorFactoryConfigurationHelper.java:421] -  - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2023-12-01 23:24:14,711 DEBUG [main][ValidatorFactoryConfigurationHelper.java:421] -  - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2023-12-01 23:24:14,711 DEBUG [main][ValidatorFactoryConfigurationHelper.java:422] -  - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2023-12-01 23:24:14,711 DEBUG [main][ValidatorFactoryConfigurationHelper.java:422] -  - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2023-12-01 23:24:14,711 DEBUG [main][ValidatorFactoryConfigurationHelper.java:423] -  - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2023-12-01 23:24:14,711 DEBUG [main][ValidatorFactoryConfigurationHelper.java:423] -  - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2023-12-01 23:24:14,711 DEBUG [main][ValidatorFactoryConfigurationHelper.java:424] -  - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2023-12-01 23:24:14,711 DEBUG [main][ValidatorFactoryConfigurationHelper.java:424] -  - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2023-12-01 23:24:14,879 DEBUG [main][AbstractHandlerMethodMapping.java:295] -  - 
+	c.p.a.c.ProjectController:
+	{GET [/project/projectList]}: getProjectList(PageParams,QueryProjectDTO)
+	{ [/mock/projectList]}: getProjectMock(PageParams)
+	{POST [/project/addProject]}: addProject()
+2023-12-01 23:24:14,879 DEBUG [main][AbstractHandlerMethodMapping.java:295] -  - 
+	c.p.a.c.ProjectController:
+	{GET [/project/projectList]}: getProjectList(PageParams,QueryProjectDTO)
+	{ [/mock/projectList]}: getProjectMock(PageParams)
+	{POST [/project/addProject]}: addProject()
+2023-12-01 23:24:14,882 DEBUG [main][AbstractHandlerMethodMapping.java:295] -  - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ [/error]}: error(HttpServletRequest)
+	{ [/error], produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2023-12-01 23:24:14,882 DEBUG [main][AbstractHandlerMethodMapping.java:295] -  - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ [/error]}: error(HttpServletRequest)
+	{ [/error], produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2023-12-01 23:24:14,888 DEBUG [main][AbstractDetectingUrlHandlerMapping.java:86] -  - 'beanNameHandlerMapping' {}
+2023-12-01 23:24:14,888 DEBUG [main][AbstractDetectingUrlHandlerMapping.java:86] -  - 'beanNameHandlerMapping' {}
+2023-12-01 23:24:14,899 DEBUG [main][SimpleUrlHandlerMapping.java:177] -  - 'resourceHandlerMapping' {/webjars/**=ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]], /**=ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]}
+2023-12-01 23:24:14,899 DEBUG [main][SimpleUrlHandlerMapping.java:177] -  - 'resourceHandlerMapping' {/webjars/**=ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]], /**=ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]}
+2023-12-01 23:24:14,923 DEBUG [main][MybatisPlusAutoConfiguration.java:314] -  - Not found configuration for registering mapper bean using @MapperScan, MapperFactoryBean and MapperScannerConfigurer.
+2023-12-01 23:24:14,923 DEBUG [main][MybatisPlusAutoConfiguration.java:314] -  - Not found configuration for registering mapper bean using @MapperScan, MapperFactoryBean and MapperScannerConfigurer.
+2023-12-01 23:24:14,981 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.insert
+2023-12-01 23:24:14,981 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.insert
+2023-12-01 23:24:14,983 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.delete
+2023-12-01 23:24:14,983 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.delete
+2023-12-01 23:24:14,984 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteByMap
+2023-12-01 23:24:14,984 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteByMap
+2023-12-01 23:24:14,985 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteById
+2023-12-01 23:24:14,985 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteById
+2023-12-01 23:24:14,987 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteBatchIds
+2023-12-01 23:24:14,987 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.deleteBatchIds
+2023-12-01 23:24:14,989 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.update
+2023-12-01 23:24:14,989 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.update
+2023-12-01 23:24:14,990 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.updateById
+2023-12-01 23:24:14,990 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.updateById
+2023-12-01 23:24:14,991 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectById
+2023-12-01 23:24:14,991 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectById
+2023-12-01 23:24:14,992 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectBatchIds
+2023-12-01 23:24:14,992 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectBatchIds
+2023-12-01 23:24:14,994 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectByMap
+2023-12-01 23:24:14,994 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectByMap
+2023-12-01 23:24:14,995 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectOne
+2023-12-01 23:24:14,995 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectOne
+2023-12-01 23:24:14,997 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectCount
+2023-12-01 23:24:14,997 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectCount
+2023-12-01 23:24:14,999 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectMaps
+2023-12-01 23:24:14,999 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectMaps
+2023-12-01 23:24:15,000 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectMapsPage
+2023-12-01 23:24:15,000 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectMapsPage
+2023-12-01 23:24:15,003 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectObjs
+2023-12-01 23:24:15,003 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectObjs
+2023-12-01 23:24:15,004 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectList
+2023-12-01 23:24:15,004 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectList
+2023-12-01 23:24:15,007 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectPage
+2023-12-01 23:24:15,007 DEBUG [main][MybatisConfiguration.java:128] -  - addMappedStatement: com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper.selectPage
+2023-12-01 23:24:15,027 INFO [main][DirectJDKLog.java:173] -  - Starting ProtocolHandler ["http-nio-8080"]
+2023-12-01 23:24:15,027 INFO [main][DirectJDKLog.java:173] -  - Starting ProtocolHandler ["http-nio-8080"]
+2023-12-01 23:24:15,039 INFO [main][TomcatWebServer.java:220] -  - Tomcat started on port(s): 8080 (http) with context path ''
+2023-12-01 23:24:15,039 INFO [main][TomcatWebServer.java:220] -  - Tomcat started on port(s): 8080 (http) with context path ''
+2023-12-01 23:24:15,049 INFO [main][StartupInfoLogger.java:61] -  - Started ATPlatformApplication in 2.041 seconds (JVM running for 3.161)
+2023-12-01 23:24:15,049 INFO [main][StartupInfoLogger.java:61] -  - Started ATPlatformApplication in 2.041 seconds (JVM running for 3.161)
+2023-12-01 23:24:17,207 INFO [http-nio-8080-exec-1][DirectJDKLog.java:173] -  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-01 23:24:17,207 INFO [http-nio-8080-exec-1][DirectJDKLog.java:173] -  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-01 23:24:17,208 INFO [http-nio-8080-exec-1][FrameworkServlet.java:525] -  - Initializing Servlet 'dispatcherServlet'
+2023-12-01 23:24:17,208 INFO [http-nio-8080-exec-1][FrameworkServlet.java:525] -  - Initializing Servlet 'dispatcherServlet'
+2023-12-01 23:24:17,209 INFO [http-nio-8080-exec-1][FrameworkServlet.java:547] -  - Completed initialization in 1 ms
+2023-12-01 23:24:17,209 INFO [http-nio-8080-exec-1][FrameworkServlet.java:547] -  - Completed initialization in 1 ms
+2023-12-01 23:24:17,250 INFO [http-nio-8080-exec-1][PublicFillObjectHandler.java:19] - e676220c-9d1a-4e65-a0cd-bad5b330d2ef - 公共字段填充，事件:insert
+2023-12-01 23:24:17,250 INFO [http-nio-8080-exec-1][PublicFillObjectHandler.java:19] - e676220c-9d1a-4e65-a0cd-bad5b330d2ef - 公共字段填充，事件:insert
+2023-12-01 23:24:17,529 INFO [http-nio-8080-exec-1][ProjectInfoImpl.java:84] - e676220c-9d1a-4e65-a0cd-bad5b330d2ef - 插入成功
+2023-12-01 23:24:17,529 INFO [http-nio-8080-exec-1][ProjectInfoImpl.java:84] - e676220c-9d1a-4e65-a0cd-bad5b330d2ef - 插入成功
+2023-12-01 23:25:00,546 INFO [http-nio-8080-exec-3][ProjectInfoImpl.java:66] - 8ec9ded4-e7b4-4395-bc07-1c71f27d8a25 - 查询到的记录总数:0
+2023-12-01 23:25:00,546 INFO [http-nio-8080-exec-3][ProjectInfoImpl.java:66] - 8ec9ded4-e7b4-4395-bc07-1c71f27d8a25 - 查询到的记录总数:0
+2023-12-01 23:25:38,816 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2051] -  - {dataSource-1} closing ...
+2023-12-01 23:25:38,816 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2051] -  - {dataSource-1} closing ...
+2023-12-01 23:25:38,823 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2124] -  - {dataSource-1} closed
+2023-12-01 23:25:38,823 INFO [SpringApplicationShutdownHook][DruidDataSource.java:2124] -  - {dataSource-1} closed

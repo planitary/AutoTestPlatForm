@@ -7,6 +7,7 @@ import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.base.handler.PageParams;
+import com.planitary.atplatform.base.utils.GeneralIdGenerator;
 import com.planitary.atplatform.mapper.ATTestProjectMapper;
 import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
@@ -18,7 +19,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author：planitary
@@ -64,26 +67,30 @@ public class ProjectInfoImpl implements ProjectInfoService {
         List<ATTestProject> records = projectPage.getRecords();
         long total = projectPage.getTotal();
         log.info("查询到的记录总数:{}",total);
-        return new PageResult<>(records,total,pageNo,pageNo,SUCCESS_CODE);
+        return new PageResult<>(records,records.size(),pageNo,pageSize,SUCCESS_CODE);
     }
 
     @Override
-    public void insertProject(AddProjectDTO addProjectDTO) {
+    public Map<String,String> insertProject(AddProjectDTO addProjectDTO) {
         int currentVersion = INIT_VERSION;
         // 拷贝相同值
         ATTestProject atTestProject = new ATTestProject();
         BeanUtils.copyProperties(addProjectDTO,atTestProject);
         atTestProject.setVersion(currentVersion);
+        String projectId = GeneralIdGenerator.generateId() + GeneralIdGenerator.generateId().substring(1, 7);
         atTestProject.setCreateUser("zane");
         atTestProject.setUpdateUser("zane");
+        atTestProject.setProjectId(projectId);
         int insertCount = atTestProjectMapper.insert(atTestProject);
         if (insertCount <= 0){
             log.error("执行失败:{}",ExceptionEnum.INSERT_FAILED.getErrMessage());
             ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);
         }
         log.info("插入成功");
+        Map<String,String> resMap = new HashMap<>();
+        resMap.put("projectId",projectId);
 //        //  插入后更新版本号
 //        currentVersion ++;
-
+        return resMap;
     }
 }

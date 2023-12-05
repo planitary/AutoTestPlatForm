@@ -45,16 +45,21 @@ public class ProjectController {
         return projectInfoService.queryProjectList(pageParams,queryProjectDTO);
     }
 
-    @PostMapping("/project/addProject")
+    @PostMapping("/mock/addProject")
     public PtResult<?> addProject(){
         AddProjectDTO addProjectDTO = new AddProjectDTO();
-        addProjectDTO.setProjectName("test_baga");
-        String projectId = GeneralIdGenerator.generateId();
-        addProjectDTO.setProjectId(projectId);
-        addProjectDTO.setProjectUrl("/cornerstone");
+        addProjectDTO.setProjectName("new_test");
+        addProjectDTO.setProjectUrl("/HRMS");
         projectInfoService.insertProject(addProjectDTO);
         Map<String,String> resMap = new HashMap<>();
         resMap.put("msg","success");
         return PtResult.success(resMap);
+    }
+
+    @PostMapping("/project/addProject")
+    public PtResult<?> addProject(@RequestBody AddProjectDTO addProjectDTO){
+        Map<String, String> resMap = projectInfoService.insertProject(addProjectDTO);
+        return PtResult.success(resMap);
+
     }
 }

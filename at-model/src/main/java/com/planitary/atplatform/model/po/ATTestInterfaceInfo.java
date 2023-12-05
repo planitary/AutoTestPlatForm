@@ -28,7 +28,7 @@ public class ATTestInterfaceInfo {
     /**
      * 接口名
      */
-    private String interfaceString;
+    private String interfaceName;
 
     /**
      * 接口url

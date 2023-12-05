@@ -1,0 +1,8 @@
+2023-12-01 23:23:18,924 ERROR [http-nio-8080-exec-3][GlobalExceptionHandler.java:40] - bb4092ab-78d9-482b-84cc-0953d5368b47 - 捕获系统异常:
+### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'hahaha2' for key 'at_test_project.at_test_project_project_name_uindex'
+### The error may exist in com/planitary/atplatform/mapper/ATTestProjectMapper.java (best guess)
+### The error may involve com.planitary.atplatform.mapper.ATTestProjectMapper.insert-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO at_test_project  ( project_name, project_url, project_id, version,  is_delete, create_time, create_user, update_time, update_user )  VALUES  ( ?, ?, ?, ?,  ?, ?, ?, ?, ? )
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'hahaha2' for key 'at_test_project.at_test_project_project_name_uindex'
+; Duplicate entry 'hahaha2' for key 'at_test_project.at_test_project_project_name_uindex'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'hahaha2' for key 'at_test_project.at_test_project_project_name_uindex'

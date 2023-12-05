@@ -7,6 +7,8 @@ import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
 import com.planitary.atplatform.model.po.ATTestProject;
 
+import java.util.Map;
+
 /**
  * @Author：planitary
  * @Package：com.planitary.atplatform.service
@@ -29,5 +31,5 @@ public interface ProjectInfoService {
      * @param addProjectDTO     insert参数
      * @return      结果集
      */
-    void insertProject(AddProjectDTO addProjectDTO);
+    Map<String,String> insertProject(AddProjectDTO addProjectDTO);
 }

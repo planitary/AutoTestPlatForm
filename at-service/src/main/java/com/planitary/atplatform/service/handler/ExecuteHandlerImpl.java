@@ -1,21 +1,28 @@
 package com.planitary.atplatform.service.handler;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.base.handler.CommonHttpPost;
 import com.planitary.atplatform.base.handler.PreMockLogin;
+import com.planitary.atplatform.base.utils.GeneralIdGenerator;
+import com.planitary.atplatform.base.utils.UniqueStringIdGenerator;
+import com.planitary.atplatform.mapper.ATTestInterfaceCallRecordMapper;
 import com.planitary.atplatform.mapper.ATTestProjectMapper;
 import com.planitary.atplatform.model.dto.ExecuteDTO;
 import com.planitary.atplatform.model.dto.ExecuteResponseDTO;
+import com.planitary.atplatform.model.po.ATTestInterfaceCallRecord;
 import com.planitary.atplatform.model.po.ATTestProject;
 import com.planitary.atplatform.service.ExecuteHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.ObjectStreamClass;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
@@ -34,6 +41,9 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
 
     @Resource
     ATTestProjectMapper atTestProjectMapper;
+
+    @Resource
+    ATTestInterfaceCallRecordMapper atTestInterfaceCallRecordMapper;
 
     /**
      * 接口执行类
@@ -68,11 +78,24 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
         long executeTime = System.currentTimeMillis();
         log.info("resbody:{}",executeJson);
 
+        // 插入接口调用记录表
+        ATTestInterfaceCallRecord atTestInterfaceCallRecord = new ATTestInterfaceCallRecord();
+        atTestInterfaceCallRecord.setInterfaceId(executeDTO.getInterfaceId());
+        atTestInterfaceCallRecord.setRecordId(GeneralIdGenerator.generateId());
+        atTestInterfaceCallRecord.setExecuteTime(executeTime);
+        atTestInterfaceCallRecord.setDurationTime(executeTime - requireTime);
+        String resBody = JSON.toJSONString(executeDTO.getRequestBody());
+        atTestInterfaceCallRecord.setRequestBody(resBody);
+        atTestInterfaceCallRecord.setResponseBody(executeJson);
+        int insert = atTestInterfaceCallRecordMapper.insert(atTestInterfaceCallRecord);
+        if (insert <= 0){
+            ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);
+        }
+        log.debug("插入成功,接口id:{}",executeDTO.getInterfaceId());
+
         // 封装返回数据
         ExecuteResponseDTO executeResponseDTO = new ExecuteResponseDTO();
-        executeResponseDTO.setInterfaceId(executeDTO.getInterfaceId());
-        executeResponseDTO.setResponseBody(executeJson);
-        executeResponseDTO.setExecuteTime(executeTime);
-        executeResponseDTO.setDurationTime(String.valueOf(executeTime - requireTime));
+        BeanUtils.copyProperties(atTestInterfaceCallRecord,executeResponseDTO);
+        return executeResponseDTO;
     }
 }

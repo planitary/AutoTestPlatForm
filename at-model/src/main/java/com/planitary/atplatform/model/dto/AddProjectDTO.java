@@ -14,5 +14,4 @@ import lombok.Data;
 public class AddProjectDTO {
     private String projectName;
     private String projectUrl;
-    private String projectId;
 }
