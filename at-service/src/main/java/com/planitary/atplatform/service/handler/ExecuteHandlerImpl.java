@@ -63,6 +63,7 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
 
         long requireTime = executeDTO.getRequireTime();
 
+        // 公共调用方法
         String executeJson = commonHttpPost.doCommonHttpPostJson(requestBody, headers, url);
         long executeTime = System.currentTimeMillis();
         log.info("resbody:{}",executeJson);
