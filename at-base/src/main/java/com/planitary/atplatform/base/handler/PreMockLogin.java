@@ -15,6 +15,7 @@ import java.util.Map;
 public class PreMockLogin {
     private static final String USER_CODE = "2103471201";
     private static final String TEST_LOGIN_URL_PREFIX = "https://test-scs-login.52imile.cn/ucenter/";
+    // 密码目前写死
     private static final String PASSWORD = "g5dllW8Rk9IGOO6XhqNAuwq5e/R4pfYG3Y/w9+pwio5CpMB727UQg0Ov0WDCfn3MsRt+9CsFKx94zFiNe1PEM2fVnjNqbSKsurYFmh41MoI+qbL6ou+PJgAO+KPDrmTGc346vz+46zKpBuX4Lbmms7NNr5QwzJm8kbCl2PLGOgE=";
     private static final String LOGIN_AUTHORIZED_HEADER = "Basic YXBwOmFwcA==";
 
