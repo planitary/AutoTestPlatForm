@@ -67,7 +67,7 @@ public class ProjectInfoImpl implements ProjectInfoService {
         List<ATTestProject> records = projectPage.getRecords();
         long total = projectPage.getTotal();
         log.info("查询到的记录总数:{}",total);
-        return new PageResult<>(records,records.size(),pageNo,pageSize,SUCCESS_CODE);
+        return new PageResult<>(records,total,pageNo,pageSize,SUCCESS_CODE);
     }
 
     @Override

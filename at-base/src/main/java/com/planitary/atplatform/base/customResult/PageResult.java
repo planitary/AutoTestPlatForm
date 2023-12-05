@@ -22,7 +22,6 @@ import java.util.Map;
  */
 @Data
 @NoArgsConstructor
-@ToString
 public class PageResult<T> implements Serializable {
     // 数据列表
     private List<T> items;
