@@ -3,7 +3,11 @@ package com.planitary.atplatform.base.handler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,13 +17,17 @@ import java.util.Map;
  */
 @Slf4j
 public class PreMockLogin {
+
+    private static final CommonHttpPost commonHttpPost = new CommonHttpPost();
+//    @Resource
+//    private CommonHttpPost commonHttpPost;
     private static final String USER_CODE = "2103471201";
     private static final String TEST_LOGIN_URL_PREFIX = "https://test-scs-login.52imile.cn/ucenter/";
     // 密码目前写死
     private static final String PASSWORD = "g5dllW8Rk9IGOO6XhqNAuwq5e/R4pfYG3Y/w9+pwio5CpMB727UQg0Ov0WDCfn3MsRt+9CsFKx94zFiNe1PEM2fVnjNqbSKsurYFmh41MoI+qbL6ou+PJgAO+KPDrmTGc346vz+46zKpBuX4Lbmms7NNr5QwzJm8kbCl2PLGOgE=";
     private static final String LOGIN_AUTHORIZED_HEADER = "Basic YXBwOmFwcA==";
 
-    private static String login(){
+    private  String login(){
         String contentType = "application/x-www-form-urlencoded";
         Map<String,String> map = new HashMap<>();
         Map<String,String> headersMap = new HashMap<>();
@@ -31,7 +39,7 @@ public class PreMockLogin {
         map.put("timeZone","8");
         headersMap.put("Authorization",LOGIN_AUTHORIZED_HEADER);
         headersMap.put("Content-Type",contentType);
-        String loginResponse = CommonHttpPost.doCommonHttpPostForm(map,headersMap,loginUrl);
+        String loginResponse = commonHttpPost.doCommonHttpPostForm(map,headersMap,loginUrl);
         log.info("url:{},resbody:{}",loginUrl,loginResponse);
         return loginResponse;
     }
@@ -41,9 +49,9 @@ public class PreMockLogin {
      * @return map
      * keySet:accessToken,tokenType,refreshToken,userStatus;
      */
-    private static Map<String,String> getToken(){
+    private  Map<String,String> getToken(){
         Map<String,String> map = new HashMap<>();
-        String loginRes = login();
+        String loginRes = this.login();
         //解析JSON，拿到token
         JSONObject jsonObject = JSON.parseObject(loginRes);
         JSONObject resultObject = jsonObject.getJSONObject("resultObject");
@@ -62,7 +70,8 @@ public class PreMockLogin {
     }
 
     public static void main(String[] args) {
-        Map<String, String> token = getToken();
+        PreMockLogin preMockLogin = new PreMockLogin();
+        Map<String, String> token = preMockLogin.getToken();
         System.out.println(token);
     }
 }

@@ -27,9 +27,10 @@ public enum ExceptionEnum {
 
     // db相关异常
     QUERY_ERROR("查询异常","-3000"),
-    INSERT_FAILED("插入失败","-3001"),
-    UPDATE_FAILED("更新失败","-3002"),
-    DELETE_FAILED("删除失败","-3003"),
+    RESULT_IS_NONE("查询结果为空","-3001"),
+    INSERT_FAILED("插入失败","-3002"),
+    UPDATE_FAILED("更新失败","-3003"),
+    DELETE_FAILED("删除失败","-3004"),
     CONNECTION_FAILED("数据库链接异常","-3009");
 
     private final String errMessage;

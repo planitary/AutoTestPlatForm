@@ -13,9 +13,9 @@ import java.util.Objects;
 public class ExecuteDTO {
 
     /**
-     * 接口id
+     * 项目id
      */
-    private String interfaceId;
+    private String projectId;
 
     /**
      * 接口url
@@ -23,27 +23,22 @@ public class ExecuteDTO {
     private String interfaceUrl;
 
     /**
+     * 接口id
+     */
+    private String interfaceId;
+
+
+    /**
      * 请求体
      */
     private Map<String,String> requestBody;
 
-    /**
-     * 执行时间
-     */
-    private LocalDateTime executeTime;
+
 
     /**
      * 请求时间
      */
-    private LocalDateTime requireTime;
+    private long requireTime;
 
-    /**
-     * 返回体
-     */
-    private String responseBody;
 
-    /**
-     * 响应时间
-     */
-    private String durationTime;
 }
