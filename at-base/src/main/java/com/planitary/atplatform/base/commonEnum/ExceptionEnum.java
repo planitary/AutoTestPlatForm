@@ -31,7 +31,11 @@ public enum ExceptionEnum {
     INSERT_FAILED("插入失败","-3002"),
     UPDATE_FAILED("更新失败","-3003"),
     DELETE_FAILED("删除失败","-3004"),
-    CONNECTION_FAILED("数据库链接异常","-3009");
+    CONNECTION_FAILED("数据库链接异常","-3009"),
+
+    // 接口调用相关
+    CALL_FAILED("接口调用失败","-8001"),
+    CALL_BACK_FAILED("获取接口回调失败","-8002");
 
     private final String errMessage;
     private final String errCode;

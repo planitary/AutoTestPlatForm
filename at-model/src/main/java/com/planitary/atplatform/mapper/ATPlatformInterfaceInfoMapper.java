@@ -1,7 +1,7 @@
 package com.planitary.atplatform.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.planitary.atplatform.model.po.ATTestInterfaceInfo;
+import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,5 +13,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @description：
  */
 @Mapper
-public interface ATTestInterfaceInfoMapper extends BaseMapper<ATTestInterfaceInfo> {
+public interface ATPlatformInterfaceInfoMapper extends BaseMapper<ATPlatformInterfaceInfo> {
 }

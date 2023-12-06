@@ -1,7 +1,7 @@
 package com.planitary.atplatform.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.planitary.atplatform.model.po.ATTestInterfaceCallRecord;
+import com.planitary.atplatform.model.po.ATPlatformInterfaceCallRecord;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,5 +13,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @description：
  */
 @Mapper
-public interface ATTestInterfaceCallRecordMapper extends BaseMapper<ATTestInterfaceCallRecord> {
+public interface ATPlatformInterfaceCallRecordMapper extends BaseMapper<ATPlatformInterfaceCallRecord> {
 }

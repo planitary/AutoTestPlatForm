@@ -3,10 +3,9 @@ package com.planitary.atplatform.controller;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.handler.PageParams;
-import com.planitary.atplatform.base.utils.GeneralIdGenerator;
 import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
-import com.planitary.atplatform.model.po.ATTestProject;
+import com.planitary.atplatform.model.po.ATPlatformProject;
 import com.planitary.atplatform.service.ProjectInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * @Author：planitary
@@ -32,12 +30,12 @@ public class ProjectController {
     ProjectInfoService projectInfoService;
 
     @GetMapping("/project/projectList")
-    public PageResult<ATTestProject> getProjectList(PageParams pageParams, @RequestBody QueryProjectDTO queryProjectDTO){
+    public PageResult<ATPlatformProject> getProjectList(PageParams pageParams, @RequestBody QueryProjectDTO queryProjectDTO){
         return projectInfoService.queryProjectList(pageParams, queryProjectDTO);
     }
 
     @RequestMapping("/mock/projectList")
-    public PageResult<ATTestProject> getProjectMock(PageParams pageParams){
+    public PageResult<ATPlatformProject> getProjectMock(PageParams pageParams){
         pageParams.setPageNo(1L);
         pageParams.setPageSize(10L);
         QueryProjectDTO queryProjectDTO = new QueryProjectDTO();

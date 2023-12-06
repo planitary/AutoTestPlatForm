@@ -4,11 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.base.utils.GeneralIdGenerator;
-import com.planitary.atplatform.mapper.ATTestInterfaceInfoMapper;
-import com.planitary.atplatform.mapper.ATTestProjectMapper;
+import com.planitary.atplatform.mapper.ATPlatformInterfaceInfoMapper;
+import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.AddInterfaceDTO;
-import com.planitary.atplatform.model.po.ATTestInterfaceInfo;
-import com.planitary.atplatform.model.po.ATTestProject;
+import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
+import com.planitary.atplatform.model.po.ATPlatformProject;
 import com.planitary.atplatform.service.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -31,30 +31,30 @@ import java.util.Map;
 @Slf4j
 public class InterfaceServiceImpl implements InterfaceService {
     @Resource
-    private ATTestInterfaceInfoMapper atTestInterfaceInfoMapper;
+    private ATPlatformInterfaceInfoMapper atPlatformInterfaceInfoMapper;
 
     @Resource
-    private ATTestProjectMapper atTestProjectMapper;
+    private ATPlatformProjectMapper atPlatformProjectMapper;
 
 
     @Override
     @Transactional
     public Map<String,String> insertInterface(AddInterfaceDTO addInterfaceDTO) {
         // 校验项目的合法性
-        LambdaQueryWrapper<ATTestProject> atTestProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        atTestProjectLambdaQueryWrapper.eq(ATTestProject::getProjectId,addInterfaceDTO.getProjectId());
-        ATTestProject atTestProject = atTestProjectMapper.selectOne(atTestProjectLambdaQueryWrapper);
+        LambdaQueryWrapper<ATPlatformProject> atTestProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        atTestProjectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,addInterfaceDTO.getProjectId());
+        ATPlatformProject atTestProject = atPlatformProjectMapper.selectOne(atTestProjectLambdaQueryWrapper);
         if (atTestProject == null){
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
-        ATTestInterfaceInfo interfaceInfo = new ATTestInterfaceInfo();
+        ATPlatformInterfaceInfo interfaceInfo = new ATPlatformInterfaceInfo();
         String interfaceId = GeneralIdGenerator.generateId() + GeneralIdGenerator.generateId().substring(0,6);
         BeanUtils.copyProperties(addInterfaceDTO,interfaceInfo);
         interfaceInfo.setInterfaceId(interfaceId);
         interfaceInfo.setCreateUser("zane");
         interfaceInfo.setProjectId(addInterfaceDTO.getProjectId());
         interfaceInfo.setVersion(1);
-        int insert = atTestInterfaceInfoMapper.insert(interfaceInfo);
+        int insert = atPlatformInterfaceInfoMapper.insert(interfaceInfo);
         if (insert <= 0){
             log.error("执行失败:{}",ExceptionEnum.INSERT_FAILED.getErrMessage());
             ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);

@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
  * @description：  test_project实体类
  */
 @Data
-@TableName("at_test_project")
-public class ATTestProject {
+@TableName("at_platform_project")
+public class ATPlatformProject {
     /**
      * 主键
      */

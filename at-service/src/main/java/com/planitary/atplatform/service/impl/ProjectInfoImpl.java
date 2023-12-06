@@ -4,14 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
-import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.base.utils.GeneralIdGenerator;
-import com.planitary.atplatform.mapper.ATTestProjectMapper;
+import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
-import com.planitary.atplatform.model.po.ATTestProject;
+import com.planitary.atplatform.model.po.ATPlatformProject;
 import com.planitary.atplatform.service.ProjectInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -39,19 +38,19 @@ public class ProjectInfoImpl implements ProjectInfoService {
     private final Integer INIT_VERSION = 1;
 
     @Resource
-    ATTestProjectMapper atTestProjectMapper;
+    ATPlatformProjectMapper atPlatformProjectMapper;
 
     @Override
-    public PageResult<ATTestProject> queryProjectList(PageParams pageParams, QueryProjectDTO queryProjectDTO) {
-        LambdaQueryWrapper<ATTestProject> atTestProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+    public PageResult<ATPlatformProject> queryProjectList(PageParams pageParams, QueryProjectDTO queryProjectDTO) {
+        LambdaQueryWrapper<ATPlatformProject> atTestProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
         // 拼接查询条件
         atTestProjectLambdaQueryWrapper.like(StringUtils.isNotEmpty(queryProjectDTO.getProjectName()),
-                ATTestProject::getProjectName,queryProjectDTO.getProjectName());
+                ATPlatformProject::getProjectName,queryProjectDTO.getProjectName());
         atTestProjectLambdaQueryWrapper.like(StringUtils.isNotEmpty(queryProjectDTO.getProjectUrl()),
-                ATTestProject::getProjectUrl,queryProjectDTO.getProjectUrl());
+                ATPlatformProject::getProjectUrl,queryProjectDTO.getProjectUrl());
 
         atTestProjectLambdaQueryWrapper.eq(StringUtils.isNotEmpty(queryProjectDTO.getProjectId()),
-                ATTestProject::getProjectId,queryProjectDTO.getProjectId());
+                ATPlatformProject::getProjectId,queryProjectDTO.getProjectId());
 
         // 分页参数
         long pageNo = pageParams.getPageNo();
@@ -60,11 +59,11 @@ public class ProjectInfoImpl implements ProjectInfoService {
             ATPlatformException.exceptionCast(ExceptionEnum.PAGINATION_PARAM_ERROR);
         }
 
-        Page<ATTestProject> page = new Page<>(pageNo,pageSize);
+        Page<ATPlatformProject> page = new Page<>(pageNo,pageSize);
         // 分页查询
-        Page<ATTestProject> projectPage = atTestProjectMapper.selectPage(page,atTestProjectLambdaQueryWrapper);
+        Page<ATPlatformProject> projectPage = atPlatformProjectMapper.selectPage(page,atTestProjectLambdaQueryWrapper);
         // 数据列表
-        List<ATTestProject> records = projectPage.getRecords();
+        List<ATPlatformProject> records = projectPage.getRecords();
         long total = projectPage.getTotal();
         log.info("查询到的记录总数:{}",total);
         return new PageResult<>(records,total,pageNo,pageSize,SUCCESS_CODE);
@@ -74,14 +73,14 @@ public class ProjectInfoImpl implements ProjectInfoService {
     public Map<String,String> insertProject(AddProjectDTO addProjectDTO) {
         int currentVersion = INIT_VERSION;
         // 拷贝相同值
-        ATTestProject atTestProject = new ATTestProject();
-        BeanUtils.copyProperties(addProjectDTO,atTestProject);
-        atTestProject.setVersion(currentVersion);
+        ATPlatformProject atPlatformProject = new ATPlatformProject();
+        BeanUtils.copyProperties(addProjectDTO, atPlatformProject);
+        atPlatformProject.setVersion(currentVersion);
         String projectId = GeneralIdGenerator.generateId() + GeneralIdGenerator.generateId().substring(1, 7);
-        atTestProject.setCreateUser("zane");
-        atTestProject.setUpdateUser("zane");
-        atTestProject.setProjectId(projectId);
-        int insertCount = atTestProjectMapper.insert(atTestProject);
+        atPlatformProject.setCreateUser("zane");
+        atPlatformProject.setUpdateUser("zane");
+        atPlatformProject.setProjectId(projectId);
+        int insertCount = atPlatformProjectMapper.insert(atPlatformProject);
         if (insertCount <= 0){
             log.error("执行失败:{}",ExceptionEnum.INSERT_FAILED.getErrMessage());
             ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);

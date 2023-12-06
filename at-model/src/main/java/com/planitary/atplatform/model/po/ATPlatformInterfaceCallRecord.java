@@ -1,5 +1,6 @@
 package com.planitary.atplatform.model.po;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -11,7 +12,8 @@ import lombok.Data;
  * @description：
  */
 @Data
-public class ATTestInterfaceCallRecord {
+@TableName("at_platform_interface_call_record")
+public class ATPlatformInterfaceCallRecord {
 
     private Long id;
     /**

@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
  * @description：
  */
 @Data
-@TableName("at_test_interface_info")
-public class ATTestInterfaceInfo {
+@TableName("at_platform_interface_info")
+public class ATPlatformInterfaceInfo {
 
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;

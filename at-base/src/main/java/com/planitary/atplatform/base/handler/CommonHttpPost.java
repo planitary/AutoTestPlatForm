@@ -2,6 +2,7 @@ package com.planitary.atplatform.base.handler;
 
 
 import com.alibaba.fastjson.JSON;
+import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
@@ -93,10 +94,15 @@ public class CommonHttpPost {
             if (statusCode == 200) {
                 responseJSON = resBody;
             } else {
-                log.debug("请求结果:{}", resBody);
+                String errMsg = JSON.parseObject(resBody).getString("errMsg");
+                log.debug("请求结果:{}", errMsg);
+                ATPlatformException.exceptionCast(ExceptionEnum.CALL_FAILED);
             }
         } catch (IOException e) {
             log.error("捕获异常{}", e.getMessage());
+            log.error("接口调用失败:{}",ExceptionEnum.CALL_FAILED.getErrMessage());
+            ATPlatformException.exceptionCast(e.getMessage());
+
         } finally {
             try {
                 httpClient.close();
@@ -104,6 +110,7 @@ public class CommonHttpPost {
                 log.error("捕获异常:{}", e.getMessage());
             }
         }
+        log.debug("{}-调用成功",url);
         return responseJSON;
     }
 }
