@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Slf4j
@@ -86,7 +87,8 @@ public class CommonHttpPost {
         httpPost.addHeader("Content-Type", headers.get("Content-Type"));
         try {
             log.info("json解析源文件:{}", body);
-            StringEntity stringEntity = new StringEntity(JSON.toJSONString(body));
+            StringEntity stringEntity = new StringEntity(JSON.toJSONString(body), StandardCharsets.UTF_8);
+            log.debug("StringEntity:{}",stringEntity);
             httpPost.setEntity(stringEntity);
             HttpResponse httpResponse = httpClient.execute(httpPost);
             int statusCode = httpResponse.getStatusLine().getStatusCode();

@@ -2,7 +2,7 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/ATPlatform?useUnicode=true&charactetEncoding=utf-8
+      url: jdbc:mysql://localhost:3306/ATPlatform?useUnicode=true&charactetEncoding=utf8mb4
       username: root
       password: zgdlpp0302.
 
