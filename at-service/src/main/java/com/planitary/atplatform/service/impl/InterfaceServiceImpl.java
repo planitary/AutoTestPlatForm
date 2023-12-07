@@ -79,6 +79,13 @@ public class InterfaceServiceImpl implements InterfaceService {
             log.error("projectId不能为空");
             ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
         }
+        LambdaQueryWrapper<ATPlatformProject> atPlatformProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        atPlatformProjectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,projectId);
+        ATPlatformProject atPlatformProject = atPlatformProjectMapper.selectOne(atPlatformProjectLambdaQueryWrapper);
+        if (atPlatformProject == null){
+            log.error("project不存在");
+            ATPlatformException.exceptionCast("接口所属项目不存在");
+        }
 
         LambdaQueryWrapper<ATPlatformInterfaceInfo> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getProjectId,projectId)
