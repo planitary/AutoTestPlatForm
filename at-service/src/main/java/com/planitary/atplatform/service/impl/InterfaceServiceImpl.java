@@ -1,22 +1,28 @@
 package com.planitary.atplatform.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
+import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
+import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.base.utils.GeneralIdGenerator;
 import com.planitary.atplatform.mapper.ATPlatformInterfaceInfoMapper;
 import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.AddInterfaceDTO;
+import com.planitary.atplatform.model.dto.QueryInterfaceInfoDTO;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import com.planitary.atplatform.model.po.ATPlatformProject;
 import com.planitary.atplatform.service.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,5 +69,36 @@ public class InterfaceServiceImpl implements InterfaceService {
         Map<String,String> res = new HashMap<>();
         res.put("interfaceId",interfaceId);
         return res;
+    }
+
+    @Override
+    public PageResult<ATPlatformInterfaceInfo> queryInterfaceInfoList(PageParams pageParams, QueryInterfaceInfoDTO queryInterfaceInfoDTO) {
+        String projectId = queryInterfaceInfoDTO.getProjectId();
+        final String SUCCESS_CODE = "200";
+        if(projectId == null){
+            log.error("projectId不能为空");
+            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
+        }
+
+        LambdaQueryWrapper<ATPlatformInterfaceInfo> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getProjectId,projectId)
+                .eq(StringUtils.isNotEmpty(queryInterfaceInfoDTO.getInterfaceUrl()),
+                        ATPlatformInterfaceInfo::getInterfaceUrl,queryInterfaceInfoDTO.getInterfaceUrl())
+                .like(StringUtils.isNotEmpty(queryInterfaceInfoDTO.getInterfaceName()),
+                        ATPlatformInterfaceInfo::getInterfaceName,queryInterfaceInfoDTO.getInterfaceName())
+                .eq(StringUtils.isNotEmpty(queryInterfaceInfoDTO.getInterfaceUrl()),
+                        ATPlatformInterfaceInfo::getInterfaceUrl,queryInterfaceInfoDTO.getInterfaceUrl());
+
+        long pageNo = pageParams.getPageNo();
+        long pageSize = pageParams.getPageSize();
+        if (pageNo <= 0 || pageSize <= 0){
+            ATPlatformException.exceptionCast(ExceptionEnum.PAGINATION_PARAM_ERROR);
+        }
+        Page<ATPlatformInterfaceInfo> page = new Page<>(pageNo,pageSize);
+        Page<ATPlatformInterfaceInfo> interfaceInfoPage = atPlatformInterfaceInfoMapper.selectPage(page,lambdaQueryWrapper);
+        List<ATPlatformInterfaceInfo> records = interfaceInfoPage.getRecords();
+        long total = interfaceInfoPage.getTotal();
+        log.info("查询到的记录总数:{}",total);
+        return new PageResult<>(records,total,pageNo,pageSize,SUCCESS_CODE);
     }
 }
