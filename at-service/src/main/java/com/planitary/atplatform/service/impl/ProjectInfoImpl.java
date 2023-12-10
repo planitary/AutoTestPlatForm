@@ -116,6 +116,7 @@ public class ProjectInfoImpl implements ProjectInfoService {
         updateWrapper.eq("project_id",projectId);
         project.setProjectName(atPlatformProject.getProjectName());
         project.setProjectUrl(atPlatformProject.getProjectUrl());
+        project.setRemark(atPlatformProject.getRemark());
         project.setVersion(originVersion + 1);
 
         int updateCount = atPlatformProjectMapper.update(project,updateWrapper);
