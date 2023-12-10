@@ -1,7 +1,9 @@
 package com.planitary.atplatform.controller;
 
+import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
+import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
@@ -58,6 +60,15 @@ public class ProjectController {
     public PtResult<?> addProject(@RequestBody AddProjectDTO addProjectDTO){
         Map<String, String> resMap = projectInfoService.insertProject(addProjectDTO);
         return PtResult.success(resMap);
+    }
 
+    @PostMapping("/project/updateProject")
+    public PtResult<?> updateProject(String projectId,@RequestBody ATPlatformProject atPlatformProject){
+        if (projectId == null){
+            log.error("项目id为空!");
+            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
+        }
+        Map<String, String> resMap = projectInfoService.updateProject(projectId, atPlatformProject);
+        return PtResult.success(resMap);
     }
 }

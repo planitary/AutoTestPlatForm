@@ -1,6 +1,9 @@
 package com.planitary.atplatform.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
@@ -16,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -78,6 +82,7 @@ public class ProjectInfoImpl implements ProjectInfoService {
         atPlatformProject.setVersion(currentVersion);
         String projectId = GeneralIdGenerator.generateId() + GeneralIdGenerator.generateId().substring(1, 7);
         atPlatformProject.setCreateUser("zane");
+        atPlatformProject.setVersion(1);
         atPlatformProject.setUpdateUser("zane");
         atPlatformProject.setProjectId(projectId);
         int insertCount = atPlatformProjectMapper.insert(atPlatformProject);
@@ -90,6 +95,36 @@ public class ProjectInfoImpl implements ProjectInfoService {
         resMap.put("projectId",projectId);
 //        //  插入后更新版本号
 //        currentVersion ++;
+        return resMap;
+    }
+
+    @Override
+    @Transactional
+    public Map<String, String> updateProject(String projectId, ATPlatformProject atPlatformProject) {
+
+        // 校验id合法性
+        LambdaQueryWrapper<ATPlatformProject> atPlatformProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        atPlatformProjectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,projectId);
+        ATPlatformProject project = atPlatformProjectMapper.selectOne(atPlatformProjectLambdaQueryWrapper);
+        if (project == null){
+            log.error("项目:{}不存在",projectId);
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        // 更新项目后，version版本更新
+        Integer originVersion = project.getVersion();
+        UpdateWrapper<ATPlatformProject> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("project_id",projectId);
+        project.setProjectName(atPlatformProject.getProjectName());
+        project.setProjectUrl(atPlatformProject.getProjectUrl());
+        project.setVersion(originVersion + 1);
+
+        int updateCount = atPlatformProjectMapper.update(project,updateWrapper);
+        if (updateCount <= 0){
+            ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
+        }
+        log.info("更新项目成功");
+        Map<String,String> resMap = new HashMap<>();
+        resMap.put("projectId",projectId);
         return resMap;
     }
 }

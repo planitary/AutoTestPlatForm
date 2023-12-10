@@ -31,4 +31,12 @@ public interface ProjectInfoService {
      * @return      结果集
      */
     Map<String,String> insertProject(AddProjectDTO addProjectDTO);
+
+    /**
+     * 更新项目
+     * @param projectId             项目id
+     * @param atPlatformProject     项目实体类
+     * @return
+     */
+    Map<String,String> updateProject(String projectId,ATPlatformProject atPlatformProject);
 }
