@@ -53,6 +53,8 @@ public class ATPlatformInterfaceInfo {
     private LocalDateTime updateTime;
     private String updateUser;
 
+    private String remark;
+
 
 
 }

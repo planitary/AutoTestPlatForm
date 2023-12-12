@@ -1,6 +1,7 @@
 package com.planitary.atplatform.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
@@ -21,9 +22,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author：planitary
@@ -107,5 +110,46 @@ public class InterfaceServiceImpl implements InterfaceService {
         long total = interfaceInfoPage.getTotal();
         log.info("查询到的记录总数:{}",total);
         return new PageResult<>(records,total,pageNo,pageSize,SUCCESS_CODE);
+    }
+
+    @Override
+    @Transactional
+    public Map<String, String> updateInterface(String projectId,ATPlatformInterfaceInfo atPlatformInterfaceInfo) {
+        // 校验projectId合法性以及与当前interface的关联性
+        LambdaQueryWrapper<ATPlatformProject> projectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        projectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,projectId);
+        ATPlatformProject projectByInterface = atPlatformProjectMapper.selectOne(projectLambdaQueryWrapper);
+        if (projectByInterface == null){
+            log.error("项目:{}不存在",projectId);
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        String interfaceId = atPlatformInterfaceInfo.getInterfaceId();
+        LambdaQueryWrapper<ATPlatformInterfaceInfo> interfaceInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        interfaceInfoLambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getInterfaceId,interfaceId);
+        ATPlatformInterfaceInfo interfaceInfo = atPlatformInterfaceInfoMapper.selectOne(interfaceInfoLambdaQueryWrapper);
+        if (interfaceInfo == null){
+            log.error("接口:{}不存在",interfaceId);
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        if (!Objects.equals(projectId,interfaceInfo.getProjectId())){
+            log.error("接口:{}与项目:{}不匹配",interfaceId,projectId);
+            ATPlatformException.exceptionCast("接口与项目不匹配!");
+        }
+        // 更新版本version（只在字段更新时触发）
+        UpdateWrapper<ATPlatformInterfaceInfo> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("interface_id",interfaceId);
+        updateWrapper.set("interface_name",atPlatformInterfaceInfo.getInterfaceName());
+        updateWrapper.set("interface_url",atPlatformInterfaceInfo.getInterfaceUrl());
+        updateWrapper.set("remark",atPlatformInterfaceInfo.getRemark());
+        updateWrapper.set("version",interfaceInfo.getVersion() + 1);
+        updateWrapper.set("update_time", LocalDateTime.now());
+        int updateCount = atPlatformInterfaceInfoMapper.update(null, updateWrapper);
+        if (updateCount <= 0){
+            ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
+        }
+        log.info("更新接口成功");
+        Map<String,String> resMap = new HashMap<>();
+        resMap.put("interfaceId",interfaceId);
+        return resMap;
     }
 }

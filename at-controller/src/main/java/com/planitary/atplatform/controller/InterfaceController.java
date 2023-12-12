@@ -1,7 +1,9 @@
 package com.planitary.atplatform.controller;
 
+import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
+import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.model.dto.*;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
@@ -61,5 +63,15 @@ public class InterfaceController {
     @GetMapping("/interface/interfaceList")
     public PageResult<ATPlatformInterfaceInfo> getInterfaceList(PageParams pageParams, @RequestBody QueryInterfaceInfoDTO queryInterfaceInfoDTO){
         return interfaceService.queryInterfaceInfoList(pageParams,queryInterfaceInfoDTO);
+    }
+
+    @PostMapping("/interface/updateInterface")
+    public PtResult<Map<String,String>> updateInterface(String projectId, @RequestBody ATPlatformInterfaceInfo atPlatformInterfaceInfo){
+        if (projectId == null){
+            log.error("项目id为空");
+            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
+        }
+        Map<String, String> resMap = interfaceService.updateInterface(projectId, atPlatformInterfaceInfo);
+        return PtResult.success(resMap);
     }
 }
