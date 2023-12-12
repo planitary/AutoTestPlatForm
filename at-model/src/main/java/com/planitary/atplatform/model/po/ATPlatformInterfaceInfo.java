@@ -31,6 +31,11 @@ public class ATPlatformInterfaceInfo {
     private String interfaceName;
 
     /**
+     * 接口入参
+     */
+    private String requestBody;
+
+    /**
      * 接口url
      */
     private String interfaceUrl;
