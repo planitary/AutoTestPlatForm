@@ -25,6 +25,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author：planitary
@@ -101,7 +102,7 @@ public class ProjectInfoImpl implements ProjectInfoService {
     @Override
     @Transactional
     public Map<String, String> updateProject(String projectId, ATPlatformProject atPlatformProject) {
-
+        boolean versionFlag = false;
         // 校验id合法性
         LambdaQueryWrapper<ATPlatformProject> atPlatformProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
         atPlatformProjectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,projectId);
@@ -110,20 +111,34 @@ public class ProjectInfoImpl implements ProjectInfoService {
             log.error("项目:{}不存在",projectId);
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
-        // 更新项目后，version版本更新
+        // 更新项目后，version版本更新（version仅在字段更新时更新)
         Integer originVersion = project.getVersion();
         UpdateWrapper<ATPlatformProject> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("project_id",projectId);
-        project.setProjectName(atPlatformProject.getProjectName());
-        project.setProjectUrl(atPlatformProject.getProjectUrl());
-        project.setRemark(atPlatformProject.getRemark());
-        project.setVersion(originVersion + 1);
-
-        int updateCount = atPlatformProjectMapper.update(project,updateWrapper);
-        if (updateCount <= 0){
-            ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
+        if (!Objects.equals(project.getProjectName(),atPlatformProject.getProjectName())) {
+            project.setProjectName(atPlatformProject.getProjectName());
+            versionFlag = true;
         }
-        log.info("更新项目成功");
+        if (!Objects.equals(project.getProjectUrl(),atPlatformProject.getProjectUrl())) {
+            project.setProjectUrl(atPlatformProject.getProjectUrl());
+            versionFlag = true;
+        }
+        if (!Objects.equals(project.getRemark(),atPlatformProject.getRemark())) {
+            project.setRemark(atPlatformProject.getRemark());
+            versionFlag = true;
+        }
+        if (versionFlag) {
+            project.setVersion(originVersion + 1);
+
+            int updateCount = atPlatformProjectMapper.update(project, updateWrapper);
+            if (updateCount <= 0) {
+                ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
+            }
+            log.info("更新项目成功");
+        }
+        else {
+            log.info("项目无变化，无需更新");
+        }
         Map<String,String> resMap = new HashMap<>();
         resMap.put("projectId",projectId);
         return resMap;
