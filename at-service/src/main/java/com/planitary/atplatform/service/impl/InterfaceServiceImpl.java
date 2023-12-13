@@ -1,5 +1,7 @@
 package com.planitary.atplatform.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,6 +10,8 @@ import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.base.utils.GeneralIdGenerator;
+import com.planitary.atplatform.base.utils.MD5Utils;
+import com.planitary.atplatform.base.utils.UniqueStringIdGenerator;
 import com.planitary.atplatform.mapper.ATPlatformInterfaceInfoMapper;
 import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.AddInterfaceDTO;
@@ -22,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +50,9 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Resource
     private ATPlatformProjectMapper atPlatformProjectMapper;
 
+    @Resource
+    private UniqueStringIdGenerator uniqueStringIdGenerator;
+
 
     @Override
     @Transactional
@@ -57,7 +65,7 @@ public class InterfaceServiceImpl implements InterfaceService {
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
         ATPlatformInterfaceInfo interfaceInfo = new ATPlatformInterfaceInfo();
-        String interfaceId = GeneralIdGenerator.generateId() + GeneralIdGenerator.generateId().substring(0, 6);
+        String interfaceId = uniqueStringIdGenerator.idGenerator();
         BeanUtils.copyProperties(addInterfaceDTO, interfaceInfo);
         interfaceInfo.setInterfaceId(interfaceId);
         interfaceInfo.setCreateUser("zane");
@@ -139,6 +147,15 @@ public class InterfaceServiceImpl implements InterfaceService {
         // 更新版本version（version只在字段更新时更新）
         UpdateWrapper<ATPlatformInterfaceInfo> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("interface_id", interfaceId);
+        // 校验requestBody,使用json进行比较，不一致则发生了变更
+        JSONObject originalJSON = JSON.parseObject(interfaceInfo.getRequestBody());
+        JSONObject targetJSON = JSON.parseObject(atPlatformInterfaceInfo.getRequestBody());
+        String originalStandardJSON = JSON.toJSONString(originalJSON);
+        String targetStandardJSON = JSON.toJSONString(targetJSON);
+        if (!Objects.equals(originalStandardJSON, targetStandardJSON)) {
+            updateWrapper.set("request_body", atPlatformInterfaceInfo.getRequestBody());
+            versionFlag = true;
+        }
         if (!Objects.equals(atPlatformInterfaceInfo.getInterfaceName(), interfaceInfo.getInterfaceName())) {
             updateWrapper.set("interface_name", atPlatformInterfaceInfo.getInterfaceName());
             versionFlag = true;
@@ -159,8 +176,7 @@ public class InterfaceServiceImpl implements InterfaceService {
                 ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
             }
             log.info("更新接口成功");
-        }
-        else {
+        } else {
             log.info("接口无变化，无需变更");
         }
         Map<String, String> resMap = new HashMap<>();
