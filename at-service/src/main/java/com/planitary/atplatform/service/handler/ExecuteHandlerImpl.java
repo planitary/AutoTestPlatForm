@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
     private static final String LOGIN_AUTHORIZED_HEADER = "Basic YXBwOmFwcA==";
 
     private static String TEST_ENV_PREFIX = "https://test-scs-login.52imile.cn/";
+    private static String LOCAL_ENV_PREFIX = "http://localhost:8080/";
 
     @Resource
     CommonHttpPost commonHttpPost;
@@ -63,7 +65,7 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
         String projectName = atTestProject.getProjectUrl();
 //        String url = TEST_ENV_PREFIX + projectName + "/" + executeDTO.getInterfaceUrl();
         // 本地测试用地址
-        String url = executeDTO.getInterfaceUrl();
+        String url = LOCAL_ENV_PREFIX + executeDTO.getInterfaceUrl();
         log.info("请求地址:{}",url);
         Map<String,String> headers = new HashMap<>();
         headers.put("Authorization", LOGIN_AUTHORIZED_HEADER);
@@ -73,7 +75,8 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
 
         // 公共调用方法
         String executeJson = commonHttpPost.doCommonHttpPostJson(requestBody, headers, url);
-        long executeTime = System.currentTimeMillis();
+        LocalDateTime executeTime = LocalDateTime.now();
+        long exeTimeStamp = this.convertLocalDateTime2TimeStamp(executeTime);
         log.info("resbody:{}",executeJson);
 
         // 插入接口调用记录表
@@ -81,7 +84,7 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
         atTestInterfaceCallRecord.setInterfaceId(executeDTO.getInterfaceId());
         atTestInterfaceCallRecord.setRecordId(GeneralIdGenerator.generateId());
         atTestInterfaceCallRecord.setExecuteTime(executeTime);
-        atTestInterfaceCallRecord.setDurationTime(executeTime - requireTime);
+        atTestInterfaceCallRecord.setDurationTime(exeTimeStamp - requireTime);
         String resBody = JSON.toJSONString(executeDTO);
         atTestInterfaceCallRecord.setRequestBody(resBody);
         atTestInterfaceCallRecord.setResponseBody(executeJson);
@@ -95,5 +98,20 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
         ExecuteResponseDTO executeResponseDTO = new ExecuteResponseDTO();
         BeanUtils.copyProperties(atTestInterfaceCallRecord,executeResponseDTO);
         return executeResponseDTO;
+    }
+
+    private long convertLocalDateTime2TimeStamp(LocalDateTime localDateTime){
+        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Shanghai"));
+        return zonedDateTime.toInstant().toEpochMilli();
+    }
+
+    /**
+     * 毫秒级时间戳转换为日期
+     * @param timeStamp     毫秒级时间戳
+     * @return
+     */
+    private LocalDateTime convertTimeStamp2LocalDateTime(Long timeStamp){
+        Instant instant = Instant.ofEpochMilli(timeStamp);
+        return instant.atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime();
     }
 }

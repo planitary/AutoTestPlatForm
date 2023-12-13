@@ -3,6 +3,8 @@ package com.planitary.atplatform.model.po;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * @Author：planitary
  * @Package：com.planitary.atplatform.model.po
@@ -29,7 +31,7 @@ public class ATPlatformInterfaceCallRecord {
     /**
      * 执行时间
      */
-    private Long executeTime;
+    private LocalDateTime executeTime;
 
     /**
      * 响应体

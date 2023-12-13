@@ -1,0 +1,2 @@
+2023-12-13 21:28:33,372 ERROR [http-nio-8080-exec-5][InterfaceServiceImpl.java:142] - 20ef1bf4-1f47-4336-8711-f54653b7093a - 接口:306002377101312与项目:62958363481295836不匹配
+2023-12-13 21:28:33,380 ERROR [http-nio-8080-exec-5][GlobalExceptionHandler.java:31] - 20ef1bf4-1f47-4336-8711-f54653b7093a - 捕获自定义异常:接口与项目不匹配!

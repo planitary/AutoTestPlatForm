@@ -103,8 +103,6 @@ public class CommonHttpPost {
         } catch (IOException e) {
             log.error("捕获异常{}", e.getMessage());
             log.error("接口调用失败:{}",ExceptionEnum.CALL_FAILED.getErrMessage());
-            ATPlatformException.exceptionCast(e.getMessage());
-
         } finally {
             try {
                 httpClient.close();

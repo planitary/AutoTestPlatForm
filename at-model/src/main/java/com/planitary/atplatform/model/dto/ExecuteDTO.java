@@ -2,6 +2,7 @@ package com.planitary.atplatform.model.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
@@ -10,7 +11,7 @@ import java.util.Objects;
  * 接口执行封装DTO
  */
 @Data
-public class ExecuteDTO {
+public class ExecuteDTO implements Serializable {
 
     /**
      * 项目id
