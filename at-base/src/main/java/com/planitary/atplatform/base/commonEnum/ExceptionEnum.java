@@ -35,7 +35,11 @@ public enum ExceptionEnum {
 
     // 接口调用相关
     CALL_FAILED("接口调用失败","-8001"),
-    CALL_BACK_FAILED("获取接口回调失败","-8002");
+    CALL_BACK_FAILED("获取接口回调失败","-8002"),
+
+    // 业务通用异常
+    BIZ_ERROR("业务异常","-9009");
+
 
     private final String errMessage;
     private final String errCode;

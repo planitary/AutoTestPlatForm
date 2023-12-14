@@ -1,4 +1,4 @@
-package com.planitary.atplatform.controller;
+package com.planitary.atplatform.controller.project;
 
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
@@ -8,7 +8,7 @@ import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
 import com.planitary.atplatform.model.po.ATPlatformProject;
-import com.planitary.atplatform.service.ProjectInfoService;
+import com.planitary.atplatform.service.project.ProjectInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

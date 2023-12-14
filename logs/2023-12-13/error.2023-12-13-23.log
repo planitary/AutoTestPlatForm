@@ -1,0 +1,27 @@
+2023-12-13 23:01:52,218 ERROR [http-nio-8080-exec-1][GlobalExceptionHandler.java:40] - d7d63e76-9b24-4346-bde0-7fe7075be99d - 捕获系统异常:
+### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column 'duration_time' at row 1
+### The error may exist in com/planitary/atplatform/mapper/ATPlatformInterfaceCallRecordMapper.java (best guess)
+### The error may involve com.planitary.atplatform.mapper.ATPlatformInterfaceCallRecordMapper.insert-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO at_platform_interface_call_record  ( id, record_id, interface_id, execute_time, response_body, duration_time,  request_body )  VALUES  ( ?, ?, ?, ?, ?, ?,  ? )
+### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column 'duration_time' at row 1
+; Data truncation: Out of range value for column 'duration_time' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column 'duration_time' at row 1
+2023-12-13 23:04:10,466 ERROR [http-nio-8080-exec-1][GlobalExceptionHandler.java:40] - 79b6a6fa-eb35-4189-a425-4200f5f9ed82 - 捕获系统异常:JSON parse error: Cannot deserialize value of type `long` from String "2023-": not a valid `long` value; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `long` from String "2023-": not a valid `long` value
+ at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 238] (through reference chain: com.planitary.atplatform.model.dto.ExecuteDTO["requireTime"])
+2023-12-13 23:04:29,195 ERROR [http-nio-8080-exec-3][GlobalExceptionHandler.java:40] - 34793b42-1274-4af6-8ea6-199824de8053 - 捕获系统异常:JSON parse error: Cannot deserialize value of type `long` from String "2023-12-23": not a valid `long` value; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `long` from String "2023-12-23": not a valid `long` value
+ at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 238] (through reference chain: com.planitary.atplatform.model.dto.ExecuteDTO["requireTime"])
+2023-12-13 23:04:53,384 ERROR [http-nio-8080-exec-2][GlobalExceptionHandler.java:40] - 236736d9-c84d-455a-9693-122f0f6f3481 - 捕获系统异常:JSON parse error: Cannot deserialize value of type `long` from String "2023-12-23": not a valid `long` value; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `long` from String "2023-12-23": not a valid `long` value
+ at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 218] (through reference chain: com.planitary.atplatform.model.dto.ExecuteDTO["requireTime"])
+2023-12-13 23:05:16,806 ERROR [http-nio-8080-exec-4][GlobalExceptionHandler.java:40] - 0d721a4d-288f-49a3-96e7-1a3450f1c05f - 捕获系统异常:JSON parse error: Cannot deserialize value of type `long` from String "2023-1": not a valid `long` value; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `long` from String "2023-1": not a valid `long` value
+ at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 238] (through reference chain: com.planitary.atplatform.model.dto.ExecuteDTO["requireTime"])
+2023-12-13 23:05:31,245 ERROR [http-nio-8080-exec-5][GlobalExceptionHandler.java:40] - af0e558d-4c2d-49c6-be63-f7164c973aa2 - 捕获系统异常:
+### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column 'duration_time' at row 1
+### The error may exist in com/planitary/atplatform/mapper/ATPlatformInterfaceCallRecordMapper.java (best guess)
+### The error may involve com.planitary.atplatform.mapper.ATPlatformInterfaceCallRecordMapper.insert-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO at_platform_interface_call_record  ( id, record_id, interface_id, execute_time, response_body, duration_time,  request_body )  VALUES  ( ?, ?, ?, ?, ?, ?,  ? )
+### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column 'duration_time' at row 1
+; Data truncation: Out of range value for column 'duration_time' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column 'duration_time' at row 1
+2023-12-13 23:19:23,390 ERROR [http-nio-8080-exec-6][GlobalExceptionHandler.java:40] - c43698ae-f30d-4b26-a151-e6124c6b6307 - 捕获系统异常:/ by zero
+2023-12-13 23:19:23,406 ERROR [http-nio-8080-exec-5][GlobalExceptionHandler.java:31] - bcb1e666-ff56-4165-9290-bb0500aaff79 - 捕获自定义异常:接口调用失败
+2023-12-13 23:19:58,941 ERROR [http-nio-8080-exec-7][GlobalExceptionHandler.java:40] - 07474aab-f5be-4fbf-ba9d-0f6b0e212861 - 捕获系统异常:/ by zero

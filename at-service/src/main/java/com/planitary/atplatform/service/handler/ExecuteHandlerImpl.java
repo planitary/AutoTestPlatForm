@@ -12,13 +12,11 @@ import com.planitary.atplatform.model.dto.ExecuteDTO;
 import com.planitary.atplatform.model.dto.ExecuteResponseDTO;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceCallRecord;
 import com.planitary.atplatform.model.po.ATPlatformProject;
-import com.planitary.atplatform.service.ExecuteHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 import java.time.*;

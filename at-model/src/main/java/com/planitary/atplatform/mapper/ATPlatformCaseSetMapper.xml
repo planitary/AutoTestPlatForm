@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planitary.atplatform.mapper.ATPlatformCaseSetMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.planitary.atplatform.model.po.ATPlatformCaseSet">
+        <id column="id" property="id" />
+        <result column="set_id" property="setId" />
+        <result column="set_name" property="setName" />
+        <result column="interface_ids" property="interfaceIds" />
+        <result column="set_weight" property="setWeight" />
+        <result column="parameter_list" property="parameterList" />
+        <result column="is_delete" property="isDelete" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user" property="createUser" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_user" property="updateUser" />
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, set_id, set_name, interface_ids, set_weight, parameter_list, is_delete,create_time,create_user,update_time,update_user,remark
+    </sql>
+
+</mapper>

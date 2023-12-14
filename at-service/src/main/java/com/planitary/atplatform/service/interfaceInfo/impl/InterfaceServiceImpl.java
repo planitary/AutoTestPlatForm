@@ -1,4 +1,4 @@
-package com.planitary.atplatform.service.impl;
+package com.planitary.atplatform.service.interfaceInfo.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -9,8 +9,6 @@ import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.base.handler.PageParams;
-import com.planitary.atplatform.base.utils.GeneralIdGenerator;
-import com.planitary.atplatform.base.utils.MD5Utils;
 import com.planitary.atplatform.base.utils.UniqueStringIdGenerator;
 import com.planitary.atplatform.mapper.ATPlatformInterfaceInfoMapper;
 import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
@@ -18,7 +16,7 @@ import com.planitary.atplatform.model.dto.AddInterfaceDTO;
 import com.planitary.atplatform.model.dto.QueryInterfaceInfoDTO;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import com.planitary.atplatform.model.po.ATPlatformProject;
-import com.planitary.atplatform.service.InterfaceService;
+import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -26,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +69,6 @@ public class InterfaceServiceImpl implements InterfaceService {
         interfaceInfo.setProjectId(addInterfaceDTO.getProjectId());
         interfaceInfo.setVersion(1);
         int insert = atPlatformInterfaceInfoMapper.insert(interfaceInfo);
-        int x = 3 / 0;
         if (insert <= 0) {
             log.error("执行失败:{}", ExceptionEnum.INSERT_FAILED.getErrMessage());
             ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);

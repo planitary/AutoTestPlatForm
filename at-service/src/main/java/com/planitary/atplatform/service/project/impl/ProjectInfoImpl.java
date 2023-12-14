@@ -1,9 +1,7 @@
-package com.planitary.atplatform.service.impl;
+package com.planitary.atplatform.service.project.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
@@ -14,7 +12,7 @@ import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
 import com.planitary.atplatform.model.po.ATPlatformProject;
-import com.planitary.atplatform.service.ProjectInfoService;
+import com.planitary.atplatform.service.project.ProjectInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;

@@ -1,4 +1,4 @@
-package com.planitary.atplatform.service;
+package com.planitary.atplatform.service.interfaceInfo;
 
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.handler.PageParams;
