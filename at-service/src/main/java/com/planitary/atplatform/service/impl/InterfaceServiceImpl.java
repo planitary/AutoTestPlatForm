@@ -72,6 +72,7 @@ public class InterfaceServiceImpl implements InterfaceService {
         interfaceInfo.setProjectId(addInterfaceDTO.getProjectId());
         interfaceInfo.setVersion(1);
         int insert = atPlatformInterfaceInfoMapper.insert(interfaceInfo);
+        int x = 3 / 0;
         if (insert <= 0) {
             log.error("执行失败:{}", ExceptionEnum.INSERT_FAILED.getErrMessage());
             ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);

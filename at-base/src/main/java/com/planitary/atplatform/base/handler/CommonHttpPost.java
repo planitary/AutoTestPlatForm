@@ -17,6 +17,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -24,7 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Slf4j
-@Component
+@Repository
 public class CommonHttpPost {
     String resBody = null;
 
@@ -78,6 +79,7 @@ public class CommonHttpPost {
      * @param url       url
      * @return
      */
+    @Transactional
     public String doCommonHttpPostJson(Map<String,String> body,Map<String,String> headers,String url) {
         String responseJSON = null;
 

@@ -16,7 +16,9 @@ import com.planitary.atplatform.service.ExecuteHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 import java.time.*;
@@ -34,6 +36,9 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
 
     @Resource
     CommonHttpPost commonHttpPost;
+
+    @Resource
+    PlatformTransactionManager transactionManager;
 
     @Resource
     ATPlatformProjectMapper atPlatformProjectMapper;
