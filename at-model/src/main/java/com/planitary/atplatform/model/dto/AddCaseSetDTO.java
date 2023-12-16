@@ -19,5 +19,6 @@ public class AddCaseSetDTO {
     private String remark;
     private Integer setWeight;
     private String parameterList;
+    private String projectId;
 
 }

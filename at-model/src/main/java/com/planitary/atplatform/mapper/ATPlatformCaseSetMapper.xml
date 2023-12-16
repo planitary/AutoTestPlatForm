@@ -16,11 +16,12 @@
         <result column="update_time" property="updateTime" />
         <result column="update_user" property="updateUser" />
         <result column="remark" property="remark"/>
+        <result column="project_id" property="projectId"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, set_id, set_name, interface_ids, set_weight, parameter_list, is_delete,create_time,create_user,update_time,update_user,remark
+        id, set_id, set_name, interface_ids, set_weight,project_id, parameter_list, is_delete,create_time,create_user,update_time,update_user,remark
     </sql>
 
 </mapper>

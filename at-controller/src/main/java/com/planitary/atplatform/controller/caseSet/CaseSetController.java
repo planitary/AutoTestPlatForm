@@ -4,6 +4,7 @@ import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.model.dto.AddCaseSetDTO;
+import com.planitary.atplatform.model.po.ATPlatformCaseSet;
 import com.planitary.atplatform.service.caseSet.CaseSetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,15 @@ public class CaseSetController {
         }
         String setId = caseSetService.addCaseSet(addCaseSetDTO);
         return PtResult.success(setId);
+    }
 
+    @PostMapping("/caseSet/updateCaseSet")
+    public PtResult<String> updateCaseSet(String projectId,@RequestBody ATPlatformCaseSet atPlatformCaseSet){
+        if (projectId == null){
+            log.error("项目id为空");
+            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
+        }
+        String caseSetId = caseSetService.updateCaseSet(atPlatformCaseSet);
+        return PtResult.success(caseSetId);
     }
 }

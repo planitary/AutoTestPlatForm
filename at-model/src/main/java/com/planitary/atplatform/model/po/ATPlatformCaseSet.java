@@ -37,6 +37,11 @@ public class ATPlatformCaseSet implements Serializable {
     private String interfaceIds;
 
     /**
+     * 项目列表
+     */
+    private String projectId;
+
+    /**
      * 集合权重
      */
     private Integer setWeight;

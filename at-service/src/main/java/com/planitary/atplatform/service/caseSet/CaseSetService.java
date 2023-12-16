@@ -17,10 +17,17 @@ public interface CaseSetService {
 
     /**
      * 新增一个集合，集合中包含了一个接口id的列表，通过接口id的列表来确定一个唯一的集合
-     * @param atPlatformCaseSet
+     * @param addCaseSetDTO
      * @return
      */
     String addCaseSet(AddCaseSetDTO addCaseSetDTO);
+
+    /**
+     * 编辑测试用例集合
+     * @param atPlatformCaseSet
+     * @return
+     */
+    String updateCaseSet(ATPlatformCaseSet atPlatformCaseSet);
 
 
 }
