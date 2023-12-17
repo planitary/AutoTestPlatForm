@@ -1,8 +1,12 @@
 package com.planitary.atplatform.service.caseSet;
 
+import com.planitary.atplatform.base.customResult.PageResult;
+import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.model.dto.AddCaseSetDTO;
+import com.planitary.atplatform.model.dto.QueryCaseSetListDTO;
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
 
+import javax.print.attribute.standard.PageRanges;
 import java.util.Map;
 
 /**
@@ -28,6 +32,14 @@ public interface CaseSetService {
      * @return
      */
     String updateCaseSet(ATPlatformCaseSet atPlatformCaseSet);
+
+    /**
+     * 查询测试集合列表
+     * @param pageParams
+     * @param queryCaseSetListDTO
+     * @return
+     */
+    PageResult<ATPlatformCaseSet> queryCaseSetList(PageParams pageParams, QueryCaseSetListDTO queryCaseSetListDTO);
 
 
 }

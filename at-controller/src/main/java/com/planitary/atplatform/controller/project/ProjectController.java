@@ -46,7 +46,7 @@ public class ProjectController {
     }
 
     @PostMapping("/mock/addProject")
-    public PtResult<?> addProject(){
+    public PtResult<Map<String,String>> addProject(){
         AddProjectDTO addProjectDTO = new AddProjectDTO();
         addProjectDTO.setProjectName("new_test");
         addProjectDTO.setProjectUrl("/HRMS");

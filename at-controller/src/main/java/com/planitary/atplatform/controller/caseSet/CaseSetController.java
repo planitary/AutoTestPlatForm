@@ -1,12 +1,16 @@
 package com.planitary.atplatform.controller.caseSet;
 
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
+import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
+import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.model.dto.AddCaseSetDTO;
+import com.planitary.atplatform.model.dto.QueryCaseSetListDTO;
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
 import com.planitary.atplatform.service.caseSet.CaseSetService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,5 +50,10 @@ public class CaseSetController {
         }
         String caseSetId = caseSetService.updateCaseSet(atPlatformCaseSet);
         return PtResult.success(caseSetId);
+    }
+
+    @GetMapping("/caseSet/caseSetList")
+    public PageResult<ATPlatformCaseSet> getCaseSetList(PageParams pageParams, @RequestBody QueryCaseSetListDTO queryCaseSetListDTO){
+        return caseSetService.queryCaseSetList(pageParams,queryCaseSetListDTO);
     }
 }
