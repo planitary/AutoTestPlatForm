@@ -38,8 +38,12 @@ public enum ExceptionEnum {
     CALL_BACK_FAILED("获取接口回调失败","-8002"),
 
     // 业务通用异常
-    BIZ_ERROR("业务异常","-9009");
+    BIZ_ERROR("业务异常","-9009"),
 
+    // 文件读取相关
+    FILE_LOAD_FAILED("文件读取失败","-4000"),
+    FILE_NOT_EXIST("文件不存在","-4001"),
+    PERMISSION_DENIED("无权访问","-4002");
 
     private final String errMessage;
     private final String errCode;
