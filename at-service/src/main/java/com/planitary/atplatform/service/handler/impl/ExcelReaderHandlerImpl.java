@@ -44,6 +44,7 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
                 Iterator<Cell> cellIterator = row.cellIterator();
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
+                    this.formatCellValue(cell);
                     // 获取单元格的值
                     System.out.print(cell.toString() + "\t");
                 }
@@ -65,6 +66,12 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
         File file = new File(localFilePath);
         if (!file.exists()){
             ATPlatformException.exceptionCast(ExceptionEnum.FILE_NOT_EXIST);
+        }
+    }
+    // 格式化读入数字（String类型读取，以防1被解析成1.0)
+    private  void formatCellValue(Cell cell){
+        if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC){
+            cell.setCellType(Cell.CELL_TYPE_STRING);
         }
     }
 }

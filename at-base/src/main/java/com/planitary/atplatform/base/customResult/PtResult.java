@@ -10,6 +10,7 @@ package com.planitary.atplatform.base.customResult;
  */
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.slf4j.MDC;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import java.util.Map;
  * 封装自定义返回类
  */
 @Data
+@NoArgsConstructor
 public class PtResult<T> {
     /**
      * 返回编码,默认0为成功的响应
