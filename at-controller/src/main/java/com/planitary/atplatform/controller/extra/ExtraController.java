@@ -43,10 +43,20 @@ public class ExtraController {
     }
 
     @PostMapping("/exe/excel/getExcelByUploadFile")
-    public PtResult<Map<String,List<String>>> getExcel(@RequestParam("file")MultipartFile file){
+    public PtResult<Map<String,String>> getExcel(@RequestParam("file")MultipartFile file){
         Map<String,List<String>> valueListMap = new HashMap<>();
         excelReaderHandler.uploadFileParse(file,valueListMap);
-        return PtResult.success(valueListMap);
+        Map<String,String> resMap = new HashMap<>();
+
+        if (valueListMap.size() > 0){
+            resMap.put("rows",String.valueOf(valueListMap.size()));
+        }
+        else {
+            log.info("无内容");
+            resMap.put("msg","数据为空");
+        }
+        return PtResult.success(resMap);
+
     }
 
 }
