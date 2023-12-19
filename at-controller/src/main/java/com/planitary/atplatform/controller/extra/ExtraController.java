@@ -7,9 +7,15 @@ import com.planitary.atplatform.service.handler.ExcelReaderHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author：planitary
@@ -26,12 +32,21 @@ public class ExtraController {
     @Resource
     ExcelReaderHandler excelReaderHandler;
 
-    @PostMapping("/exe/excel/getExcel")
-    public PtResult<String> getExcel(String path) {
+    @PostMapping("/exe/excel/getExcelByLocalFile")
+    public PtResult<Map<String,List<String>>> getExcel(String path) {
         if (null == path) {
             ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
         }
-        excelReaderHandler.localFileParse(path);
-        return PtResult.success("ok");
+        Map<String,List<String>> valueListMap = new HashMap<>();
+        excelReaderHandler.localFileParse(path,valueListMap);
+        return PtResult.success(valueListMap);
     }
+
+    @PostMapping("/exe/excel/getExcelByUploadFile")
+    public PtResult<Map<String,List<String>>> getExcel(@RequestParam("file")MultipartFile file){
+        Map<String,List<String>> valueListMap = new HashMap<>();
+        excelReaderHandler.uploadFileParse(file,valueListMap);
+        return PtResult.success(valueListMap);
+    }
+
 }
