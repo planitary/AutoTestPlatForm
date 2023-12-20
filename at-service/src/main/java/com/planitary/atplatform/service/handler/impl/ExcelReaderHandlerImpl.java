@@ -8,13 +8,12 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.apache.poi.ss.usermodel.FillPatternType;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -108,6 +107,42 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public Workbook createExcelTemplate() {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("sheet1");
+
+        Row headerRow = sheet.createRow(0);
+        // 设置单元格样式
+        CellStyle unitStyle = workbook.createCellStyle();
+        unitStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        unitStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        String[] headers = {"姓名","id","性别","字段4"};
+        // 循环往单元格中填入字段
+        for (int i = 0;i < headers.length;i++){
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+            cell.setCellStyle(unitStyle);
+        }
+        log.info("模板文件生成成功");
+        return workbook;
+    }
+
+    @Override
+    public byte[] workbook2ByteArray(Workbook workbook) {
+        if (workbook == null){
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            workbook.write(byteArrayOutputStream);
+        }catch (IOException e){
+            log.error("流转换失败");
+            e.printStackTrace();
+        }
+        return byteArrayOutputStream.toByteArray();
     }
 
     private void checkFile(String localFilePath) {

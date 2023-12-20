@@ -1,6 +1,7 @@
 package com.planitary.atplatform.service.handler;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,4 +31,17 @@ public interface ExcelReaderHandler {
      * @param multipartFile       上传的excel文件
      */
     void uploadFileParse(MultipartFile multipartFile,Map<String,List<String>> excelValueList);
+
+    /**
+     * 后端配置excel模板
+     * @return       返回一个创建好的excel，以WorkBook的形式
+     */
+    Workbook createExcelTemplate();
+
+    /**
+     * workbook转为字节流供下载
+     * @param workbook          模板文件
+     * @return
+     */
+    byte[] workbook2ByteArray(Workbook workbook);
 }
