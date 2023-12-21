@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.planitary.atplatform.base.commonEnum.BizCodeEnum;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
@@ -13,9 +14,12 @@ import com.planitary.atplatform.base.utils.UniqueStringIdGenerator;
 import com.planitary.atplatform.mapper.ATPlatformInterfaceInfoMapper;
 import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.AddInterfaceDTO;
+import com.planitary.atplatform.model.dto.ExcelParseDTO;
 import com.planitary.atplatform.model.dto.QueryInterfaceInfoDTO;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import com.planitary.atplatform.model.po.ATPlatformProject;
+import com.planitary.atplatform.service.handler.ExcelReaderHandler;
+import com.planitary.atplatform.service.handler.impl.ExcelReaderHandlerImpl;
 import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -49,6 +53,9 @@ public class InterfaceServiceImpl implements InterfaceService {
 
     @Resource
     private UniqueStringIdGenerator uniqueStringIdGenerator;
+
+    @Resource
+    private ExcelReaderHandler excelReaderHandler;
 
 
     @Override
@@ -179,5 +186,13 @@ public class InterfaceServiceImpl implements InterfaceService {
         Map<String, String> resMap = new HashMap<>();
         resMap.put("interfaceId", interfaceId);
         return resMap;
+    }
+
+    @Override
+    public Map<String, String> batchFillRequestBody(String fileType) {
+//        if (Objects.equals(fileType, BizCodeEnum.UPLOAD_FILE.getBizCode())){
+//            excelReaderHandler.uploadFileParse()
+//        }
+        return null;
     }
 }

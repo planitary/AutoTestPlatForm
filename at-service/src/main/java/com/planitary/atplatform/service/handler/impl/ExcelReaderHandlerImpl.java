@@ -1,7 +1,10 @@
 package com.planitary.atplatform.service.handler.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.microsoft.schemas.office.visio.x2012.main.CellType;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.exception.ATPlatformException;
+import com.planitary.atplatform.model.dto.ExcelParseDTO;
 import com.planitary.atplatform.service.handler.ExcelReaderHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.EncryptedDocumentException;
@@ -33,38 +36,22 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
     private static final Integer BASE_KEY = 1;
 
     @Override
-    public void localFileParse(String localFilePath, Map<String, List<String>> excelValueList) {
+    public List<ExcelParseDTO> localFileParse(String localFilePath) {
         checkFile(localFilePath);
         int baseKey = BASE_KEY;
         try (FileInputStream fileInputStream = new FileInputStream(localFilePath)) {
-            Workbook workbook = WorkbookFactory.create(fileInputStream);
-            // 获取第一个sheet
-            Sheet sheet = workbook.getSheetAt(0);
-            // 从第二行开始遍历
-            for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
-                Row row = sheet.getRow(i);
-                List<String> valueList = new ArrayList<>();
-                // 遍历每一列
-                Iterator<Cell> cellIterator = row.cellIterator();
-                while (cellIterator.hasNext()) {
-                    Cell cell = cellIterator.next();
-                    this.formatCellValue(cell);
-                    // 获取单元格的值
-                    valueList.add(cell.toString());
-                }
-                excelValueList.put(Integer.toString(baseKey), valueList);
-                baseKey++;
-            }
+            List<ExcelParseDTO> excelParseDTOList = parseExcel(fileInputStream);
             log.info("文件'{}'解析成功", localFilePath);
-            workbook.close();
+            return excelParseDTOList;
         } catch (IOException | EncryptedDocumentException | InvalidFormatException ex) {
             log.error("文件'{}'解析失败!", localFilePath);
             ex.printStackTrace();
         }
+        return null;
     }
 
     @Override
-    public void uploadFileParse(MultipartFile multipartFile,Map<String,List<String>> excelValueListMap) {
+    public List<ExcelParseDTO> uploadFileParse(MultipartFile multipartFile) {
         checkFile(multipartFile);
         // 写入临时文件
         try {
@@ -75,38 +62,65 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
             outputStream.close();
             // 处理excel文件
             FileInputStream inputStream = new FileInputStream(tempFile);
-            Workbook workbook = WorkbookFactory.create(inputStream);
-            Sheet sheet = workbook.getSheetAt(0);
-
-            for (int i = 1;i < sheet.getPhysicalNumberOfRows();i++){
-                Row row = sheet.getRow(i);
-                List<String> unitValueList = new ArrayList<>();
-                Iterator<Cell> cellIterator = row.cellIterator();
-                while (cellIterator.hasNext()){
-                    Cell cell = cellIterator.next();
-                    this.formatCellValue(cell);
-                    unitValueList.add(cell.toString());
-                }
-                excelValueListMap.put(Integer.toString(baseKey),unitValueList);
-                baseKey ++;
-            }
+            List<ExcelParseDTO> excelParseDTOList = parseExcel(inputStream);
             log.info("临时文件'{}'解析成功", tempFile.getName());
-            workbook.close();
             inputStream.close();
             // 删除临时文件
-            if (!tempFile.delete()){
-                log.error("临时文件{}删除失败!",tempFile);
+            if (!tempFile.delete()) {
+                log.error("临时文件{}删除失败!", tempFile);
                 ATPlatformException.exceptionCast(ExceptionEnum.UNKNOWN_ERROR);
             }
-
-        }catch (IOException  e){
+            return excelParseDTOList;
+        } catch (IOException e) {
             log.error("文件流读取失败!");
             e.printStackTrace();
-        }catch (InvalidFormatException e){
+        } catch (InvalidFormatException e) {
             log.error("不支持的文件格式");
             e.printStackTrace();
         }
+        return null;
+    }
 
+    /**
+     * excel解析类
+     * @param inputStream                   excel的文件输入流
+     * @return                              excel文件解析数据
+     * @throws IOException
+     * @throws InvalidFormatException
+     */
+    public List<ExcelParseDTO> parseExcel(FileInputStream inputStream) throws IOException, InvalidFormatException {
+        Workbook workbook = WorkbookFactory.create(inputStream);
+        Sheet sheet = workbook.getSheetAt(0);
+        List<ExcelParseDTO> excelParseDTOList = new ArrayList<>();
+
+        for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
+            Row row = sheet.getRow(i);
+            ExcelParseDTO excelParseDTO = new ExcelParseDTO();
+
+            Cell cell0 = row.getCell(0);
+            if (cell0 != null && cell0.getCellType() == Cell.CELL_TYPE_STRING) {
+                excelParseDTO.setInterfaceUrl(cell0.getStringCellValue());
+            }
+            else {
+                ATPlatformException.exceptionCast("接口url不能为空");
+            }
+
+            Cell cell1 = row.getCell(1);
+            if (cell1 != null && cell1.getCellType() == Cell.CELL_TYPE_STRING) {
+                excelParseDTO.setRequestBody(cell1.getStringCellValue());
+            }
+            else {
+                ATPlatformException.exceptionCast("接口入参不能为空");
+            }
+
+            Cell cell2 = row.getCell(2);
+            if (cell2 != null && cell2.getCellType() == Cell.CELL_TYPE_STRING) {
+                excelParseDTO.setOwnerName(cell2.getStringCellValue());
+            }
+            excelParseDTOList.add(excelParseDTO);
+        }
+        workbook.close();
+        return excelParseDTOList;
     }
 
     @Override
@@ -115,30 +129,44 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
         Sheet sheet = workbook.createSheet("sheet1");
 
         Row headerRow = sheet.createRow(0);
+        Row exampleRow = sheet.createRow(1);
         // 设置单元格样式
         CellStyle unitStyle = workbook.createCellStyle();
         unitStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
         unitStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-        String[] headers = {"姓名","id","性别","字段4"};
+        String[] headers = {"接口url(*)", "入参requestBody(*)", "维护人"};
+        Map<String,String> exampleMap = new HashMap<>();
+        // 设置样例
+        exampleMap.put("id","100");
+        exampleMap.put("param1","abc");
+        exampleMap.put("param2","[1,5,7]");
+        String exampleJSON = JSON.toJSONString(exampleMap);
+        String[] exampleValue = {"/test/getList",exampleJSON,"planitary"};
         // 循环往单元格中填入字段
-        for (int i = 0;i < headers.length;i++){
+        for (int i = 0; i < headers.length; i++) {
             Cell cell = headerRow.createCell(i);
             cell.setCellValue(headers[i]);
             cell.setCellStyle(unitStyle);
         }
+
+        for (int i = 0;i < exampleValue.length;i++){
+            Cell cell = exampleRow.createCell(i);
+            cell.setCellValue(exampleValue[i]);
+        }
+
         log.info("模板文件生成成功");
         return workbook;
     }
 
     @Override
     public byte[] workbook2ByteArray(Workbook workbook) {
-        if (workbook == null){
+        if (workbook == null) {
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             workbook.write(byteArrayOutputStream);
-        }catch (IOException e){
+        } catch (IOException e) {
             log.error("流转换失败");
             e.printStackTrace();
         }
@@ -160,7 +188,7 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
         String fileSuffix = file.getOriginalFilename();
         if (fileSuffix != null) {
             if (!fileSuffix.endsWith("xls") && !fileSuffix.endsWith("xlsx")) {
-                log.error("后缀名不是excel格式,原文件后缀名:{}",fileSuffix);
+                log.error("后缀名不是excel格式,原文件后缀名:{}", fileSuffix);
                 ATPlatformException.exceptionCast(ExceptionEnum.SUFFIX_NAME_IS_INVALID);
             }
         }

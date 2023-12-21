@@ -1,0 +1,5 @@
+2023-12-20 22:16:02,565 ERROR [http-nio-8080-exec-5][GlobalExceptionHandler.java:50] -  - 父类异常:Request method 'GET' not supported
+2023-12-20 22:39:00,316 ERROR [http-nio-8080-exec-9][GlobalExceptionHandler.java:50] -  - 父类异常:Request method 'GET' not supported
+2023-12-20 22:41:48,017 ERROR [http-nio-8080-exec-1][GlobalExceptionHandler.java:50] -  - 父类异常:Request method 'GET' not supported
+2023-12-20 22:50:35,507 ERROR [http-nio-8080-exec-1][GlobalExceptionHandler.java:50] -  - 父类异常:Request method 'GET' not supported
+2023-12-20 22:51:13,604 ERROR [http-nio-8080-exec-1][GlobalExceptionHandler.java:50] -  - 父类异常:Request method 'GET' not supported

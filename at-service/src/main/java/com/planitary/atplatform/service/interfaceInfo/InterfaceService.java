@@ -3,9 +3,11 @@ package com.planitary.atplatform.service.interfaceInfo;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.model.dto.AddInterfaceDTO;
+import com.planitary.atplatform.model.dto.ExcelParseDTO;
 import com.planitary.atplatform.model.dto.QueryInterfaceInfoDTO;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,8 +36,22 @@ public interface InterfaceService {
      */
     PageResult<ATPlatformInterfaceInfo> queryInterfaceInfoList(PageParams pageParams, QueryInterfaceInfoDTO queryInterfaceInfoDTO);
 
-
+    /**
+     * 更新接口
+     * @param projectId                 项目id
+     * @param atPlatformInterfaceInfo   接口实体类
+     * @return
+     */
     Map<String,String> updateInterface(String projectId,ATPlatformInterfaceInfo atPlatformInterfaceInfo);
+
+    /**
+     * 批量填充接口入参
+     * @param fileType       文件来源类型
+     * @return
+     */
+    Map<String,String> batchFillRequestBody(String fileType);
+
+
 
 
 }

@@ -3,6 +3,7 @@ package com.planitary.atplatform.controller.extra;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
+import com.planitary.atplatform.model.dto.ExcelParseDTO;
 import com.planitary.atplatform.service.handler.ExcelReaderHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -42,29 +43,26 @@ public class ExtraController {
     ExcelReaderHandler excelReaderHandler;
 
     @PostMapping("/exe/excel/getExcelByLocalFile")
-    public PtResult<Map<String,List<String>>> getExcel(String path) {
+    public PtResult<List<ExcelParseDTO>> getExcel(String path) {
         if (null == path) {
             ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
         }
-        Map<String,List<String>> valueListMap = new HashMap<>();
-        excelReaderHandler.localFileParse(path,valueListMap);
-        return PtResult.success(valueListMap);
+        List<ExcelParseDTO> excelParseDTOList = excelReaderHandler.localFileParse(path);
+        if (excelParseDTOList == null){
+            log.error("文件内容为空或格式不正确");
+            ATPlatformException.exceptionCast(ExceptionEnum.PARSE_FAILED);
+        }
+        return PtResult.success(excelParseDTOList);
     }
 
     @PostMapping("/exe/excel/getExcelByUploadFile")
-    public PtResult<Map<String,String>> getExcel(@RequestParam("file")MultipartFile file){
-        Map<String,List<String>> valueListMap = new HashMap<>();
-        excelReaderHandler.uploadFileParse(file,valueListMap);
-        Map<String,String> resMap = new HashMap<>();
-
-        if (valueListMap.size() > 0){
-            resMap.put("rows",String.valueOf(valueListMap.size()));
+    public PtResult<List<ExcelParseDTO>> getExcel(@RequestParam("file")MultipartFile file){
+        List<ExcelParseDTO> excelParseDTOList = excelReaderHandler.uploadFileParse(file);
+        if (excelParseDTOList == null){
+            log.error("文件内容为空或格式不正确");
+            ATPlatformException.exceptionCast(ExceptionEnum.PARSE_FAILED);
         }
-        else {
-            log.info("无内容");
-            resMap.put("msg","数据为空");
-        }
-        return PtResult.success(resMap);
+        return PtResult.success(excelParseDTOList);
     }
 
     @RequestMapping("/exe/excel/getTestCaseTemplate")
@@ -72,7 +70,7 @@ public class ExtraController {
         Workbook workbook = excelReaderHandler.createExcelTemplate();
         String fileName = TEST_CASE_TEMPLATE_FILENAME + System.currentTimeMillis() + ".xlsx";
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition","attatchment; filename=" + fileName);
+        headers.add("Content-Disposition","attachment; filename=" + fileName);
         log.info("模板文件名:{}",fileName);
         return ResponseEntity.ok()
                 .headers(headers)
