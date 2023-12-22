@@ -12,43 +12,42 @@ import java.util.Map;
  * @Date：2023/12/22 11:00 下午
  * @Filename：ChosenParamDTO
  * @description：
- * 封装选择的接口参数列表
+ * 封装选择的接口参数列表（带接口url）
  * 一个典型的DTO格式为：
  * <p>
  * {
- * "cornerstone/loading":
- * {
- * 			"id": [
- * 				1,
- * 				2,
- * 				3,
- * 				4
- * 			],
- * 			"age": [
- * 				34,
- * 				33,
- * 				22,
- * 				12
- * 			],
- * 			"name": [
- * 				"jack",
- * 				"peter",
- * 				"zane"
- * 			]
- *                }
- * 	,
- * 	"cornerstone/logout": [
+ * 	"cornerstone/test": [
+ *                {
+ * 			"id": 1,
+ * 			"name": "jack",
+ * 			"age": 20
+ *        },
  *        {
- * 			"id": [
- * 				"24794124",
- * 				"329840214",
- * 				"218740",
- * 				"8213u0"
+ * 			"id": 2,
+ * 			"name": "peter",
+ * 			"age": 33
+ *        },
+ *         {
+ * 			"id": 3,
+ * 			"name": "jack",
+ * 			"age": 21
+ *        }
+ * 	],
+ * 	"conerstone/login": [
+ *         {
+ * 			"ids": [
+ * 				"2342354235",
+ * 				"324823423",
+ * 				"214301924312"
  * 			],
- * 			"token": [
- * 				"7J",
- * 				"87b"
- * 			]
+ * 			"token": "2288e"
+ *        },
+ *        {
+ * 			"ids": [
+ * 				"3247328423",
+ * 				"21481231"
+ * 			],
+ * 			"token": "77u8"
  *        }
  * 	]
  * }
@@ -56,6 +55,6 @@ import java.util.Map;
  */
 @Data
 public class ChosenParamDTO {
-    private Map<String,Map<String,List<Object>>> chosenParamMap;
+    private Map<String,List<ParamDTO>> chosenParamDTO;
 
 }
