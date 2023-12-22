@@ -3,6 +3,7 @@ package com.planitary.atplatform.service.interfaceInfo;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.model.dto.AddInterfaceDTO;
+import com.planitary.atplatform.model.dto.ChosenParamDTO;
 import com.planitary.atplatform.model.dto.ExcelParseDTO;
 import com.planitary.atplatform.model.dto.QueryInterfaceInfoDTO;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
@@ -46,10 +47,10 @@ public interface InterfaceService {
 
     /**
      * 批量填充接口入参
-     * @param fileType       文件来源类型
+     * @param chosenParamMap       选中的参数集合
      * @return
      */
-    Map<String,String> batchFillRequestBody(String fileType);
+    void coreFillParameter(ChosenParamDTO chosenParamMap);
 
 
 

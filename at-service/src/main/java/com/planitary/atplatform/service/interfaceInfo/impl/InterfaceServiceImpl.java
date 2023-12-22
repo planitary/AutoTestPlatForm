@@ -14,6 +14,7 @@ import com.planitary.atplatform.base.utils.UniqueStringIdGenerator;
 import com.planitary.atplatform.mapper.ATPlatformInterfaceInfoMapper;
 import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.AddInterfaceDTO;
+import com.planitary.atplatform.model.dto.ChosenParamDTO;
 import com.planitary.atplatform.model.dto.ExcelParseDTO;
 import com.planitary.atplatform.model.dto.QueryInterfaceInfoDTO;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
@@ -24,15 +25,14 @@ import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.awt.font.ShapeGraphicAttribute;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @Author：planitary
@@ -188,11 +188,15 @@ public class InterfaceServiceImpl implements InterfaceService {
         return resMap;
     }
 
+    /**
+     * 这里的逻辑，先通过导入接口导入excel，然后用户会选择接口url，并选择需要执行的接口字段
+     * @param chosenParamDTO
+     * @return
+     */
     @Override
-    public Map<String, String> batchFillRequestBody(String fileType) {
-//        if (Objects.equals(fileType, BizCodeEnum.UPLOAD_FILE.getBizCode())){
-//            excelReaderHandler.uploadFileParse()
-//        }
-        return null;
+    public void coreFillParameter(ChosenParamDTO chosenParamDTO) {
+
+        }
+//        return null;
     }
 }
