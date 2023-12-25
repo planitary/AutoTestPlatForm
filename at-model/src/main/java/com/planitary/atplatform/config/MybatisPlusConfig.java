@@ -1,4 +1,4 @@
-package com.planitary.atplatform;
+package com.planitary.atplatform.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;

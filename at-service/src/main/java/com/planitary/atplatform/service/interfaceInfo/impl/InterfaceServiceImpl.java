@@ -30,6 +30,10 @@ import javax.annotation.Resource;
 import java.awt.font.ShapeGraphicAttribute;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @Author：planitary
@@ -51,8 +55,8 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Resource
     private UniqueStringIdGenerator uniqueStringIdGenerator;
 
-    @Resource
-    private ExcelReaderHandler excelReaderHandler;
+    private final ExecutorService executorService = Executors.newFixedThreadPool(10); // 线程池大小
+    private final List<CompletableFuture<Map<String,?>>> dataPool = new CopyOnWriteArrayList<>();
 
 
     @Override
@@ -186,29 +190,62 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
     /**
+     * 异步解析封装数据
      * 这里的逻辑，先通过导入接口导入excel，然后用户会选择接口url，并选择需要执行的接口字段
      *
-     * @param chosenParamDTO
+     * @param chosenParamDTO 用户选择的excel解析值（包含接口url和传参）
      * @return
      */
     @Override
-    public void coreFillParameter(ChosenParamDTO chosenParamDTO) {
-        // 解析外层key（interfaceUrl）
+    @Async
+    public CompletableFuture<String> coreFillParameter(ChosenParamDTO chosenParamDTO) {
+        List<CompletableFuture<Map<String,?>>> futures = new ArrayList<>();
+
         Map<String, List<ParamDTO>> chosenParamMap = chosenParamDTO.getChosenParamDTO();
         if (!chosenParamMap.isEmpty()) {
+            // 解析外层key（interfaceUrl)
             for (Map.Entry<String, List<ParamDTO>> outerEntry : chosenParamMap.entrySet()) {
-                String interfaceUrl = outerEntry.getKey();
-                ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.
-                        selectOne(new LambdaQueryWrapper<ATPlatformInterfaceInfo>()
-                                .eq(ATPlatformInterfaceInfo::getInterfaceUrl, interfaceUrl));
-                if (atPlatformInterfaceInfo == null) {
-                    ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
-                }
-                // 解析内层map(封装了参数的map，key是参数名，value是值)，该map放在list中
-                List<ParamDTO> paramDTOList = outerEntry.getValue();
-                // TODO: 2023/12/23 取出param填充到接口中发起调用
+                CompletableFuture<Map<String,?>> future = CompletableFuture.supplyAsync(() -> {
+                    try {
+                        String interfaceUrl = outerEntry.getKey();
+                        ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.selectOne(
+                                new LambdaQueryWrapper<ATPlatformInterfaceInfo>()
+                                        .eq(ATPlatformInterfaceInfo::getInterfaceUrl, interfaceUrl));
+
+                        if (atPlatformInterfaceInfo == null) {
+                            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+                        }
+                        // 解析内层map(封装了参数的map，key是参数名，value是值)，该map放在list中
+                        List<ParamDTO> paramDTOList = outerEntry.getValue();
+                        Map<String, ?> currentRequestBody = new HashMap<>();
+                        // 遍历list，一组key-value是一个请求的参数
+                        for (ParamDTO paramDTO : paramDTOList) {
+                            currentRequestBody = paramDTO.getParamsMap();
+                        }
+
+                        Thread.sleep(1000);
+                        // 返回解析结果
+                        log.info("解析成功:threadId:{}-{}",Thread.currentThread(),currentRequestBody);
+                        return currentRequestBody;
+                    } catch (InterruptedException e) {
+                        log.error("业务异常: {}", e.getMessage());
+                        throw new RuntimeException(e.getMessage());
+                    }
+                }, executorService);
+
+                // 解析出的结果放入数据池
+                dataPool.add(future);
+                futures.add(future);
             }
         }
+
+        log.debug("无数据");
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                .thenApplyAsync(ignored -> "所有解析完成");
+    }
+
+    @Override
+    public void coreExecutor() {
 
     }
 //        return null;

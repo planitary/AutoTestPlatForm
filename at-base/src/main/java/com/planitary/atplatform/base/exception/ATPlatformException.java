@@ -23,10 +23,12 @@ public class ATPlatformException extends RuntimeException {
         this.errCode = code;
     }
 
+    // 父类runtime异常
     public static void exceptionCast(String message){
-        throw new ATPlatformException(message);
+        throw new RuntimeException(message);
     }
 
+    // 自定义异常参数
     public static void exceptionCast(String message,String code){
         throw new ATPlatformException(message,code);
     }

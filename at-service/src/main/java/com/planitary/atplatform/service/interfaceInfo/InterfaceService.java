@@ -10,6 +10,8 @@ import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @Author：planitary
@@ -46,12 +48,16 @@ public interface InterfaceService {
     Map<String,String> updateInterface(String projectId,ATPlatformInterfaceInfo atPlatformInterfaceInfo);
 
     /**
-     * 批量填充接口入参
+     * 批量填充接口入参（异步封装请求)
      * @param chosenParamMap       选中的参数集合
      * @return
      */
-    void coreFillParameter(ChosenParamDTO chosenParamMap);
+    CompletableFuture<String> coreFillParameter(ChosenParamDTO chosenParamMap);
 
+    /**
+     * 填充后的接口执行发起请求
+     */
+    void coreExecutor();
 
 
 }
