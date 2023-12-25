@@ -52,6 +52,9 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
      */
     @Override
     @Transactional
+    // TODO: 2023/12/25 这里需要添加两阶段提交算法，当该方法执行失败后，所调用的接口相关的事务也需要回滚,这里的接口是外部的接口
+    // TODO: 2023/12/25 外部接口的事务由外部自己控制，难点在于如何由我们来保障外部事务的一致性
+
     public ExecuteResponseDTO doInterfaceExecutor(ExecuteDTO executeDTO) {
         if (executeDTO == null){
             log.error("{}", ExceptionEnum.OBJECT_NULL);
@@ -92,6 +95,7 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
         String resBody = JSON.toJSONString(executeDTO);
         atTestInterfaceCallRecord.setRequestBody(resBody);
         atTestInterfaceCallRecord.setResponseBody(executeJson);
+        int x = 1/ 0;
         int insert = atPlatformInterfaceCallRecordMapper.insert(atTestInterfaceCallRecord);
         if (insert <= 0){
             ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);
