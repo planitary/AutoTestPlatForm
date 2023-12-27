@@ -57,7 +57,7 @@ public interface InterfaceService {
     /**
      * 填充后的接口执行发起请求
      */
-    void coreExecutor();
+    CompletableFuture<Void> coreExecutor();
 
 
 }

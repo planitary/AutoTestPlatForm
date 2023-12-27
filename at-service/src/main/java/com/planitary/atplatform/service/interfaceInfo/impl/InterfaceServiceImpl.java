@@ -221,12 +221,11 @@ public class InterfaceServiceImpl implements InterfaceService {
                         // 遍历list，一组key-value是一个请求的参数
                         for (ParamDTO paramDTO : paramDTOList) {
                             currentRequestBody = paramDTO.getParamsMap();
+                            Thread.sleep(1000);
+                            // 返回解析结果
+                            log.info("解析成功:threadId:{}-{}", Thread.currentThread(), currentRequestBody);
+                            return currentRequestBody;
                         }
-
-                        Thread.sleep(1000);
-                        // 返回解析结果
-                        log.info("解析成功:threadId:{}-{}",Thread.currentThread(),currentRequestBody);
-                        return currentRequestBody;
                     } catch (InterruptedException e) {
                         log.error("业务异常: {}", e.getMessage());
                         throw new RuntimeException(e.getMessage());
@@ -245,7 +244,16 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
     @Override
-    public void coreExecutor() {
+    @Async
+    public CompletableFuture<Void> coreExecutor() {
+        for (CompletableFuture<Map<String,?>> future  :dataPool){
+            future.thenAcceptAsync(data -> {
+                // 业务执行核心逻辑(填充interface的requestBody并发起调用
+                try {
+
+                }
+            })
+        }
 
     }
 //        return null;
