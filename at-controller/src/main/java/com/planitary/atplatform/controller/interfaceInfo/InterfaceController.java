@@ -73,4 +73,11 @@ public class InterfaceController {
         Map<String, String> resMap = interfaceService.updateInterface(projectId, atPlatformInterfaceInfo);
         return PtResult.success(resMap);
     }
+
+    @PostMapping("/interface/fillRequestBody")
+    public PtResult<String> fillRequestBody(@RequestBody ChosenParamDTO chosenParamDTO){
+        interfaceService.coreFillParameter(chosenParamDTO);
+        interfaceService.coreExecutor();
+        return PtResult.success("done");
+    }
 }

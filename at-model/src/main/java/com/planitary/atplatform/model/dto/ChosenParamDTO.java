@@ -2,6 +2,7 @@ package com.planitary.atplatform.model.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -9,52 +10,43 @@ import java.util.Map;
  * @Author：planitary
  * @Package：com.planitary.atplatform.model.dto
  * @name：ChosenParamDTO
- * @Date：2023/12/22 11:00 下午
+ * @Date：2023/12/28 10:41 下午
  * @Filename：ChosenParamDTO
- * @description：
- * 封装选择的接口参数列表（带接口url）
- * 一个典型的DTO格式为：
- * <p>
+ * @description：        封装了用户选中的接口，带接口url的json，典型的DTO如下
  * {
- * 	"cornerstone/test": [
+ * 	"paramDTOS": [
  *                {
- * 			"id": 1,
- * 			"name": "jack",
- * 			"age": 20
+ * 			"interfaceUrl": "cornerstone/test",
+ * 			"interfaceDTOS": [
+ *                {
+ * 					"id": 1,
+ * 					"name": "peter",
+ * 					"code": 990
+ *                },
+ *                {
+ * 					"id": 2,
+ * 					"name": "jack",
+ * 					"code": 772
+ *                }
+ * 			]
  *        },
  *        {
- * 			"id": 2,
- * 			"name": "peter",
- * 			"age": 33
- *        },
- *         {
- * 			"id": 3,
- * 			"name": "jack",
- * 			"age": 21
- *        }
- * 	],
- * 	"conerstone/login": [
- *         {
- * 			"ids": [
- * 				"2342354235",
- * 				"324823423",
- * 				"214301924312"
- * 			],
- * 			"token": "2288e"
- *        },
- *        {
- * 			"ids": [
- * 				"3247328423",
- * 				"21481231"
- * 			],
- * 			"token": "77u8"
+ * 			"interfaceUrl": "prism/get",
+ * 			"interfaceDTOS": [
+ *                {
+ * 					"ocCode": "S12377",
+ * 					"ocName": "TEST-s"
+ *                },
+ *                {
+ * 					"ocCode": "S12375",
+ * 					"ocName": "TEST-x"
+ *                }
+ * 			]
  *        }
  * 	]
  * }
- * </p>
  */
 @Data
-public class ChosenParamDTO {
-    private Map<String,List<ParamDTO>> chosenParamDTO;
-
+public class ChosenParamDTO implements Serializable {
+    List<InterfaceParamDTO> chosenParamDTOS;
 }

@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.planitary.atplatform.base.commonEnum.BizCodeEnum;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
@@ -16,8 +15,6 @@ import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.*;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import com.planitary.atplatform.model.po.ATPlatformProject;
-import com.planitary.atplatform.service.handler.ExcelReaderHandler;
-import com.planitary.atplatform.service.handler.impl.ExcelReaderHandlerImpl;
 import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.awt.font.ShapeGraphicAttribute;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -56,7 +52,7 @@ public class InterfaceServiceImpl implements InterfaceService {
     private UniqueStringIdGenerator uniqueStringIdGenerator;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(10); // 线程池大小
-    private final List<CompletableFuture<Map<String,?>>> dataPool = new CopyOnWriteArrayList<>();
+    private final List<CompletableFuture<Map<String,Object>>> dataPool = new CopyOnWriteArrayList<>();
 
 
     @Override
@@ -199,13 +195,14 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Override
     @Async
     public CompletableFuture<String> coreFillParameter(ChosenParamDTO chosenParamDTO) {
-        List<CompletableFuture<Map<String,?>>> futures = new ArrayList<>();
-
-        Map<String, List<ParamDTO>> chosenParamMap = chosenParamDTO.getChosenParamDTO();
+        List<CompletableFuture<Map<String,Object>>> futures = new ArrayList<>();
+        Map<String, InterfaceParamDTO> chosenDTO = chosenParamDTO.getChosenParamDTO();
+        InterfaceParamDTO interfaceParamDTO = chosenDTO.get("paramDTO");
+        Map<String, List<ParamDTO>> chosenParamMap = interfaceParamDTO.getInterfaceParamDTO();
         if (!chosenParamMap.isEmpty()) {
-            // 解析外层key（interfaceUrl)
+            // 解析外层key (interfaceUrl)
             for (Map.Entry<String, List<ParamDTO>> outerEntry : chosenParamMap.entrySet()) {
-                CompletableFuture<Map<String,?>> future = CompletableFuture.supplyAsync(() -> {
+                CompletableFuture<Map<String,Object>> future = CompletableFuture.supplyAsync(() -> {
                     try {
                         String interfaceUrl = outerEntry.getKey();
                         ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.selectOne(
@@ -217,15 +214,16 @@ public class InterfaceServiceImpl implements InterfaceService {
                         }
                         // 解析内层map(封装了参数的map，key是参数名，value是值)，该map放在list中
                         List<ParamDTO> paramDTOList = outerEntry.getValue();
-                        Map<String, ?> currentRequestBody = new HashMap<>();
+                        Map<String,Object> currentRequestBody = new HashMap<>();
                         // 遍历list，一组key-value是一个请求的参数
                         for (ParamDTO paramDTO : paramDTOList) {
                             currentRequestBody = paramDTO.getParamsMap();
-                            Thread.sleep(1000);
-                            // 返回解析结果
-                            log.info("解析成功:threadId:{}-{}", Thread.currentThread(), currentRequestBody);
-                            return currentRequestBody;
+                            currentRequestBody.put("interfaceId",atPlatformInterfaceInfo.getInterfaceId());
                         }
+                        Thread.sleep(1000);
+                        // 返回解析结果
+                        log.info("解析成功:threadId:{}-{}", Thread.currentThread(), currentRequestBody);
+                        return currentRequestBody;
                     } catch (InterruptedException e) {
                         log.error("业务异常: {}", e.getMessage());
                         throw new RuntimeException(e.getMessage());
@@ -246,15 +244,44 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Override
     @Async
     public CompletableFuture<Void> coreExecutor() {
-        for (CompletableFuture<Map<String,?>> future  :dataPool){
+        for (CompletableFuture<Map<String,Object>> future  :dataPool){
             future.thenAcceptAsync(data -> {
                 // 业务执行核心逻辑(填充interface的requestBody并发起调用
                 try {
-
+                    System.out.println(data);
+                    Thread.sleep(1500);
+                }catch (InterruptedException e){
+                    throw new RuntimeException(e);
                 }
-            })
+            },executorService);
         }
-
+        return CompletableFuture.completedFuture(null);
     }
-//        return null;
+
+//    public static void main(String[] args) {
+//        InterfaceServiceImpl interfaceService = new InterfaceServiceImpl();
+//        InterfaceParamDTO interfaceParamDTO = new InterfaceParamDTO();
+//        ParamDTO paramDTO1 = new ParamDTO();
+//        ParamDTO paramDTO2 = new ParamDTO();
+//
+//        Map<String,Object> map1 = new HashMap<>();
+//        map1.put("id",1);
+//        map1.put("name","jack");
+//        map1.put("age",20);
+//        Map<String,Object> map2 = new HashMap<>();
+//        map2.put("id",2);
+//        map2.put("name","peter");
+//        map2.put("age",35);
+//        paramDTO1.setParamsMap(map1);
+//        paramDTO2.setParamsMap(map2);
+//        List<ParamDTO> paramDTOList = new ArrayList<>();
+//        paramDTOList.add(paramDTO1);
+//        paramDTOList.add(paramDTO2);
+//        Map<String,List<ParamDTO>> stringListMap = new HashMap<>();
+//        stringListMap.put("cornerstone/test",paramDTOList);
+//        interfaceParamDTO.setChosenParamDTO(stringListMap);
+//        CompletableFuture<String> future = interfaceService.coreFillParameter(interfaceParamDTO);
+//        System.out.println(future);
+//        interfaceService.coreExecutor();
+//    }
 }
