@@ -17,5 +17,5 @@ import java.util.Map;
  */
 @Data
 public class ParamDTO implements Serializable {
-    private Map<String,Object> paramsMap;
+    private Map<String,Object> params;
 }

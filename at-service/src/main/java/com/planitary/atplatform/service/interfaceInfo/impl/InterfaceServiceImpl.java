@@ -52,7 +52,7 @@ public class InterfaceServiceImpl implements InterfaceService {
     private UniqueStringIdGenerator uniqueStringIdGenerator;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(10); // 线程池大小
-    private final List<CompletableFuture<Map<String, Object>>> dataPool = new CopyOnWriteArrayList<>();
+    private final List<CompletableFuture<List<Map<String, Object>>>> dataPool = new CopyOnWriteArrayList<CompletableFuture<List<Map<String, Object>>>>();
 
 
     @Override
@@ -195,43 +195,53 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Override
     @Async
     public CompletableFuture<String> coreFillParameter(ChosenParamDTO chosenParamDTO) {
-        List<CompletableFuture<Map<String, Object>>> futures = new ArrayList<>();
-        List<InterfaceParamDTO> interfaceParamDTOS = chosenParamDTO.getChosenParamDTOS();
-        // 解析外层 (interfaceUrl)
-        for (InterfaceParamDTO interfaceParamDTO : interfaceParamDTOS) {
-            CompletableFuture<Map<String, Object>> future = CompletableFuture.supplyAsync(() -> {
-                try {
-                    String interfaceUrl = interfaceParamDTO.getInterfaceUrl();
-                    ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.selectOne(
-                            new LambdaQueryWrapper<ATPlatformInterfaceInfo>()
-                                    .eq(ATPlatformInterfaceInfo::getInterfaceUrl, interfaceUrl));
-
-                    if (atPlatformInterfaceInfo == null) {
-                        ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
-                    }
-                    // 解析内层map(封装了参数的map，key是参数名，value是值)，该map放在list中
-                    List<ParamDTO> paramDTOList = interfaceParamDTO.getRequestParams();
-                    Map<String, Object> currentRequestBody = new HashMap<>();
-                    // 遍历list，一组key-value是一个请求的参数
-                    for (ParamDTO paramDTO : paramDTOList) {
-                        currentRequestBody = paramDTO.getParamsMap();
-                        currentRequestBody.put("interfaceId", atPlatformInterfaceInfo.getInterfaceId());
-                    }
-                    Thread.sleep(1000);
-                    // 返回解析结果
-                    log.info("解析成功:threadId:{}-{}", Thread.currentThread(), currentRequestBody);
-                    return currentRequestBody;
-                } catch (InterruptedException e) {
-                    log.error("业务异常: {}", e.getMessage());
-                    throw new RuntimeException(e.getMessage());
-                }
-            }, executorService);
-
-            // 解析出的结果放入数据池
-            dataPool.add(future);
-            futures.add(future);
+        List<CompletableFuture<List<Map<String, Object>>>> futures = new ArrayList<>();
+        List<InterfaceParamDTO> interfaceParamDTOS = chosenParamDTO.getChosenParamDTOs();
+        if (interfaceParamDTOS == null || interfaceParamDTOS.size() == 0){
+            log.debug("无数据");
         }
-        log.debug("无数据");
+        else {
+            for (InterfaceParamDTO interfaceParamDTO : interfaceParamDTOS) {
+                CompletableFuture<List<Map<String, Object>>> future = CompletableFuture.supplyAsync(() -> {
+                    try {
+                        String interfaceUrl = interfaceParamDTO.getInterfaceUrl();
+                        ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.selectOne(
+                                new LambdaQueryWrapper<ATPlatformInterfaceInfo>()
+                                        .eq(ATPlatformInterfaceInfo::getInterfaceUrl, interfaceUrl));
+
+                        if (atPlatformInterfaceInfo == null) {
+                            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+                        }
+
+                        // 初始化currentRequestBody
+                        Map<String, Object> currentRequestBody;
+                        List<Map<String,Object>> requestBodies = new ArrayList<>();
+
+                        // 遍历list，一组key-value是一个请求的参数
+                        List<ParamDTO> paramDTOList = interfaceParamDTO.getInterfaceParamDTOs();
+                        for (ParamDTO paramDTO : paramDTOList) {
+                            currentRequestBody = paramDTO.getParams();
+                            currentRequestBody.put("interfaceId", atPlatformInterfaceInfo.getInterfaceId());
+                            requestBodies.add(currentRequestBody);
+                        }
+
+                        // 添加额外的参数
+
+                        Thread.sleep(1000);
+                        // 返回解析结果
+                        log.info("解析成功: threadId:{}-{}", Thread.currentThread(), requestBodies);
+                        return requestBodies;
+                    } catch (InterruptedException e) {
+                        log.error("业务异常: {}", e.getMessage());
+                        throw new RuntimeException(e.getMessage());
+                    }
+                }, executorService);
+
+                // 解析出的结果放入数据池
+                dataPool.add(future);
+                futures.add(future);
+            }
+        }
         return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
                 .thenApplyAsync(ignored -> "所有解析完成");
     }
@@ -239,19 +249,26 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Override
     @Async
     public CompletableFuture<Void> coreExecutor() {
-        for (CompletableFuture<Map<String, Object>> future : dataPool) {
+        for (CompletableFuture<List<Map<String, Object>>> future : dataPool) {
             future.thenAcceptAsync(data -> {
                 // 业务执行核心逻辑(填充interface的requestBody并发起调用
                 try {
                     System.out.println(data);
-                    Thread.sleep(1500);
+                    // 实际业务逻辑，注意线程睡眠的使用
+                    // 填充interface的requestBody并发起调用
+                    // ...
+
+                    Thread.sleep(1500); // 仅用于模拟延迟，请谨慎使用线程睡眠
+
                 } catch (InterruptedException e) {
+                    log.error("业务执行异常: {}", e.getMessage());
                     throw new RuntimeException(e);
                 }
             }, executorService);
         }
         return CompletableFuture.completedFuture(null);
     }
+
 
 //    public static void main(String[] args) {
 //        InterfaceServiceImpl interfaceService = new InterfaceServiceImpl();
