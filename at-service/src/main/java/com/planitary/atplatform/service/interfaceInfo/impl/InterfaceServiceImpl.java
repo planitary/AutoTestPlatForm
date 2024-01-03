@@ -18,6 +18,7 @@ import com.planitary.atplatform.model.po.ATPlatformProject;
 import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.MDC;
 import org.springframework.beans.BeanUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,7 @@ public class InterfaceServiceImpl implements InterfaceService {
     private UniqueStringIdGenerator uniqueStringIdGenerator;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(10); // 线程池大小
-    private final List<CompletableFuture<List<Map<String, Object>>>> dataPool = new CopyOnWriteArrayList<CompletableFuture<List<Map<String, Object>>>>();
+    private final List<CompletableFuture<Map<String, Object>>> dataPool = new CopyOnWriteArrayList<>();
 
 
     @Override
@@ -195,51 +196,50 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Override
     @Async
     public CompletableFuture<String> coreFillParameter(ChosenParamDTO chosenParamDTO) {
-        List<CompletableFuture<List<Map<String, Object>>>> futures = new ArrayList<>();
+        String traceId = MDC.get("traceId");
+        List<CompletableFuture<Map<String, Object>>> futures = new ArrayList<>();
         List<InterfaceParamDTO> interfaceParamDTOS = chosenParamDTO.getChosenParamDTOs();
-        if (interfaceParamDTOS == null || interfaceParamDTOS.size() == 0){
+        if (interfaceParamDTOS == null || interfaceParamDTOS.size() == 0) {
             log.debug("无数据");
-        }
-        else {
+        } else {
+            log.info("=====开始执行异步任务=====");
             for (InterfaceParamDTO interfaceParamDTO : interfaceParamDTOS) {
-                CompletableFuture<List<Map<String, Object>>> future = CompletableFuture.supplyAsync(() -> {
-                    try {
-                        String interfaceUrl = interfaceParamDTO.getInterfaceUrl();
-                        ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.selectOne(
-                                new LambdaQueryWrapper<ATPlatformInterfaceInfo>()
-                                        .eq(ATPlatformInterfaceInfo::getInterfaceUrl, interfaceUrl));
+                String interfaceUrl = interfaceParamDTO.getInterfaceUrl();
+                ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.selectOne(
+                        new LambdaQueryWrapper<ATPlatformInterfaceInfo>()
+                                .eq(ATPlatformInterfaceInfo::getInterfaceUrl, interfaceUrl));
 
-                        if (atPlatformInterfaceInfo == null) {
-                            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+                if (atPlatformInterfaceInfo == null) {
+                    ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+                }
+
+                // 遍历list，一组key-value是一个请求的参数
+                List<ParamDTO> paramDTOList = interfaceParamDTO.getInterfaceParamDTOs();
+                for (ParamDTO paramDTO : paramDTOList) {
+                    // 初始化currentRequestBody
+                    Map<String, Object> currentRequestBody = new HashMap<>();
+                    CompletableFuture<Map<String, Object>> future = CompletableFuture.supplyAsync(() -> {
+                        MDC.put("traceId",traceId);
+                        try {
+                            currentRequestBody.put("param", paramDTO.getParams());
+                            // 添加额外的参数
+                            currentRequestBody.put("interfaceInfo", atPlatformInterfaceInfo);
+
+                            Thread.sleep(1000);
+                            // 返回解析结果
+                            log.info("解析成功: threadId:{}-{}", Thread.currentThread(), currentRequestBody);
+                            return currentRequestBody;
+
+                        } catch (InterruptedException e) {
+                            log.error("业务异常: {}", e.getMessage());
+                            throw new RuntimeException(e.getMessage());
                         }
+                    }, executorService);
 
-                        // 初始化currentRequestBody
-                        Map<String, Object> currentRequestBody;
-                        List<Map<String,Object>> requestBodies = new ArrayList<>();
-
-                        // 遍历list，一组key-value是一个请求的参数
-                        List<ParamDTO> paramDTOList = interfaceParamDTO.getInterfaceParamDTOs();
-                        for (ParamDTO paramDTO : paramDTOList) {
-                            currentRequestBody = paramDTO.getParams();
-                            currentRequestBody.put("interfaceId", atPlatformInterfaceInfo.getInterfaceId());
-                            requestBodies.add(currentRequestBody);
-                        }
-
-                        // 添加额外的参数
-
-                        Thread.sleep(1000);
-                        // 返回解析结果
-                        log.info("解析成功: threadId:{}-{}", Thread.currentThread(), requestBodies);
-                        return requestBodies;
-                    } catch (InterruptedException e) {
-                        log.error("业务异常: {}", e.getMessage());
-                        throw new RuntimeException(e.getMessage());
-                    }
-                }, executorService);
-
-                // 解析出的结果放入数据池
-                dataPool.add(future);
-                futures.add(future);
+                    // 解析出的结果放入数据池
+                    dataPool.add(future);
+                    futures.add(future);
+                }
             }
         }
         return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
@@ -249,11 +249,22 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Override
     @Async
     public CompletableFuture<Void> coreExecutor() {
-        for (CompletableFuture<List<Map<String, Object>>> future : dataPool) {
+        String traceId = MDC.get("traceId");
+        for (CompletableFuture<Map<String, Object>> future : dataPool) {
             future.thenAcceptAsync(data -> {
+                MDC.put("traceId",traceId);
                 // 业务执行核心逻辑(填充interface的requestBody并发起调用
                 try {
-                    System.out.println(data);
+                    log.info("消费到参数:{}", data);
+                    ATPlatformInterfaceInfo interfaceInfo = (ATPlatformInterfaceInfo) data.get("interfaceInfo");
+                    if (interfaceInfo == null){
+                        ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+                    }
+                    log.info("拿到生产的接口id:{}",interfaceInfo.getInterfaceId());
+                    // 解析参数，转为json
+                    String paramJson = JSON.toJSONString(data.get("param"));
+                    // TODO: 2024/1/3 已经成功封装为json，后续需要填充并进行接口调用 
+                    System.out.println(paramJson);
                     // 实际业务逻辑，注意线程睡眠的使用
                     // 填充interface的requestBody并发起调用
                     // ...
