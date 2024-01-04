@@ -35,6 +35,6 @@ import java.util.Map;
 @Data
 public class InterfaceParamDTO implements Serializable {
     String interfaceUrl;
-    List<ParamDTO> interfaceParamDTOs;
+    List<Map<String,Object>> interfaceParamDTOs;
 
 }

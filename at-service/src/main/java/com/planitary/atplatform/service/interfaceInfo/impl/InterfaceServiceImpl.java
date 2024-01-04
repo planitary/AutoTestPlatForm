@@ -214,14 +214,14 @@ public class InterfaceServiceImpl implements InterfaceService {
                 }
 
                 // 遍历list，一组key-value是一个请求的参数
-                List<ParamDTO> paramDTOList = interfaceParamDTO.getInterfaceParamDTOs();
-                for (ParamDTO paramDTO : paramDTOList) {
+                List<Map<String, Object>> paramDTOList = interfaceParamDTO.getInterfaceParamDTOs();
+                for (Map<String, Object> paramDTO : paramDTOList) {
                     // 初始化currentRequestBody
                     Map<String, Object> currentRequestBody = new HashMap<>();
                     CompletableFuture<Map<String, Object>> future = CompletableFuture.supplyAsync(() -> {
-                        MDC.put("traceId",traceId);
+                        MDC.put("traceId", traceId);
                         try {
-                            currentRequestBody.put("param", paramDTO.getParams());
+                            currentRequestBody.put("param", paramDTO);
                             // 添加额外的参数
                             currentRequestBody.put("interfaceInfo", atPlatformInterfaceInfo);
 
@@ -252,32 +252,78 @@ public class InterfaceServiceImpl implements InterfaceService {
         String traceId = MDC.get("traceId");
         for (CompletableFuture<Map<String, Object>> future : dataPool) {
             future.thenAcceptAsync(data -> {
-                MDC.put("traceId",traceId);
+                MDC.put("traceId", traceId);
                 // 业务执行核心逻辑(填充interface的requestBody并发起调用
                 try {
                     log.info("消费到参数:{}", data);
                     ATPlatformInterfaceInfo interfaceInfo = (ATPlatformInterfaceInfo) data.get("interfaceInfo");
-                    if (interfaceInfo == null){
+                    if (interfaceInfo == null) {
                         ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
                     }
-                    log.info("拿到生产的接口id:{}",interfaceInfo.getInterfaceId());
+                    log.info("拿到生产的接口id:{}", interfaceInfo.getInterfaceId());
                     // 解析参数，转为json
                     String paramJson = JSON.toJSONString(data.get("param"));
-                    // TODO: 2024/1/3 已经成功封装为json，后续需要填充并进行接口调用 
-                    System.out.println(paramJson);
-                    // 实际业务逻辑，注意线程睡眠的使用
-                    // 填充interface的requestBody并发起调用
-                    // ...
+                    log.debug("开始消费，参数:{}", paramJson);
 
-                    Thread.sleep(1500); // 仅用于模拟延迟，请谨慎使用线程睡眠
+                    String requestBody = interfaceInfo.getRequestBody();
+                    Map<String, Object> interfaceRequestBody = JSON.parseObject(requestBody);
+                    this.updateRequestBody(JSON.parseObject(paramJson), interfaceRequestBody);
+                    // 重新序列化为json
+                    String afterRequestBody = JSON.toJSONString(interfaceRequestBody);
+                    // 更新interfaceInfo的requestBody字段
+                    try {
+                        this.updateInterfaceInfo("request_body", afterRequestBody,
+                                "interface_id", interfaceInfo.getInterfaceId());
+                        log.info("更新完成");
 
-                } catch (InterruptedException e) {
-                    log.error("业务执行异常: {}", e.getMessage());
-                    throw new RuntimeException(e);
+                    }catch (ATPlatformException e){
+                        e.printStackTrace();
+                        log.error("业务异常:{}",e.getMessage());
                 }
-            }, executorService);
-        }
+
+                // 实际业务逻辑，注意线程睡眠的使用
+                // 填充interface的requestBody并发起调用
+                // ...
+
+                Thread.sleep(1500); // 仅用于模拟延迟，请谨慎使用线程睡眠
+
+            } catch(InterruptedException e){
+                log.error("业务执行异常: {}", e.getMessage());
+                throw new RuntimeException(e);
+            }
+        },executorService);
+    }
         return CompletableFuture.completedFuture(null);
+}
+
+
+    /**
+     * 更新接口参数，因为interfaceInfo的requestBody字段也是一个json
+     *
+     * @param sourceMap 实际传参
+     * @param targetMap 接口入参（要更新的）
+     */
+    private void updateRequestBody(Map<String, Object> sourceMap, Map<String, Object> targetMap) {
+        log.info("接收到的参数为:{},接口的参数为:{}", sourceMap, targetMap);
+        if (sourceMap.isEmpty() || targetMap.isEmpty()) {
+            log.info("接口参数或传参为空，无需变更");
+        } else {
+            for (Map.Entry<String, Object> entryA : sourceMap.entrySet()) {
+                if (targetMap.containsKey(entryA.getKey())) {
+                    targetMap.put(entryA.getKey(), entryA.getValue());
+                }
+            }
+        }
+    }
+
+    @Transactional
+    protected void updateInterfaceInfo(String key, Object value, String primaryKey, Object primaryValue) {
+        UpdateWrapper<ATPlatformInterfaceInfo> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.set(key, value).set("update_time", LocalDateTime.now()).eq(primaryKey, primaryValue);
+        int update = atPlatformInterfaceInfoMapper.update(null, updateWrapper);
+        if (update <= 0) {
+            ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
+        }
     }
 
 

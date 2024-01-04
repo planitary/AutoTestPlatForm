@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @Author：planitary
@@ -78,6 +79,6 @@ public class InterfaceController {
     public PtResult<String> fillRequestBody(@RequestBody ChosenParamDTO chosenParamDTO){
         interfaceService.coreFillParameter(chosenParamDTO);
         interfaceService.coreExecutor();
-        return PtResult.success("done");
+        return PtResult.success("Success");
     }
 }
