@@ -248,6 +248,7 @@ public class InterfaceServiceImpl implements InterfaceService {
 
     @Override
     @Async
+    // TODO: 2024/1/4 实际上这里要发起异步的调用
     public CompletableFuture<Void> coreExecutor() {
         String traceId = MDC.get("traceId");
         for (CompletableFuture<Map<String, Object>> future : dataPool) {

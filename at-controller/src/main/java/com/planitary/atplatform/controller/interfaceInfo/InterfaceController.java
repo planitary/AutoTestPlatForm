@@ -75,7 +75,13 @@ public class InterfaceController {
         return PtResult.success(resMap);
     }
 
-    @PostMapping("/interface/fillRequestBody")
+    /**
+     * 这里整个的逻辑是先新建接口，创建requestBody--->填写excel文件(接口执行的集合以及参数集合）
+     * ---> 前端选择要执行的接口以及对应的参数
+     * @param chosenParamDTO                前端封装的接口选择类（包含接口url和参数集合）
+     * @return
+     */
+    @PostMapping("/interface/parameterizedExecution")
     public PtResult<String> fillRequestBody(@RequestBody ChosenParamDTO chosenParamDTO){
         interfaceService.coreFillParameter(chosenParamDTO);
         interfaceService.coreExecutor();

@@ -14,32 +14,30 @@ import java.util.Map;
  * @Filename：ChosenParamDTO
  * @description：        封装了用户选中的接口，带接口url的json，典型的DTO如下
  * {
- * 	"paramDTOS": [
+ * 	"chosenParamDTOs": [
  *                {
- * 			"interfaceUrl": "cornerstone/test",
- * 			"interfaceDTOS": [
- *                {
- * 					"id": 1,
- * 					"name": "peter",
- * 					"code": 990
+ * 			"interfaceUrl": "/hera/core/list",
+ * 			"interfaceParamDTOs": [    * 	{
+ * 						"page": 7,
+ * 						"size": 25,
+ * 						"res": [10,20,30]
+ *
  *                },
- *                {
- * 					"id": 2,
- * 					"name": "jack",
- * 					"code": 772
+ *                 {
+ * 						"page": 6,
+ * 						"size": 70,
+ * 						"res": [4,6,9]
+ *
  *                }
  * 			]
  *        },
  *        {
- * 			"interfaceUrl": "prism/get",
- * 			"interfaceDTOS": [
- *                {
- * 					"ocCode": "S12377",
- * 					"ocName": "TEST-s"
- *                },
- *                {
- * 					"ocCode": "S12375",
- * 					"ocName": "TEST-x"
+ * 			"interfaceUrl": "/hermrs/core/log",
+ * 			"interfaceParamDTOs": [
+ *         {
+ * 						"ocCode": "S12332",
+ * 						"ocName": "testStation"
+ *
  *                }
  * 			]
  *        }
