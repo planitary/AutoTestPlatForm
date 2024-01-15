@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.planitary.atplatform.base.commonEnum.BizCodeEnum;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
@@ -15,6 +16,7 @@ import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.*;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import com.planitary.atplatform.model.po.ATPlatformProject;
+import com.planitary.atplatform.service.handler.ExecuteHandler;
 import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -51,6 +53,9 @@ public class InterfaceServiceImpl implements InterfaceService {
 
     @Resource
     private UniqueStringIdGenerator uniqueStringIdGenerator;
+
+    @Resource
+    private ExecuteHandler executeHandler;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(10); // 线程池大小
     private final List<CompletableFuture<Map<String, Object>>> dataPool = new CopyOnWriteArrayList<>();
@@ -249,50 +254,77 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Override
     @Async
     // TODO: 2024/1/4 实际上这里要发起异步的调用
-    public CompletableFuture<Void> coreExecutor() {
+    public CompletableFuture<Void> coreExecutor(BizCodeEnum callableMethod) {
         String traceId = MDC.get("traceId");
         for (CompletableFuture<Map<String, Object>> future : dataPool) {
             future.thenAcceptAsync(data -> {
                 MDC.put("traceId", traceId);
-                // 业务执行核心逻辑(填充interface的requestBody并发起调用
+                // 业务执行核心逻辑(更新当前接口)
                 try {
-                    log.info("消费到参数:{}", data);
-                    ATPlatformInterfaceInfo interfaceInfo = (ATPlatformInterfaceInfo) data.get("interfaceInfo");
-                    if (interfaceInfo == null) {
-                        ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+                    if (Objects.equals(callableMethod.getBizCode(),"CM001")) {
+                        log.info("消费到参数:{}", data);
+                        ATPlatformInterfaceInfo interfaceInfo = (ATPlatformInterfaceInfo) data.get("interfaceInfo");
+                        if (interfaceInfo == null) {
+                            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+                        }
+                        log.info("拿到生产的接口id:{}", interfaceInfo.getInterfaceId());
+                        // 解析参数，转为json
+                        String paramJson = JSON.toJSONString(data.get("param"));
+                        log.debug("开始消费，参数:{}", paramJson);
+
+                        String requestBody = interfaceInfo.getRequestBody();
+                        Map<String, Object> interfaceRequestBody = JSON.parseObject(requestBody);
+                        this.updateRequestBody(JSON.parseObject(paramJson), interfaceRequestBody);
+                        // 重新序列化为json
+                        String afterRequestBody = JSON.toJSONString(interfaceRequestBody);
+                        // 更新interfaceInfo的requestBody字段
+                        try {
+                            this.updateInterfaceInfo("request_body", afterRequestBody,
+                                    "interface_id", interfaceInfo.getInterfaceId());
+                            log.info("更新完成");
+
+                        } catch (ATPlatformException e) {
+                            e.printStackTrace();
+                            log.error("业务异常:{}", e.getMessage());
+                        }
                     }
-                    log.info("拿到生产的接口id:{}", interfaceInfo.getInterfaceId());
-                    // 解析参数，转为json
-                    String paramJson = JSON.toJSONString(data.get("param"));
-                    log.debug("开始消费，参数:{}", paramJson);
-
-                    String requestBody = interfaceInfo.getRequestBody();
-                    Map<String, Object> interfaceRequestBody = JSON.parseObject(requestBody);
-                    this.updateRequestBody(JSON.parseObject(paramJson), interfaceRequestBody);
-                    // 重新序列化为json
-                    String afterRequestBody = JSON.toJSONString(interfaceRequestBody);
-                    // 更新interfaceInfo的requestBody字段
-                    try {
-                        this.updateInterfaceInfo("request_body", afterRequestBody,
-                                "interface_id", interfaceInfo.getInterfaceId());
-                        log.info("更新完成");
-
-                    }catch (ATPlatformException e){
-                        e.printStackTrace();
-                        log.error("业务异常:{}",e.getMessage());
-                }
-
-                // 实际业务逻辑，注意线程睡眠的使用
-                // 填充interface的requestBody并发起调用
-                // ...
-
+                    // 业务执行逻辑(外部调用)
+                    if (Objects.equals(callableMethod.getBizCode(),"CM002")){
+                        ATPlatformInterfaceInfo atPlatformInterfaceInfo = (ATPlatformInterfaceInfo) data.get("interfaceInfo");
+                        if (atPlatformInterfaceInfo == null) {
+                            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+                        }
+                        log.info("拿到生产的接口id:{}", atPlatformInterfaceInfo.getInterfaceId());
+                        // 解析参数，转为json
+                        String paramJson = JSON.toJSONString(data.get("param"));
+                        String requestBody = atPlatformInterfaceInfo.getRequestBody();
+                        Map<String,Object> requestBodyMap = JSON.parseObject(requestBody);
+                        ExecuteDTO executeDTO = new ExecuteDTO();
+                        executeDTO.setProjectId(atPlatformInterfaceInfo.getProjectId());
+                        executeDTO.setInterfaceUrl(atPlatformInterfaceInfo.getInterfaceUrl());
+                        executeDTO.setInterfaceId(atPlatformInterfaceInfo.getInterfaceId());
+                        try {
+                            for (int i = 0; i < requestBodyMap.size(); i++) {
+                                // 填充参数化请求后，连同公共字段一同发起请求
+                                this.updateRequestBody(JSON.parseObject(paramJson), requestBodyMap);
+                                executeDTO.setRequestBody(requestBodyMap);
+                                // 调用CommonHtpPost方法发起公共调用
+                                executeDTO.setRequireTime(System.currentTimeMillis());
+                                ExecuteResponseDTO executeResponseDTO = executeHandler.doInterfaceExecutor(executeDTO);
+                                log.debug("调用结束,调用结果:{}",executeResponseDTO);
+                            }
+                        }catch (ATPlatformException e){
+                            e.printStackTrace();
+                            log.error("业务异常:{}", e.getMessage());
+                        }
+                    }
                 Thread.sleep(1500); // 仅用于模拟延迟，请谨慎使用线程睡眠
-
             } catch(InterruptedException e){
                 log.error("业务执行异常: {}", e.getMessage());
                 throw new RuntimeException(e);
             }
-        },executorService);
+                log.debug("==========异步任务执行完毕=============");
+            },executorService);
     }
         return CompletableFuture.completedFuture(null);
 }

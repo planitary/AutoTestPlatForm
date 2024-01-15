@@ -32,7 +32,7 @@ public class ExecuteDTO implements Serializable {
     /**
      * 请求体
      */
-    private Map<String,String> requestBody;
+    private Map<String,Object> requestBody;
 
 
 

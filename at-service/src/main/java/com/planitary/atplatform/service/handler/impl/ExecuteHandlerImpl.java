@@ -61,7 +61,7 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
         String contentType = "application/json";
-        Map<String, String> requestBody = executeDTO.getRequestBody();
+        Map<String, Object> requestBody = executeDTO.getRequestBody();
         LambdaQueryWrapper<ATPlatformProject> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(ATPlatformProject::getProjectId,executeDTO.getProjectId());
         ATPlatformProject atTestProject = atPlatformProjectMapper.selectOne(lambdaQueryWrapper);

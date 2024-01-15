@@ -1,5 +1,6 @@
 package com.planitary.atplatform.controller.interfaceInfo;
 
+import com.planitary.atplatform.base.commonEnum.BizCodeEnum;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
@@ -84,7 +85,13 @@ public class InterfaceController {
     @PostMapping("/interface/parameterizedExecution")
     public PtResult<String> fillRequestBody(@RequestBody ChosenParamDTO chosenParamDTO){
         interfaceService.coreFillParameter(chosenParamDTO);
-        interfaceService.coreExecutor();
+        interfaceService.coreExecutor(BizCodeEnum.EXTERNAL_INTERFACE_CALL);
         return PtResult.success("Success");
+    }
+
+    @PostMapping("/external/testInterface")
+    public PtResult<String> testInterface(@RequestBody Map<String,Object> param){
+        String res = "test:" + param.get("ocCode") + " name:" + param.get("ocName");
+        return PtResult.success(res);
     }
 }

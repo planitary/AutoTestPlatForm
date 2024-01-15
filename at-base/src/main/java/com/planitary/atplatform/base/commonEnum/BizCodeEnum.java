@@ -18,7 +18,13 @@ public enum BizCodeEnum {
      * 文件来源的类型
      */
     UPLOAD_FILE("上传文件","1"),
-    OPEN_LOCAL_FILE("本地文件","2");
+    OPEN_LOCAL_FILE("本地文件","2"),
+
+    /**
+     * 异步调用方法
+     */
+    UPDATE_CURRENT_INTERFACE_INFO("更新当前接口信息","CM001"),
+    EXTERNAL_INTERFACE_CALL("外部接口调用","CM002");
 
     private final String bizMsg;
     private final String bizCode;

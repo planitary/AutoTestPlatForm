@@ -46,7 +46,7 @@ public class CommonHttpPost {
         List<NameValuePair> params = new ArrayList<>();
         log.info("请求体:{},请求头,{},url:{}", body, headers, url);
         for (Map.Entry<String, String> entry : body.entrySet()) {
-            params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+            params.add(new BasicNameValuePair(entry.getKey(), (String) entry.getValue()));
         }
         try {
             UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(params);
@@ -80,7 +80,7 @@ public class CommonHttpPost {
      * @return
      */
     @Transactional
-    public String doCommonHttpPostJson(Map<String,String> body,Map<String,String> headers,String url) {
+    public String doCommonHttpPostJson(Map<String,Object> body,Map<String,String> headers,String url) {
         String responseJSON = null;
 
         CloseableHttpClient httpClient = HttpClients.createDefault();

@@ -1,5 +1,6 @@
 package com.planitary.atplatform.service.interfaceInfo;
 
+import com.planitary.atplatform.base.commonEnum.BizCodeEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.model.dto.AddInterfaceDTO;
@@ -55,7 +56,7 @@ public interface InterfaceService {
     /**
      * 填充后的接口执行发起请求
      */
-    CompletableFuture<Void> coreExecutor();
+    CompletableFuture<Void> coreExecutor(BizCodeEnum callableMethod);
 
 
 }
