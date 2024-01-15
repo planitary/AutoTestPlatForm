@@ -103,7 +103,8 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
 
         // 封装返回数据
         ExecuteResponseDTO executeResponseDTO = new ExecuteResponseDTO();
-        BeanUtils.copyProperties(atTestInterfaceCallRecord,executeResponseDTO);
+        executeResponseDTO.setExecuteTime(exeTimeStamp);
+        executeResponseDTO.setDurationTime(atTestInterfaceCallRecord.getDurationTime());
         return executeResponseDTO;
     }
 

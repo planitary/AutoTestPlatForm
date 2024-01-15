@@ -27,5 +27,5 @@ public class ExecuteResponseDTO {
     /**
      * 响应时间
      */
-    private String durationTime;
+    private Long durationTime;
 }
