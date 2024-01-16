@@ -89,7 +89,7 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
         // 插入接口调用记录表
         ATPlatformInterfaceCallRecord atTestInterfaceCallRecord = new ATPlatformInterfaceCallRecord();
         atTestInterfaceCallRecord.setInterfaceId(executeDTO.getInterfaceId());
-        atTestInterfaceCallRecord.setRecordId(GeneralIdGenerator.generateId() + GeneralIdGenerator.generateId().substring(3,7));
+        atTestInterfaceCallRecord.setRecordId(GeneralIdGenerator.generateId() + GeneralIdGenerator.generateId().substring(7,10));
         atTestInterfaceCallRecord.setExecuteTime(executeTime);
         atTestInterfaceCallRecord.setDurationTime(exeTimeStamp - requireTime);
         String resBody = JSON.toJSONString(executeDTO);

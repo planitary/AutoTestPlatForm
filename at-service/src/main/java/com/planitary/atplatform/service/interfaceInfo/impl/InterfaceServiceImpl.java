@@ -261,7 +261,7 @@ public class InterfaceServiceImpl implements InterfaceService {
                 MDC.put("traceId", traceId);
                 // 业务执行核心逻辑(更新当前接口)
                 try {
-                    if (Objects.equals(callableMethod.getBizCode(),"CM001")) {
+                    if (Objects.equals(callableMethod.getBizCode(), "CM001")) {
                         log.info("消费到参数:{}", data);
                         ATPlatformInterfaceInfo interfaceInfo = (ATPlatformInterfaceInfo) data.get("interfaceInfo");
                         if (interfaceInfo == null) {
@@ -289,7 +289,7 @@ public class InterfaceServiceImpl implements InterfaceService {
                         }
                     }
                     // 业务执行逻辑(外部调用)
-                    if (Objects.equals(callableMethod.getBizCode(),"CM002")){
+                    if (Objects.equals(callableMethod.getBizCode(), "CM002")) {
                         ATPlatformInterfaceInfo atPlatformInterfaceInfo = (ATPlatformInterfaceInfo) data.get("interfaceInfo");
                         if (atPlatformInterfaceInfo == null) {
                             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
@@ -298,36 +298,34 @@ public class InterfaceServiceImpl implements InterfaceService {
                         // 解析参数，转为json
                         String paramJson = JSON.toJSONString(data.get("param"));
                         String requestBody = atPlatformInterfaceInfo.getRequestBody();
-                        Map<String,Object> requestBodyMap = JSON.parseObject(requestBody);
+                        Map<String, Object> requestBodyMap = JSON.parseObject(requestBody);
                         ExecuteDTO executeDTO = new ExecuteDTO();
                         executeDTO.setProjectId(atPlatformInterfaceInfo.getProjectId());
                         executeDTO.setInterfaceUrl(atPlatformInterfaceInfo.getInterfaceUrl());
                         executeDTO.setInterfaceId(atPlatformInterfaceInfo.getInterfaceId());
                         try {
-                            for (int i = 0; i < requestBodyMap.size(); i++) {
-                                // 填充参数化请求后，连同公共字段一同发起请求
-                                this.updateRequestBody(JSON.parseObject(paramJson), requestBodyMap);
-                                executeDTO.setRequestBody(requestBodyMap);
-                                // 调用CommonHtpPost方法发起公共调用
-                                executeDTO.setRequireTime(System.currentTimeMillis());
-                                ExecuteResponseDTO executeResponseDTO = executeHandler.doInterfaceExecutor(executeDTO);
-                                log.debug("调用结束,调用结果:{}",executeResponseDTO);
-                            }
-                        }catch (ATPlatformException e){
+                            // 填充参数化请求后，连同公共字段一同发起请求
+                            this.updateRequestBody(JSON.parseObject(paramJson), requestBodyMap);
+                            executeDTO.setRequestBody(requestBodyMap);
+                            // 调用CommonHtpPost方法发起公共调用
+                            executeDTO.setRequireTime(System.currentTimeMillis());
+                            ExecuteResponseDTO executeResponseDTO = executeHandler.doInterfaceExecutor(executeDTO);
+                            log.debug("调用结束,调用结果:{}", executeResponseDTO);
+                        } catch (ATPlatformException e) {
                             e.printStackTrace();
                             log.error("业务异常:{}", e.getMessage());
                         }
                     }
-                Thread.sleep(1500); // 仅用于模拟延迟，请谨慎使用线程睡眠
-            } catch(InterruptedException e){
-                log.error("业务执行异常: {}", e.getMessage());
-                throw new RuntimeException(e);
-            }
+                    Thread.sleep(1500); // 仅用于模拟延迟，请谨慎使用线程睡眠
+                } catch (InterruptedException e) {
+                    log.error("业务执行异常: {}", e.getMessage());
+                    throw new RuntimeException(e);
+                }
                 log.debug("==========异步任务执行完毕=============");
-            },executorService);
-    }
+            }, executorService);
+        }
         return CompletableFuture.completedFuture(null);
-}
+    }
 
 
     /**
