@@ -103,6 +103,8 @@ public class ExecuteHandlerImpl implements ExecuteHandler {
 
         // 封装返回数据
         ExecuteResponseDTO executeResponseDTO = new ExecuteResponseDTO();
+        executeResponseDTO.setInterfaceId(atTestInterfaceCallRecord.getInterfaceId());
+        executeResponseDTO.setResponseBody(atTestInterfaceCallRecord.getResponseBody());
         executeResponseDTO.setExecuteTime(exeTimeStamp);
         executeResponseDTO.setDurationTime(atTestInterfaceCallRecord.getDurationTime());
         return executeResponseDTO;

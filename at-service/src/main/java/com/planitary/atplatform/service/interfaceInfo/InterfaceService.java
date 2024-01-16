@@ -56,7 +56,7 @@ public interface InterfaceService {
     /**
      * 填充后的接口执行发起请求
      */
-    CompletableFuture<Void> coreExecutor(BizCodeEnum callableMethod);
+    CompletableFuture<Void> coreExecutor(String callableMethodCode);
 
 
 }

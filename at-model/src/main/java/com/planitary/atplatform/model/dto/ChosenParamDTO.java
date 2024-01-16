@@ -47,4 +47,5 @@ import java.util.Map;
 @Data
 public class ChosenParamDTO implements Serializable {
     private List<InterfaceParamDTO> chosenParamDTOs;
+    private String callMethod;
 }

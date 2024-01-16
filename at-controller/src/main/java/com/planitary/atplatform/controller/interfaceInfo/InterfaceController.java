@@ -11,6 +11,7 @@ import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import com.planitary.atplatform.service.handler.ExecuteHandler;
 import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.el.lang.ELArithmetic;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -77,15 +79,26 @@ public class InterfaceController {
     }
 
     /**
-     * 这里整个的逻辑是先新建接口，创建requestBody--->填写excel文件(接口执行的集合以及参数集合）
-     * ---> 前端选择要执行的接口以及对应的参数
+     * 这里整个的逻辑是先新建接口，同时填写接口的requestBody--->填写excel文件(接口执行的集合以及参数集合）
+     * ---> 前端选择要执行的接口以及对应的参数，并选择excel文件的处理目的（1、更新接口，2、批量发起调用）
      * @param chosenParamDTO                前端封装的接口选择类（包含接口url和参数集合）
      * @return
      */
     @PostMapping("/interface/parameterizedExecution")
     public PtResult<String> fillRequestBody(@RequestBody ChosenParamDTO chosenParamDTO){
+        String callMethod = chosenParamDTO.getCallMethod();
+        // 业务分类,默认发起外部接口调用
+        String callMethodCode = BizCodeEnum.EXTERNAL_INTERFACE_CALL.getBizCode();
+
+        if (Objects.equals(callMethod,"EXTERNAL_INTERFACE_CALL")){
+            callMethodCode = BizCodeEnum.EXTERNAL_INTERFACE_CALL.getBizCode();
+        }
+        if (Objects.equals(callMethod,"UPDATE_CURRENT_INTERFACE_INFO")){
+            callMethodCode = BizCodeEnum.UPDATE_CURRENT_INTERFACE_INFO.getBizCode();
+        }
         interfaceService.coreFillParameter(chosenParamDTO);
-        interfaceService.coreExecutor(BizCodeEnum.EXTERNAL_INTERFACE_CALL);
+        log.info("传递的方法为:{}",callMethodCode);
+        interfaceService.coreExecutor(callMethodCode);
         return PtResult.success("Success");
     }
 

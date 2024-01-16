@@ -269,7 +269,7 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Override
     @Async
 // TODO: 2024/1/4 实际上这里要发起异步的调用
-    public CompletableFuture<Void> coreExecutor(BizCodeEnum callableMethod) {
+    public CompletableFuture<Void> coreExecutor(String callableMethodCode) {
         String traceId = MDC.get("traceId");
         int totalTasks = dataPool.size();
         AtomicInteger completedTasks = new AtomicInteger(0);
@@ -279,8 +279,8 @@ public class InterfaceServiceImpl implements InterfaceService {
             future.thenAcceptAsync(data -> {
                 MDC.put("traceId", traceId);
                 try {
-                    // 业务执行逻辑...
-                    if (Objects.equals(callableMethod.getBizCode(), "CM001")) {
+                    // 业务执行逻辑(更新接口请求体)
+                    if (Objects.equals(callableMethodCode, "CM001")) {
                         log.info("消费到参数:{}", data);
                         ATPlatformInterfaceInfo interfaceInfo = (ATPlatformInterfaceInfo) data.get("interfaceInfo");
                         if (interfaceInfo == null) {
@@ -308,7 +308,7 @@ public class InterfaceServiceImpl implements InterfaceService {
                         }
                     }
                     // 业务执行逻辑(外部调用)
-                    if (Objects.equals(callableMethod.getBizCode(), "CM002")) {
+                    if (Objects.equals(callableMethodCode, "CM002")) {
                         ATPlatformInterfaceInfo atPlatformInterfaceInfo = (ATPlatformInterfaceInfo) data.get("interfaceInfo");
                         if (atPlatformInterfaceInfo == null) {
                             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
