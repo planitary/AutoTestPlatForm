@@ -33,6 +33,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author：planitary
@@ -57,7 +58,9 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Resource
     private ExecuteHandler executeHandler;
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(10); // 线程池大小
+    private final Integer THREAD_POOL_SIZE = 2;
+
+    private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE); // 线程池大小
     private final List<CompletableFuture<Map<String, Object>>> dataPool = new CopyOnWriteArrayList<>();
 
 
@@ -204,6 +207,10 @@ public class InterfaceServiceImpl implements InterfaceService {
         String traceId = MDC.get("traceId");
         List<CompletableFuture<Map<String, Object>>> futures = new ArrayList<>();
         List<InterfaceParamDTO> interfaceParamDTOS = chosenParamDTO.getChosenParamDTOs();
+
+//        // 清空数据池，准备接收最新的数据
+        dataPool.clear();
+
         if (interfaceParamDTOS == null || interfaceParamDTOS.size() == 0) {
             log.debug("无数据");
         } else {
@@ -247,20 +254,32 @@ public class InterfaceServiceImpl implements InterfaceService {
                 }
             }
         }
+
         return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                .thenApplyAsync(ignored -> "所有解析完成");
+                .thenApplyAsync(ignored -> {
+//                    // 等待所有解析完成后，清空线程池中旧的数据
+//                    dataPool.clear();
+                    log.debug("==========所有解析完成=============");
+                    return "所有解析完成";
+                });
     }
+
+
 
     @Override
     @Async
-    // TODO: 2024/1/4 实际上这里要发起异步的调用
+// TODO: 2024/1/4 实际上这里要发起异步的调用
     public CompletableFuture<Void> coreExecutor(BizCodeEnum callableMethod) {
         String traceId = MDC.get("traceId");
+        int totalTasks = dataPool.size();
+        AtomicInteger completedTasks = new AtomicInteger(0);
+
         for (CompletableFuture<Map<String, Object>> future : dataPool) {
+            ExecutorService newExecutorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
             future.thenAcceptAsync(data -> {
                 MDC.put("traceId", traceId);
-                // 业务执行核心逻辑(更新当前接口)
                 try {
+                    // 业务执行逻辑...
                     if (Objects.equals(callableMethod.getBizCode(), "CM001")) {
                         log.info("消费到参数:{}", data);
                         ATPlatformInterfaceInfo interfaceInfo = (ATPlatformInterfaceInfo) data.get("interfaceInfo");
@@ -316,16 +335,23 @@ public class InterfaceServiceImpl implements InterfaceService {
                             log.error("业务异常:{}", e.getMessage());
                         }
                     }
-                    Thread.sleep(1500); // 仅用于模拟延迟，请谨慎使用线程睡眠
+                    Thread.sleep(1500); // 模拟延迟，请注意线程睡眠的使用
                 } catch (InterruptedException e) {
                     log.error("业务执行异常: {}", e.getMessage());
                     throw new RuntimeException(e);
+                } finally {
+                    int completed = completedTasks.incrementAndGet();
+                    if (completed == totalTasks) {
+                        // 当所有任务完成时清空线程池
+                        newExecutorService.shutdown();
+                        log.debug("==========异步任务执行完毕=============");
+                    }
                 }
-                log.debug("==========异步任务执行完毕=============");
-            }, executorService);
+            }, newExecutorService);
         }
         return CompletableFuture.completedFuture(null);
     }
+
 
 
     /**
