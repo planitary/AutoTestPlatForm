@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.planitary.atplatform.base.commonEnum.BizCodeEnum;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
@@ -268,7 +267,6 @@ public class InterfaceServiceImpl implements InterfaceService {
 
     @Override
     @Async
-// TODO: 2024/1/4 实际上这里要发起异步的调用
     public CompletableFuture<Void> coreExecutor(String callableMethodCode) {
         String traceId = MDC.get("traceId");
         int totalTasks = dataPool.size();
@@ -354,6 +352,7 @@ public class InterfaceServiceImpl implements InterfaceService {
 
 
 
+
     /**
      * 更新接口参数，因为interfaceInfo的requestBody字段也是一个json
      *
@@ -384,30 +383,5 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
 
-//    public static void main(String[] args) {
-//        InterfaceServiceImpl interfaceService = new InterfaceServiceImpl();
-//        InterfaceParamDTO interfaceParamDTO = new InterfaceParamDTO();
-//        ParamDTO paramDTO1 = new ParamDTO();
-//        ParamDTO paramDTO2 = new ParamDTO();
-//
-//        Map<String,Object> map1 = new HashMap<>();
-//        map1.put("id",1);
-//        map1.put("name","jack");
-//        map1.put("age",20);
-//        Map<String,Object> map2 = new HashMap<>();
-//        map2.put("id",2);
-//        map2.put("name","peter");
-//        map2.put("age",35);
-//        paramDTO1.setParamsMap(map1);
-//        paramDTO2.setParamsMap(map2);
-//        List<ParamDTO> paramDTOList = new ArrayList<>();
-//        paramDTOList.add(paramDTO1);
-//        paramDTOList.add(paramDTO2);
-//        Map<String,List<ParamDTO>> stringListMap = new HashMap<>();
-//        stringListMap.put("cornerstone/test",paramDTOList);
-//        interfaceParamDTO.setChosenParamDTO(stringListMap);
-//        CompletableFuture<String> future = interfaceService.coreFillParameter(interfaceParamDTO);
-//        System.out.println(future);
-//        interfaceService.coreExecutor();
-//    }
+
 }

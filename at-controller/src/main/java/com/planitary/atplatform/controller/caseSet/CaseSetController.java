@@ -43,12 +43,12 @@ public class CaseSetController {
     }
 
     @PostMapping("/caseSet/updateCaseSet")
-    public PtResult<String> updateCaseSet(String projectId,@RequestBody ATPlatformCaseSet atPlatformCaseSet){
+    public PtResult<String> updateCaseSet(String projectId,@RequestBody AddCaseSetDTO addCaseSetDTO){
         if (projectId == null){
             log.error("项目id为空");
             ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
         }
-        String caseSetId = caseSetService.updateCaseSet(atPlatformCaseSet);
+        String caseSetId = caseSetService.updateCaseSet(addCaseSetDTO);
         return PtResult.success(caseSetId);
     }
 

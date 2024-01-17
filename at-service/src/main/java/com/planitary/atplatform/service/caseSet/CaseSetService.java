@@ -8,6 +8,7 @@ import com.planitary.atplatform.model.po.ATPlatformCaseSet;
 
 import javax.print.attribute.standard.PageRanges;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Author：planitary
@@ -28,10 +29,10 @@ public interface CaseSetService {
 
     /**
      * 编辑测试用例集合
-     * @param atPlatformCaseSet
+     * @param addCaseSetDTO         caseSetDTO类
      * @return
      */
-    String updateCaseSet(ATPlatformCaseSet atPlatformCaseSet);
+    String updateCaseSet(AddCaseSetDTO addCaseSetDTO);
 
     /**
      * 查询测试集合列表
@@ -41,5 +42,10 @@ public interface CaseSetService {
      */
     PageResult<ATPlatformCaseSet> queryCaseSetList(PageParams pageParams, QueryCaseSetListDTO queryCaseSetListDTO);
 
-
+    /**
+     * json提取接口调用的参数
+     * 这里的逻辑是新建测试集合的时候，每一条接口会附带一个要提取的参数值（如果有的话），点击新建提交的时候，会按照维护的接口顺序维护参数
+     * @param parameters            待提取的参数集合
+     */
+    void parameterExtract(Set<String> parameters);
 }
