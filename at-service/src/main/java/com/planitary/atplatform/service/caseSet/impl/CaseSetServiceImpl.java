@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jayway.jsonpath.JsonPath;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
@@ -16,14 +17,13 @@ import com.planitary.atplatform.mapper.ATPlatformCaseSetMapper;
 import com.planitary.atplatform.mapper.ATPlatformInterfaceInfoMapper;
 import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.mapper.ATPlatformTCSExtractParamMapper;
-import com.planitary.atplatform.model.dto.AddCaseSetDTO;
-import com.planitary.atplatform.model.dto.ExtractParamDTO;
-import com.planitary.atplatform.model.dto.QueryCaseSetListDTO;
+import com.planitary.atplatform.model.dto.*;
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import com.planitary.atplatform.model.po.ATPlatformProject;
 import com.planitary.atplatform.model.po.ATPlatformTCSExtractParam;
 import com.planitary.atplatform.service.caseSet.CaseSetService;
+import com.planitary.atplatform.service.handler.ExecuteHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -56,10 +56,10 @@ public class CaseSetServiceImpl implements CaseSetService {
     private ATPlatformInterfaceInfoMapper atPlatformInterfaceInfoMapper;
 
     @Resource
-    private ATPlatformTCSExtractParamMapper atPlatformTCSExtractParamMapper;
+    private UniqueStringIdGenerator uniqueStringIdGenerator;
 
     @Resource
-    private UniqueStringIdGenerator uniqueStringIdGenerator;
+    private ExecuteHandler executeHandler;
 
     @Override
     public String addCaseSet(AddCaseSetDTO addCaseSetDTO) {
@@ -200,7 +200,46 @@ public class CaseSetServiceImpl implements CaseSetService {
     }
 
     @Override
-    public void parameterExtract(Set<String> parameters) {
+    public void doCaseSetCore(String caseSetId) {
+        LambdaQueryWrapper<ATPlatformCaseSet> caseSetLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<ATPlatformInterfaceInfo> interfaceInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        caseSetLambdaQueryWrapper.eq(ATPlatformCaseSet::getSetId,caseSetId);
+        ATPlatformCaseSet atPlatformCaseSet = atPlatformCaseSetMapper.selectOne(caseSetLambdaQueryWrapper);
+        if (atPlatformCaseSet == null){
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        // 序列化成json后反序列化为ExtractParamDTO实体类
+        String parameterList = atPlatformCaseSet.getParameterList();
+        log.info(parameterList);
+        List<ExtractParamDTO> extractParamDTOS = JSON.parseArray(parameterList, ExtractParamDTO.class);
+        // 接口列表依次发起调用，然后根据提取参数，对该接口的返回值进行jsonPath读取
+        for (ExtractParamDTO extractParamDTO : extractParamDTOS){
+            String interfaceId = extractParamDTO.getInterfaceId();
+            interfaceInfoLambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getInterfaceId,interfaceId);
+            ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.selectOne(interfaceInfoLambdaQueryWrapper);
+            if (atPlatformInterfaceInfo == null){
+                ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+            }
+            List<Map<String,String>> params = extractParamDTO.getParams();
+            // 发起调用
+            String requestBody = atPlatformInterfaceInfo.getRequestBody();
+            Map<String, Object> requestBodyMap = JSON.parseObject(requestBody);
+            ExecuteDTO executeDTO = new ExecuteDTO();
+            executeDTO.setProjectId(atPlatformInterfaceInfo.getProjectId());
+            executeDTO.setInterfaceUrl(atPlatformInterfaceInfo.getInterfaceUrl());
+            executeDTO.setInterfaceId(atPlatformInterfaceInfo.getInterfaceId());
+            executeDTO.setRequestBody(requestBodyMap);
+            executeDTO.setRequireTime(System.currentTimeMillis());
+            try {
+                ExecuteResponseDTO executeResponseDTO = executeHandler.doInterfaceExecutor(executeDTO);
+                String responseBody = executeResponseDTO.getResponseBody();
+                for (Map<String,String> param : params){
+                    Object read = JsonPath.read(responseBody, param.entrySet();
+
+                }
+            }
+        }
 
     }
+
 }

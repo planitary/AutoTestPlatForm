@@ -56,4 +56,10 @@ public class CaseSetController {
     public PageResult<ATPlatformCaseSet> getCaseSetList(PageParams pageParams, @RequestBody QueryCaseSetListDTO queryCaseSetListDTO){
         return caseSetService.queryCaseSetList(pageParams,queryCaseSetListDTO);
     }
+
+//    @PostMapping("/caseSet/test")
+//    public PtResult<String> test(){
+//        caseSetService.parameterExtract("87318735395635200");
+//        return PtResult.success("yes");
+//    }
 }

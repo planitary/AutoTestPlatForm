@@ -3,6 +3,7 @@ package com.planitary.atplatform.model.dto;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author：planitary
@@ -15,5 +16,5 @@ import java.util.List;
 @Data
 public class ExtractParamDTO {
     private String interfaceId;
-    List<String> params;
+    List<Map<String,String>> params;
 }

@@ -1,0 +1,6 @@
+2024-01-18 21:23:22,895 INFO [main][AbstractTestContextBootstrapper.java:305] -  - Neither @ContextConfiguration nor @ContextHierarchy found for test class [test], using SpringBootContextLoader
+2024-01-18 21:23:22,895 INFO [main][AbstractTestContextBootstrapper.java:305] -  - Neither @ContextConfiguration nor @ContextHierarchy found for test class [test], using SpringBootContextLoader
+2024-01-18 21:23:22,906 INFO [main][AbstractContextLoader.java:264] -  - Could not detect default resource locations for test class [test]: no resource found for suffixes {-context.xml, Context.groovy}.
+2024-01-18 21:23:22,906 INFO [main][AbstractContextLoader.java:264] -  - Could not detect default resource locations for test class [test]: no resource found for suffixes {-context.xml, Context.groovy}.
+2024-01-18 21:23:22,908 INFO [main][AnnotationConfigContextLoaderUtils.java:83] -  - Could not detect default configuration classes for test class [test]: test does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-01-18 21:23:22,908 INFO [main][AnnotationConfigContextLoaderUtils.java:83] -  - Could not detect default configuration classes for test class [test]: test does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
