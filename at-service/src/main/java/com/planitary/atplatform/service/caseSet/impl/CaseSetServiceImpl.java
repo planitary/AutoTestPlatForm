@@ -105,9 +105,12 @@ public class CaseSetServiceImpl implements CaseSetService {
 //        atPlatformCaseSet.setSetWeight(addCaseSetDTO.getWeight());
 //        atPlatformCaseSet.setInterfaceIds(interfaceIdsJSON);
 //        atPlatformCaseSet.setParameterList(parameterListJSON);
+        List<ExtractParamDTO> extractParamDTOS = addCaseSetDTO.getExtractParamDTOS();
+        String extractParamDTOJson = JSON.toJSONString(extractParamDTOS);
+        atPlatformCaseSet.setParameterList(extractParamDTOJson);
         atPlatformCaseSet.setSetId(setId);
-        atPlatformCaseSet.setCreateUser("planitary");
-        atPlatformCaseSet.setUpdateUser("planitary");
+        atPlatformCaseSet.setCreateUser(addCaseSetDTO.getOwner());
+        atPlatformCaseSet.setUpdateUser(addCaseSetDTO.getOwner());
 
         int insertCount = atPlatformCaseSetMapper.insert(atPlatformCaseSet);
         if (insertCount <= 0) {
@@ -115,30 +118,13 @@ public class CaseSetServiceImpl implements CaseSetService {
             ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);
         }
         log.debug("插入集合成功");
-
-        // 解析extractParam并持久化
-        ATPlatformTCSExtractParam atPlatformTCSExtractParam = new ATPlatformTCSExtractParam();
-        List<ExtractParamDTO> extractParamDTOS = addCaseSetDTO.getExtractParamDTOS();
-        for (ExtractParamDTO extractParamDTO : extractParamDTOS){
-            String bizId = uniqueStringIdGenerator.idGenerator().substring(3,6) + uniqueStringIdGenerator.idGenerator();
-            atPlatformTCSExtractParam.setInterfaceId(extractParamDTO.getInterfaceId());
-            atPlatformTCSExtractParam.setBizId(bizId);
-            atPlatformTCSExtractParam.setOwner(addCaseSetDTO.getOwner());
-            atPlatformTCSExtractParam.setCaseSetId(setId);
-            atPlatformTCSExtractParam.setExtractParams(extractParamDTO.getParams().toString());
-            int insertExtractParam = atPlatformTCSExtractParamMapper.insert(atPlatformTCSExtractParam);
-            if (insertExtractParam <= 0){
-                log.error("执行失败:{}", ExceptionEnum.INSERT_FAILED.getErrMessage());
-                ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);
-            }
-            log.debug("插入参数集合成功");
-        }
         return setId;
     }
 
     @Override
     public String updateCaseSet(AddCaseSetDTO addCaseSetDTO) {
         if (addCaseSetDTO.getSetId() == null){
+            log.error("集合id为空!");
             ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
         }
         // 校验集合是否存在
@@ -154,8 +140,6 @@ public class CaseSetServiceImpl implements CaseSetService {
         UpdateWrapper<ATPlatformCaseSet> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("set_id", setId);
 
-        UpdateWrapper<ATPlatformTCSExtractParam> extractParamUpdateWrapper = new UpdateWrapper<>();
-
         if (addCaseSetDTO.getSetName() != null) {
             updateWrapper.set("set_name", addCaseSetDTO.getSetName());
         }
@@ -165,23 +149,12 @@ public class CaseSetServiceImpl implements CaseSetService {
         if (addCaseSetDTO.getSetWeight() != null) {
             updateWrapper.set("set_weight", addCaseSetDTO.getSetWeight());
         }
+        if (addCaseSetDTO.getParameterList() != null){
+            String extractParamDTOJson = JSON.toJSONString(addCaseSetDTO.getExtractParamDTOS());
+            updateWrapper.set("parameter_list",extractParamDTOJson);
+        }
         if (addCaseSetDTO.getRemark() != null) {
             updateWrapper.set("remark", addCaseSetDTO.getRemark());
-        }
-        if (addCaseSetDTO.getExtractParamDTOS() != null){
-            for (ExtractParamDTO extractParamDTO : addCaseSetDTO.getExtractParamDTOS()) {
-                String interfaceId = extractParamDTO.getInterfaceId();
-                List<String> params = extractParamDTO.getParams();
-                extractParamUpdateWrapper.eq("interfaceId",interfaceId).eq("set_id",setId);
-                extractParamUpdateWrapper.set("extract_params",params.toString());
-                extractParamUpdateWrapper.set("update_time",LocalDateTime.now());
-                atPlatformTCSExtractParamMapper.update(null,extractParamUpdateWrapper);
-                int extractParamUpdateCount = atPlatformCaseSetMapper.update(null, updateWrapper);
-                if (extractParamUpdateCount <= 0) {
-                    ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
-                }
-                log.info("同步更新提取参数成功");
-            }
         }
         updateWrapper.set("update_time", LocalDateTime.now());
 
@@ -189,7 +162,7 @@ public class CaseSetServiceImpl implements CaseSetService {
         if (updateCount <= 0) {
             ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
         }
-        log.info("更新接口成功");
+        log.info("更新用例集合成功");
         return setId;
     }
 
