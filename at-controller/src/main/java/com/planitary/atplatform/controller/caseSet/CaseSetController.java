@@ -10,6 +10,7 @@ import com.planitary.atplatform.model.dto.QueryCaseSetListDTO;
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
 import com.planitary.atplatform.service.caseSet.CaseSetService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.el.lang.ELArithmetic;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,8 +34,8 @@ public class CaseSetController {
     CaseSetService caseSetService;
 
     @PostMapping("/caseSet/insertCaseSet")
-    public PtResult<String> insertCaseSet(@RequestBody AddCaseSetDTO addCaseSetDTO){
-        if (addCaseSetDTO == null){
+    public PtResult<String> insertCaseSet(@RequestBody AddCaseSetDTO addCaseSetDTO) {
+        if (addCaseSetDTO == null) {
             log.error("参数为空!");
             ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
         }
@@ -43,18 +44,38 @@ public class CaseSetController {
     }
 
     @PostMapping("/caseSet/updateCaseSet")
-    public PtResult<String> updateCaseSet(String projectId,@RequestBody AddCaseSetDTO addCaseSetDTO){
-        if (projectId == null){
-            log.error("项目id为空");
-            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
-        }
+    public PtResult<String> updateCaseSet(@RequestBody AddCaseSetDTO addCaseSetDTO) {
+
         String caseSetId = caseSetService.updateCaseSet(addCaseSetDTO);
         return PtResult.success(caseSetId);
     }
 
     @GetMapping("/caseSet/caseSetList")
-    public PageResult<ATPlatformCaseSet> getCaseSetList(PageParams pageParams, @RequestBody QueryCaseSetListDTO queryCaseSetListDTO){
-        return caseSetService.queryCaseSetList(pageParams,queryCaseSetListDTO);
+    public PageResult<ATPlatformCaseSet> getCaseSetList(PageParams pageParams, @RequestBody QueryCaseSetListDTO queryCaseSetListDTO) {
+        return caseSetService.queryCaseSetList(pageParams, queryCaseSetListDTO);
+    }
+
+    @PostMapping("/caseSet/executeSet")
+    public PtResult<String> executeSet(String caseSetId) {
+        boolean isSuccess;
+        if (caseSetId == null) {
+            log.error("集合id为空!");
+            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
+        }
+        try {
+            caseSetService.doCaseSetCore(caseSetId);
+            isSuccess = true;
+        }catch (ATPlatformException e){
+            e.printStackTrace();
+            isSuccess = false;
+            log.error(e.getMessage());
+        }
+        if (Boolean.TRUE.equals(isSuccess)){
+            return PtResult.success("execute success!");
+        }else {
+            return PtResult.error("execute failed",ExceptionEnum.CALL_FAILED.getErrCode());
+        }
+
     }
 
 //    @PostMapping("/caseSet/test")

@@ -107,4 +107,9 @@ public class InterfaceController {
         String res = "test:" + param.get("ocCode") + " name:" + param.get("ocName");
         return PtResult.success(res);
     }
+
+    @PostMapping("/external/testInterface2")
+    public PtResult<String> testInterface2(@RequestBody Map<String,Object> param){
+        return PtResult.success((String)param.get("data"));
+    }
 }

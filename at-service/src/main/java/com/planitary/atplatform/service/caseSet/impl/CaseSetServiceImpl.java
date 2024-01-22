@@ -24,6 +24,7 @@ import com.planitary.atplatform.model.po.ATPlatformProject;
 import com.planitary.atplatform.model.po.ATPlatformTCSExtractParam;
 import com.planitary.atplatform.service.caseSet.CaseSetService;
 import com.planitary.atplatform.service.handler.ExecuteHandler;
+import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -32,6 +33,7 @@ import org.springframework.web.context.annotation.RequestScope;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -123,7 +125,7 @@ public class CaseSetServiceImpl implements CaseSetService {
 
     @Override
     public String updateCaseSet(AddCaseSetDTO addCaseSetDTO) {
-        if (addCaseSetDTO.getSetId() == null){
+        if (addCaseSetDTO.getSetId() == null) {
             log.error("集合id为空!");
             ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
         }
@@ -149,9 +151,9 @@ public class CaseSetServiceImpl implements CaseSetService {
         if (addCaseSetDTO.getSetWeight() != null) {
             updateWrapper.set("set_weight", addCaseSetDTO.getSetWeight());
         }
-        if (addCaseSetDTO.getParameterList() != null){
+        if (addCaseSetDTO.getExtractParamDTOS() != null) {
             String extractParamDTOJson = JSON.toJSONString(addCaseSetDTO.getExtractParamDTOS());
-            updateWrapper.set("parameter_list",extractParamDTOJson);
+            updateWrapper.set("parameter_list", extractParamDTOJson);
         }
         if (addCaseSetDTO.getRemark() != null) {
             updateWrapper.set("remark", addCaseSetDTO.getRemark());
@@ -188,58 +190,79 @@ public class CaseSetServiceImpl implements CaseSetService {
                         ATPlatformCaseSet::getInterfaceIds, queryCaseSetListDTO.getInterfaceIds());
         long pageNo = pageParams.getPageNo();
         long pageSize = pageParams.getPageSize();
-        if (pageNo <= 0 || pageSize <= 0){
+        if (pageNo <= 0 || pageSize <= 0) {
             ATPlatformException.exceptionCast(ExceptionEnum.PAGINATION_PARAM_ERROR);
         }
-        Page<ATPlatformCaseSet> page = new Page<>(pageNo,pageSize);
-        Page<ATPlatformCaseSet> caseSetPage = atPlatformCaseSetMapper.selectPage(page,atPlatformCaseSetLambdaQueryWrapper);
+        Page<ATPlatformCaseSet> page = new Page<>(pageNo, pageSize);
+        Page<ATPlatformCaseSet> caseSetPage = atPlatformCaseSetMapper.selectPage(page, atPlatformCaseSetLambdaQueryWrapper);
         List<ATPlatformCaseSet> records = caseSetPage.getRecords();
         long total = caseSetPage.getTotal();
-        log.info("查询到的记录总数:{}",total);
-        return new PageResult<>(records,total,pageNo,pageSize,"200");
+        log.info("查询到的记录总数:{}", total);
+        return new PageResult<>(records, total, pageNo, pageSize, "200");
     }
 
     @Override
     public void doCaseSetCore(String caseSetId) {
         LambdaQueryWrapper<ATPlatformCaseSet> caseSetLambdaQueryWrapper = new LambdaQueryWrapper<>();
         LambdaQueryWrapper<ATPlatformInterfaceInfo> interfaceInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        caseSetLambdaQueryWrapper.eq(ATPlatformCaseSet::getSetId,caseSetId);
+        caseSetLambdaQueryWrapper.eq(ATPlatformCaseSet::getSetId, caseSetId);
         ATPlatformCaseSet atPlatformCaseSet = atPlatformCaseSetMapper.selectOne(caseSetLambdaQueryWrapper);
-        if (atPlatformCaseSet == null){
+        if (atPlatformCaseSet == null) {
+            log.error("测试集合不存在!");
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
+        // 公共Map，存放通过提取的参数获得的值
+        Map<String,Object> extractValueMap = new HashMap<>();
         // 序列化成json后反序列化为ExtractParamDTO实体类
         String parameterList = atPlatformCaseSet.getParameterList();
         log.info(parameterList);
         List<ExtractParamDTO> extractParamDTOS = JSON.parseArray(parameterList, ExtractParamDTO.class);
         // 接口列表依次发起调用，然后根据提取参数，对该接口的返回值进行jsonPath读取
-        for (ExtractParamDTO extractParamDTO : extractParamDTOS){
+        // TODO: 2024/1/22 bug ：for的循环不能取extractParamDTO的长度，应该取intetfaceIds的长度，interfaceIds需要序列化一下
+        for (int i = 0 ; i < atPlatformCaseSet.getInterfaceIds().) {
+            log.info("当前参数:{}",extractParamDTO.getParams());
             String interfaceId = extractParamDTO.getInterfaceId();
-            interfaceInfoLambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getInterfaceId,interfaceId);
+            interfaceInfoLambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getInterfaceId, interfaceId);
             ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.selectOne(interfaceInfoLambdaQueryWrapper);
-            if (atPlatformInterfaceInfo == null){
+            if (atPlatformInterfaceInfo == null) {
                 ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
             }
-            List<Map<String,String>> params = extractParamDTO.getParams();
+            log.info("当前执行的函数:{}-{}",interfaceId,atPlatformInterfaceInfo.getInterfaceUrl());
+
+            List<Map<String, String>> params = extractParamDTO.getParams();
             // 发起调用
             String requestBody = atPlatformInterfaceInfo.getRequestBody();
             Map<String, Object> requestBodyMap = JSON.parseObject(requestBody);
             ExecuteDTO executeDTO = new ExecuteDTO();
+            // 每次调用时，先从公共map中判断当前接口请求参数中是否含有上一个接口提取后的值
+            for (Map.Entry<String,Object> entry : extractValueMap.entrySet()){
+                if (requestBodyMap.containsKey(entry.getKey())){
+                    requestBodyMap.put(entry.getKey(), entry.getValue());
+                }
+            }
             executeDTO.setProjectId(atPlatformInterfaceInfo.getProjectId());
             executeDTO.setInterfaceUrl(atPlatformInterfaceInfo.getInterfaceUrl());
             executeDTO.setInterfaceId(atPlatformInterfaceInfo.getInterfaceId());
             executeDTO.setRequestBody(requestBodyMap);
             executeDTO.setRequireTime(System.currentTimeMillis());
             try {
+                // 从响应体中使用jasonPath取值并赋值给公共map调用
                 ExecuteResponseDTO executeResponseDTO = executeHandler.doInterfaceExecutor(executeDTO);
                 String responseBody = executeResponseDTO.getResponseBody();
-                for (Map<String,String> param : params){
-                    Object read = JsonPath.read(responseBody, param.entrySet();
-
+                for (Map<String, String> param : params) {
+                    for (String key : param.keySet()){
+                        Object extractedParam = JsonPath.read(responseBody,param.get(key));
+                        log.info("解析到参数:{}",extractedParam);
+                        extractValueMap.put(key,extractedParam);
+                    }
                 }
+            }catch (ATPlatformException e){
+                e.printStackTrace();
+                log.info("函数调用异常:{}",e.getMessage());
             }
+            log.info("当前接口:{}-参数提取完成",interfaceId);
         }
-
+        log.info("=========调用结束=========");
     }
 
 }

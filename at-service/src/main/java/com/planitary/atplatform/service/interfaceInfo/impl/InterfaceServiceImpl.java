@@ -359,7 +359,7 @@ public class InterfaceServiceImpl implements InterfaceService {
      * @param sourceMap 实际传参
      * @param targetMap 接口入参（要更新的）
      */
-    private void updateRequestBody(Map<String, Object> sourceMap, Map<String, Object> targetMap) {
+    protected void updateRequestBody(Map<String, Object> sourceMap, Map<String, Object> targetMap) {
         log.info("接收到的参数为:{},接口的参数为:{}", sourceMap, targetMap);
         if (sourceMap.isEmpty() || targetMap.isEmpty()) {
             log.info("接口参数或传参为空，无需变更");
