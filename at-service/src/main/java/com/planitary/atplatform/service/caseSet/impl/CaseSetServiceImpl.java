@@ -33,10 +33,7 @@ import org.springframework.web.context.annotation.RequestScope;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @Author：planitary
@@ -211,56 +208,65 @@ public class CaseSetServiceImpl implements CaseSetService {
             log.error("测试集合不存在!");
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
+
         // 公共Map，存放通过提取的参数获得的值
-        Map<String,Object> extractValueMap = new HashMap<>();
+        Map<String, Object> extractValueMap = new HashMap<>();
         // 序列化成json后反序列化为ExtractParamDTO实体类
         String parameterList = atPlatformCaseSet.getParameterList();
         log.info(parameterList);
         List<ExtractParamDTO> extractParamDTOS = JSON.parseArray(parameterList, ExtractParamDTO.class);
         // 接口列表依次发起调用，然后根据提取参数，对该接口的返回值进行jsonPath读取
         // TODO: 2024/1/22 bug ：for的循环不能取extractParamDTO的长度，应该取intetfaceIds的长度，interfaceIds需要序列化一下
-        for (int i = 0 ; i < atPlatformCaseSet.getInterfaceIds().) {
-            log.info("当前参数:{}",extractParamDTO.getParams());
-            String interfaceId = extractParamDTO.getInterfaceId();
-            interfaceInfoLambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getInterfaceId, interfaceId);
-            ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.selectOne(interfaceInfoLambdaQueryWrapper);
+        String interfaceIdsJson = atPlatformCaseSet.getInterfaceIds();
+        List<String> interfaceIds = JSON.parseArray(interfaceIdsJson, String.class);
+        //  开始执行
+        for (String interfaceId : interfaceIds) {
+            LambdaQueryWrapper<ATPlatformInterfaceInfo> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getInterfaceId, interfaceId);
+            ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.selectOne(lambdaQueryWrapper);
             if (atPlatformInterfaceInfo == null) {
                 ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
             }
-            log.info("当前执行的函数:{}-{}",interfaceId,atPlatformInterfaceInfo.getInterfaceUrl());
-
-            List<Map<String, String>> params = extractParamDTO.getParams();
-            // 发起调用
-            String requestBody = atPlatformInterfaceInfo.getRequestBody();
-            Map<String, Object> requestBodyMap = JSON.parseObject(requestBody);
-            ExecuteDTO executeDTO = new ExecuteDTO();
-            // 每次调用时，先从公共map中判断当前接口请求参数中是否含有上一个接口提取后的值
-            for (Map.Entry<String,Object> entry : extractValueMap.entrySet()){
-                if (requestBodyMap.containsKey(entry.getKey())){
-                    requestBodyMap.put(entry.getKey(), entry.getValue());
+            // 每次调用前先判断当前接口的参数有没有公共提取参数列表中的值，有的话覆盖
+            String requestBodyJSON = atPlatformInterfaceInfo.getRequestBody();
+            Map<String, Object> requestBody = JSON.parseObject(requestBodyJSON);
+            for (Map.Entry<String, Object> entry : extractValueMap.entrySet()) {
+                if (requestBody.containsKey(entry.getKey())) {
+                    requestBody.put(entry.getKey(), entry.getValue());
                 }
             }
-            executeDTO.setProjectId(atPlatformInterfaceInfo.getProjectId());
-            executeDTO.setInterfaceUrl(atPlatformInterfaceInfo.getInterfaceUrl());
-            executeDTO.setInterfaceId(atPlatformInterfaceInfo.getInterfaceId());
-            executeDTO.setRequestBody(requestBodyMap);
-            executeDTO.setRequireTime(System.currentTimeMillis());
+            // 发起调用
+            log.debug("当前发起调用的接口:{}-{}", interfaceId, atPlatformInterfaceInfo.getInterfaceUrl());
             try {
-                // 从响应体中使用jasonPath取值并赋值给公共map调用
+
+                ExecuteDTO executeDTO = new ExecuteDTO();
+                executeDTO.setInterfaceId(interfaceId);
+                executeDTO.setInterfaceUrl(atPlatformInterfaceInfo.getInterfaceUrl());
+                executeDTO.setProjectId(atPlatformInterfaceInfo.getProjectId());
+
+                executeDTO.setRequestBody(requestBody);
+                executeDTO.setRequireTime(System.currentTimeMillis());
                 ExecuteResponseDTO executeResponseDTO = executeHandler.doInterfaceExecutor(executeDTO);
-                String responseBody = executeResponseDTO.getResponseBody();
-                for (Map<String, String> param : params) {
-                    for (String key : param.keySet()){
-                        Object extractedParam = JsonPath.read(responseBody,param.get(key));
-                        log.info("解析到参数:{}",extractedParam);
-                        extractValueMap.put(key,extractedParam);
+                // 调用成功后根据提取列表，提取当前接口的调用结果,由于接口提取参数的接口顺序和调用顺序一致
+                // 先判断当前有无需要提取的参数,
+                for (ExtractParamDTO extractParamDTO : extractParamDTOS) {
+                    if (Objects.equals(interfaceId, extractParamDTO.getInterfaceId())) {
+                        List<Map<String, Object>> params = extractParamDTO.getParams();
+                        String responseBody = executeResponseDTO.getResponseBody();
+                        for (Map<String, Object> param : params) {
+                            for (Map.Entry<String, Object> entry : param.entrySet()) {
+                                log.debug("提取到参数:{}", param);
+                                Object read = JsonPath.read(responseBody, (String) entry.getValue());
+                                extractValueMap.put(entry.getKey(), read);
+                            }
+                        }
                     }
                 }
-            }catch (ATPlatformException e){
+            } catch (ATPlatformException e) {
+                log.error("接口调用失败");
                 e.printStackTrace();
-                log.info("函数调用异常:{}",e.getMessage());
             }
-            log.info("当前接口:{}-参数提取完成",interfaceId);
+            log.info("当前接口{}执行完毕",interfaceId);
         }
         log.info("=========调用结束=========");
     }

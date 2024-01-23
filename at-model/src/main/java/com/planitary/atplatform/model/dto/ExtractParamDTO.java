@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 /**
  * @Author：planitary
@@ -16,5 +17,5 @@ import java.util.Map;
 @Data
 public class ExtractParamDTO {
     private String interfaceId;
-    List<Map<String,String>> params;
+    List<Map<String,Object>> params;
 }
