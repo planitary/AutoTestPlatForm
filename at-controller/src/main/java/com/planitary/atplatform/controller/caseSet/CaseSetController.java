@@ -1,11 +1,13 @@
 package com.planitary.atplatform.controller.caseSet;
 
+import com.alibaba.fastjson.JSON;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.base.handler.PageParams;
 import com.planitary.atplatform.model.dto.AddCaseSetDTO;
+import com.planitary.atplatform.model.dto.CaseSetExecuteDTO;
 import com.planitary.atplatform.model.dto.QueryCaseSetListDTO;
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
 import com.planitary.atplatform.service.caseSet.CaseSetService;
@@ -56,7 +58,8 @@ public class CaseSetController {
     }
 
     @PostMapping("/caseSet/executeSet")
-    public PtResult<String> executeSet(String caseSetId) {
+    public PtResult<String> executeSet(@RequestBody CaseSetExecuteDTO caseSetExecuteDTO) {
+        String caseSetId = caseSetExecuteDTO.getCaseSetId();
         boolean isSuccess;
         if (caseSetId == null) {
             log.error("集合id为空!");

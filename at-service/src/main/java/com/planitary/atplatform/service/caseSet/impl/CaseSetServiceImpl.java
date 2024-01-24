@@ -218,6 +218,7 @@ public class CaseSetServiceImpl implements CaseSetService {
         // 接口列表依次发起调用，然后根据提取参数，对该接口的返回值进行jsonPath读取
         // TODO: 2024/1/22 bug ：for的循环不能取extractParamDTO的长度，应该取intetfaceIds的长度，interfaceIds需要序列化一下
         String interfaceIdsJson = atPlatformCaseSet.getInterfaceIds();
+        log.debug(interfaceIdsJson);
         List<String> interfaceIds = JSON.parseArray(interfaceIdsJson, String.class);
         //  开始执行
         for (String interfaceId : interfaceIds) {

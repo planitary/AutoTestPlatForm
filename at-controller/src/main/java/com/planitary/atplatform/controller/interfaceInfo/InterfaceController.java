@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -103,13 +104,17 @@ public class InterfaceController {
     }
 
     @PostMapping("/external/testInterface")
-    public PtResult<String> testInterface(@RequestBody Map<String,Object> param){
-        String res = "test:" + param.get("ocCode") + " name:" + param.get("ocName");
+    public PtResult<Map<String,Object>> testInterface(@RequestBody Map<String,Object> param){
+        Map<String,Object> res = new HashMap<>();
+        res.put("id",param.get("id"));
+        res.put("name",param.get("name"));
+        res.put("tag",param.get("tag"));
         return PtResult.success(res);
     }
 
     @PostMapping("/external/testInterface2")
     public PtResult<String> testInterface2(@RequestBody Map<String,Object> param){
-        return PtResult.success((String)param.get("data"));
+        String res ="hello" +" " + param.get("id") +" "  + param.get("name") + " " + param.get("tag");
+        return PtResult.success(res);
     }
 }
