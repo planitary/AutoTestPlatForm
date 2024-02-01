@@ -76,7 +76,7 @@ public class CaseSetController {
         if (Boolean.TRUE.equals(isSuccess)){
             return PtResult.success("execute success!");
         }else {
-            return PtResult.error("execute failed!",ExceptionEnum.CALL_FAILED.getErrCode());
+            return PtResult.error("execute failed!!",ExceptionEnum.CALL_FAILED.getErrCode());
         }
 
     }
