@@ -12,10 +12,7 @@ import com.planitary.atplatform.service.handler.ExecuteHandler;
 import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.el.lang.ELArithmetic;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -33,6 +30,7 @@ import java.util.concurrent.CompletableFuture;
  */
 @RestController
 @Slf4j
+@CrossOrigin
 public class InterfaceController {
 
     @Resource
@@ -64,7 +62,7 @@ public class InterfaceController {
     }
 
 
-    @GetMapping("/interface/interfaceList")
+    @RequestMapping("/interface/interfaceList")
     public PageResult<ATPlatformInterfaceInfo> getInterfaceList(PageParams pageParams, @RequestBody QueryInterfaceInfoDTO queryInterfaceInfoDTO){
         return interfaceService.queryInterfaceInfoList(pageParams,queryInterfaceInfoDTO);
     }
