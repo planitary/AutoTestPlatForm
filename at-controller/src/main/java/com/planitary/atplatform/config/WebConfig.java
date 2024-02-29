@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @description：
  */
 @Configuration
-public class WebConfig  {
+public class WebConfig implements WebMvcConfigurer{
     // 开启CORS
     // springboot开启CORS的方法：https://blog.csdn.net/JokerLJG/article/details/123659384
     // 1.自定义过滤器 2.实现WebMvcConfigurer接口 3.@CrossOrigin注解，其中若采取2的方式，当allowCredentials为true时,
@@ -37,8 +37,8 @@ public class WebConfig  {
         };
     }
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new TraceIdHandler()).addPathPatterns("/**");
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new TraceIdHandler()).addPathPatterns("/**");
+    }
 }
