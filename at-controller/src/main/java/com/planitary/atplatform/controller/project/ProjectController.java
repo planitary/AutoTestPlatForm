@@ -31,7 +31,7 @@ public class ProjectController {
     @Resource
     ProjectInfoService projectInfoService;
 
-    @GetMapping("/project/projectList")
+    @RequestMapping("/project/projectList")
     public PageResult<ATPlatformProject> getProjectList(PageParams pageParams, @RequestBody QueryProjectDTO queryProjectDTO){
         return projectInfoService.queryProjectList(pageParams, queryProjectDTO);
     }
