@@ -55,12 +55,12 @@ public class ATPlatformProject {
     private int isDelete;
 
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private String createTime;
 
     private String createUser;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
+    private String updateTime;
 
     private String updateUser;
 
