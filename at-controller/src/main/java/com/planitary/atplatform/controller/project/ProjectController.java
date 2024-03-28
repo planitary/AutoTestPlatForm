@@ -4,6 +4,7 @@ import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
+import com.planitary.atplatform.model.dto.BaseProjectDTO;
 import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
@@ -70,5 +71,11 @@ public class ProjectController {
         }
         Map<String, String> resMap = projectInfoService.updateProject(projectId, atPlatformProject);
         return PtResult.success(resMap);
+    }
+
+    @PostMapping("/project/getProjectDetail")
+    public PtResult<?> getProjectDetail(@RequestBody BaseProjectDTO baseProjectDTO){
+        ATPlatformProject project = projectInfoService.getProjectInfo(baseProjectDTO.getProjectId());
+        return PtResult.success(project);
     }
 }

@@ -1,6 +1,7 @@
 package com.planitary.atplatform.model.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @Author：planitary
@@ -10,8 +11,9 @@ import lombok.Data;
  * @Filename：AddProjectDTO
  * @description：
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class AddProjectDTO {
+public class AddProjectDTO extends BaseProjectDTO{
     private String projectName;
     private String projectUrl;
 }

@@ -39,4 +39,11 @@ public interface ProjectInfoService {
      * @return
      */
     Map<String,String> updateProject(String projectId,ATPlatformProject atPlatformProject);
+
+    /**
+     * 获取项目详情
+     * @param projectId         项目ID
+     * @return
+     */
+    ATPlatformProject getProjectInfo(String projectId);
 }

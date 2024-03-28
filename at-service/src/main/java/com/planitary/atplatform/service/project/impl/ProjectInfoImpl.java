@@ -170,4 +170,20 @@ public class ProjectInfoImpl implements ProjectInfoService {
         resMap.put("projectId",projectId);
         return resMap;
     }
+
+    @Override
+    public ATPlatformProject getProjectInfo(String projectId) {
+        if (projectId == null) {
+            log.error("projectId不能为空");
+            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
+        }
+        LambdaQueryWrapper<ATPlatformProject> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(ATPlatformProject::getProjectId,projectId);
+        ATPlatformProject project = atPlatformProjectMapper.selectOne(lambdaQueryWrapper);
+        if (project == null){
+            log.error("项目不存在");
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        return project;
+    }
 }
