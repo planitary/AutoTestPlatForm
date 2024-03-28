@@ -1,14 +1,10 @@
 package com.planitary.atplatform.service.caseSet;
 
 import com.planitary.atplatform.base.customResult.PageResult;
-import com.planitary.atplatform.base.handler.PageParams;
+import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.model.dto.AddCaseSetDTO;
 import com.planitary.atplatform.model.dto.QueryCaseSetListDTO;
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
-
-import javax.print.attribute.standard.PageRanges;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @Author：planitary

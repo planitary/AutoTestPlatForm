@@ -1,4 +1,4 @@
-package com.planitary.atplatform.base.handler;
+package com.planitary.atplatform.model.po;
 
 /**
  * @Author：planitary
@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.ToString;
 
 /**
- * 通用分页查询参数
+ * 通用分页查询参数，后续查询相关的DTO类直接继承，将分页参数耦合进查询DTO中
  */
 @Data
 @ToString

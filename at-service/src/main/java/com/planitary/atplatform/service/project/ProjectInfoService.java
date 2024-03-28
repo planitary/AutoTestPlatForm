@@ -1,7 +1,7 @@
 package com.planitary.atplatform.service.project;
 
 import com.planitary.atplatform.base.customResult.PageResult;
-import com.planitary.atplatform.base.handler.PageParams;
+import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
 import com.planitary.atplatform.model.po.ATPlatformProject;
@@ -19,12 +19,12 @@ import java.util.Map;
 public interface ProjectInfoService {
     /**
      *  项目查询
-     * @param pageParams        分页参数
      * @param queryProjectDTO   查询参数
      * @return      项目查询结果集
      */
-    PageResult<ATPlatformProject> queryProjectList(PageParams pageParams, QueryProjectDTO queryProjectDTO);
+    PageResult<ATPlatformProject> queryProjectList(QueryProjectDTO queryProjectDTO);
 
+    PageResult<ATPlatformProject> queryProjectList(PageParams pageParams,QueryProjectDTO queryProjectDTO);
     /**
      * 添加羡慕
      * @param addProjectDTO     insert参数

@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
-import com.planitary.atplatform.base.handler.PageParams;
+import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.base.utils.UniqueStringIdGenerator;
 import com.planitary.atplatform.mapper.ATPlatformInterfaceInfoMapper;
 import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
@@ -210,7 +210,7 @@ public class InterfaceServiceImpl implements InterfaceService {
 //        // 清空数据池，准备接收最新的数据
         dataPool.clear();
 
-        if (interfaceParamDTOS == null || interfaceParamDTOS.size() == 0) {
+        if (interfaceParamDTOS == null || interfaceParamDTOS.isEmpty()) {
             log.debug("无数据");
         } else {
             log.info("=====开始执行异步任务=====");
@@ -373,7 +373,7 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
     @Transactional
-    protected void updateInterfaceInfo(String key, Object value, String primaryKey, Object primaryValue) {
+    public void updateInterfaceInfo(String key, Object value, String primaryKey, Object primaryValue) {
         UpdateWrapper<ATPlatformInterfaceInfo> updateWrapper = new UpdateWrapper<>();
         updateWrapper.set(key, value).set("update_time", LocalDateTime.now()).eq(primaryKey, primaryValue);
         int update = atPlatformInterfaceInfoMapper.update(null, updateWrapper);

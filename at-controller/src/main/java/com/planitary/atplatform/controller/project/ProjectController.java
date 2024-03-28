@@ -4,7 +4,7 @@ import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
-import com.planitary.atplatform.base.handler.PageParams;
+import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
 import com.planitary.atplatform.model.po.ATPlatformProject;
@@ -32,8 +32,8 @@ public class ProjectController {
     ProjectInfoService projectInfoService;
 
     @RequestMapping("/project/projectList")
-    public PageResult<ATPlatformProject> getProjectList(PageParams pageParams, @RequestBody QueryProjectDTO queryProjectDTO){
-        return projectInfoService.queryProjectList(pageParams, queryProjectDTO);
+    public PageResult<ATPlatformProject> getProjectList(@RequestBody QueryProjectDTO queryProjectDTO){
+        return projectInfoService.queryProjectList(queryProjectDTO);
     }
 
     @RequestMapping("/mock/projectList")

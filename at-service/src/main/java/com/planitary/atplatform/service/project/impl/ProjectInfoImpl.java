@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
-import com.planitary.atplatform.base.handler.PageParams;
+import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.base.utils.GeneralIdGenerator;
 import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.AddProjectDTO;
@@ -42,6 +42,35 @@ public class ProjectInfoImpl implements ProjectInfoService {
 
     @Resource
     ATPlatformProjectMapper atPlatformProjectMapper;
+
+    @Override
+    public PageResult<ATPlatformProject> queryProjectList(QueryProjectDTO queryProjectDTO) {
+        LambdaQueryWrapper<ATPlatformProject> atTestProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        // 拼接查询条件
+        atTestProjectLambdaQueryWrapper.like(StringUtils.isNotEmpty(queryProjectDTO.getProjectName()),
+                ATPlatformProject::getProjectName,queryProjectDTO.getProjectName());
+        atTestProjectLambdaQueryWrapper.like(StringUtils.isNotEmpty(queryProjectDTO.getProjectUrl()),
+                ATPlatformProject::getProjectUrl,queryProjectDTO.getProjectUrl());
+
+        atTestProjectLambdaQueryWrapper.eq(StringUtils.isNotEmpty(queryProjectDTO.getProjectId()),
+                ATPlatformProject::getProjectId,queryProjectDTO.getProjectId());
+
+        // 分页参数
+        long pageNo = queryProjectDTO.getPageNo();
+        long pageSize = queryProjectDTO.getPageSize();
+        if (pageNo <= 0 || pageSize <= 0){
+            ATPlatformException.exceptionCast(ExceptionEnum.PAGINATION_PARAM_ERROR);
+        }
+
+        Page<ATPlatformProject> page = new Page<>(pageNo,pageSize);
+        // 分页查询
+        Page<ATPlatformProject> projectPage = atPlatformProjectMapper.selectPage(page,atTestProjectLambdaQueryWrapper);
+        // 数据列表
+        List<ATPlatformProject> records = projectPage.getRecords();
+        long total = projectPage.getTotal();
+        log.info("查询到的记录总数:{}",total);
+        return new PageResult<>(records,total,pageNo,pageSize,SUCCESS_CODE);
+    }
 
     @Override
     public PageResult<ATPlatformProject> queryProjectList(PageParams pageParams, QueryProjectDTO queryProjectDTO) {

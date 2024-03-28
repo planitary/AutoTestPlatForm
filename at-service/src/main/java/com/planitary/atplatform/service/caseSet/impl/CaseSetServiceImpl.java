@@ -1,7 +1,6 @@
 package com.planitary.atplatform.service.caseSet.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -10,26 +9,21 @@ import com.jayway.jsonpath.JsonPath;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
-import com.planitary.atplatform.base.handler.PageParams;
-import com.planitary.atplatform.base.utils.GeneralIdGenerator;
+import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.base.utils.UniqueStringIdGenerator;
 import com.planitary.atplatform.mapper.ATPlatformCaseSetMapper;
 import com.planitary.atplatform.mapper.ATPlatformInterfaceInfoMapper;
 import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
-import com.planitary.atplatform.mapper.ATPlatformTCSExtractParamMapper;
 import com.planitary.atplatform.model.dto.*;
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import com.planitary.atplatform.model.po.ATPlatformProject;
-import com.planitary.atplatform.model.po.ATPlatformTCSExtractParam;
 import com.planitary.atplatform.service.caseSet.CaseSetService;
 import com.planitary.atplatform.service.handler.ExecuteHandler;
-import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
