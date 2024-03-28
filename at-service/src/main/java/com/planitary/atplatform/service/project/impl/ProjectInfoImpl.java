@@ -20,10 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @Author：planitary
@@ -52,8 +49,10 @@ public class ProjectInfoImpl implements ProjectInfoService {
         atTestProjectLambdaQueryWrapper.like(StringUtils.isNotEmpty(queryProjectDTO.getProjectUrl()),
                 ATPlatformProject::getProjectUrl,queryProjectDTO.getProjectUrl());
 
+        // 按照更新时间倒序排序
         atTestProjectLambdaQueryWrapper.eq(StringUtils.isNotEmpty(queryProjectDTO.getProjectId()),
-                ATPlatformProject::getProjectId,queryProjectDTO.getProjectId());
+                ATPlatformProject::getProjectId,queryProjectDTO.getProjectId())
+                .orderByDesc(ATPlatformProject::getUpdateTime);
 
         // 分页参数
         long pageNo = queryProjectDTO.getPageNo();
@@ -67,6 +66,7 @@ public class ProjectInfoImpl implements ProjectInfoService {
         Page<ATPlatformProject> projectPage = atPlatformProjectMapper.selectPage(page,atTestProjectLambdaQueryWrapper);
         // 数据列表
         List<ATPlatformProject> records = projectPage.getRecords();
+
         long total = projectPage.getTotal();
         log.info("查询到的记录总数:{}",total);
         return new PageResult<>(records,total,pageNo,pageSize,SUCCESS_CODE);
