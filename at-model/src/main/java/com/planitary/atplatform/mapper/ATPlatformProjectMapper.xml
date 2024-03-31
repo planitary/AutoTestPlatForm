@@ -17,12 +17,13 @@
         <result column="update_user" property="updateUser"/>
         <result column="project_owner" property="projectOwner"/>
         <result column="project_group" property="projectGroup"/>
+        <result column="project_level" property="projectLevel"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, project_name, project_url, project_id, version, remark, is_delete,create_time,create_user,update_time,
-update_user,project_owner,project_group
+update_user,project_owner,project_group,project_level;
     </sql>
 
 </mapper>

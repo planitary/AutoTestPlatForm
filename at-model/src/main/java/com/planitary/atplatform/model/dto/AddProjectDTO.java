@@ -18,4 +18,5 @@ public class AddProjectDTO extends BaseProjectDTO{
     private String projectUrl;
     private String projectOwner;
     private String projectGroup;
+    private String projectLevel;
 }

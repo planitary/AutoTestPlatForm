@@ -64,6 +64,11 @@ public class ATPlatformProject {
      */
     private String projectGroup;
 
+    /**
+     * 项目级别
+     */
+    private String projectLevel;
+
     @TableField(fill = FieldFill.INSERT)
     private String createTime;
 
