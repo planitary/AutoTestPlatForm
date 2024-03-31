@@ -4,22 +4,25 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.planitary.atplatform.model.po.ATPlatformProject">
-        <id column="id" property="id" />
-        <result column="project_name" property="projectName" />
-        <result column="project_url" property="projectUrl" />
-        <result column="project_id" property="projectId" />
-        <result column="version" property="version" />
-        <result column="remark" property="remark" />
-        <result column="is_delete" property="isDelete" />
-        <result column="create_time" property="createTime" />
-        <result column="create_user" property="createUser" />
-        <result column="update_time" property="updateTime" />
-        <result column="update_user" property="updateUser" />
+        <id column="id" property="id"/>
+        <result column="project_name" property="projectName"/>
+        <result column="project_url" property="projectUrl"/>
+        <result column="project_id" property="projectId"/>
+        <result column="version" property="version"/>
+        <result column="remark" property="remark"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="project_owner" property="projectOwner"/>
+        <result column="project_group" property="projectGroup"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, project_name, project_url, project_id, version, remark, is_delete,create_time,create_user,update_time,update_user
+        id, project_name, project_url, project_id, version, remark, is_delete,create_time,create_user,update_time,
+update_user,project_owner,project_group
     </sql>
 
 </mapper>

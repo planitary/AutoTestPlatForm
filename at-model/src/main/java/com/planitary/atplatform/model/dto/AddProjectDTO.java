@@ -16,4 +16,6 @@ import lombok.EqualsAndHashCode;
 public class AddProjectDTO extends BaseProjectDTO{
     private String projectName;
     private String projectUrl;
+    private String projectOwner;
+    private String projectGroup;
 }

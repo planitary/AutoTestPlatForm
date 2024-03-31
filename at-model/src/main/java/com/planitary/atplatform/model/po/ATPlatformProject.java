@@ -54,6 +54,16 @@ public class ATPlatformProject {
     @TableLogic
     private int isDelete;
 
+    /**
+     * 项目所属人
+     */
+    private String projectOwner;
+
+    /**
+     * 项目所属组
+     */
+    private String projectGroup;
+
     @TableField(fill = FieldFill.INSERT)
     private String createTime;
 
