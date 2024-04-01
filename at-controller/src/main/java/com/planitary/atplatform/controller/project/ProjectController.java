@@ -64,12 +64,12 @@ public class ProjectController {
     }
 
     @PostMapping("/project/updateProject")
-    public PtResult<?> updateProject(String projectId,@RequestBody ATPlatformProject atPlatformProject){
-        if (projectId == null){
+    public PtResult<?> updateProject(@RequestBody ATPlatformProject atPlatformProject){
+        if (atPlatformProject.getProjectId() == null){
             log.error("项目id为空!");
             ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
         }
-        Map<String, String> resMap = projectInfoService.updateProject(projectId, atPlatformProject);
+        Map<String, String> resMap = projectInfoService.updateProject(atPlatformProject.getProjectId(), atPlatformProject);
         return PtResult.success(resMap);
     }
 

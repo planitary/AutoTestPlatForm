@@ -150,6 +150,18 @@ public class ProjectInfoImpl implements ProjectInfoService {
             project.setProjectUrl(atPlatformProject.getProjectUrl());
             versionFlag = true;
         }
+        if (!Objects.equals(project.getProjectGroup(),atPlatformProject.getProjectGroup())) {
+            project.setProjectGroup(atPlatformProject.getProjectGroup());
+            versionFlag = true;
+        }
+        if (!Objects.equals(project.getProjectOwner(),atPlatformProject.getProjectOwner())) {
+            project.setProjectOwner(atPlatformProject.getProjectOwner());
+            versionFlag = true;
+        }
+        if (!Objects.equals(project.getProjectLevel(),atPlatformProject.getProjectLevel())) {
+            project.setProjectLevel(atPlatformProject.getProjectLevel());
+            versionFlag = true;
+        }
         if (!Objects.equals(project.getRemark(),atPlatformProject.getRemark())) {
             project.setRemark(atPlatformProject.getRemark());
             versionFlag = true;
