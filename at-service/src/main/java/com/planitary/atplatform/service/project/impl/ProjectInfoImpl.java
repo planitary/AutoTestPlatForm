@@ -198,4 +198,24 @@ public class ProjectInfoImpl implements ProjectInfoService {
         }
         return project;
     }
+
+    @Override
+    @Transactional
+    public String deleteProject(String projectId) {
+
+        LambdaQueryWrapper<ATPlatformProject> atPlatformProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        atPlatformProjectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,projectId);
+        ATPlatformProject project = atPlatformProjectMapper.selectOne(atPlatformProjectLambdaQueryWrapper);
+        if (project == null){
+            log.error("项目:{}不存在",projectId);
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        UpdateWrapper<ATPlatformProject> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("project_id",projectId).set("is_delete",1);
+        int updateCount = atPlatformProjectMapper.update(null, updateWrapper);
+        if (updateCount <= 0) {
+            ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
+        }
+        return "删除成功!";
+    }
 }

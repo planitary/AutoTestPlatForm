@@ -78,4 +78,10 @@ public class ProjectController {
         ATPlatformProject project = projectInfoService.getProjectInfo(baseProjectDTO.getProjectId());
         return PtResult.success(project);
     }
+
+    @PostMapping("/project/deleteProject")
+    public PtResult<String> deleteProject(@RequestBody BaseProjectDTO baseProjectDTO){
+        String result = projectInfoService.deleteProject(baseProjectDTO.getProjectId());
+        return PtResult.success(result);
+    }
 }
