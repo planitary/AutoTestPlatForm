@@ -151,7 +151,7 @@ public class ProjectInfoImpl implements ProjectInfoService {
             versionFlag = true;
         }
         if (!Objects.equals(project.getProjectGroup(),atPlatformProject.getProjectGroup())) {
-            project.setProjectGroup(atPlatformProject.getProjectGroup());
+            project.setProjectGroup("Admin");
             versionFlag = true;
         }
         if (!Objects.equals(project.getProjectOwner(),atPlatformProject.getProjectOwner())) {
@@ -210,8 +210,10 @@ public class ProjectInfoImpl implements ProjectInfoService {
             log.error("项目:{}不存在",projectId);
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
+        // 逻辑删除后将name打上_del的标签
         UpdateWrapper<ATPlatformProject> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("project_id",projectId).set("is_delete",1);
+        updateWrapper.eq("project_id",projectId).set("is_delete",1)
+                .set("project_name",project.getProjectName() + "_del");
         int updateCount = atPlatformProjectMapper.update(null, updateWrapper);
         if (updateCount <= 0) {
             ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
