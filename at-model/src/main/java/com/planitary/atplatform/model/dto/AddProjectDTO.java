@@ -19,4 +19,5 @@ public class AddProjectDTO extends BaseProjectDTO{
     private String projectOwner;
     private String projectGroup;
     private String projectLevel;
+    private String remark;
 }
