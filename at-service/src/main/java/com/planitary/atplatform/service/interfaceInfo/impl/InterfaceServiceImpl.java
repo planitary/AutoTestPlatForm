@@ -130,6 +130,45 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
     @Override
+    public PageResult<ATPlatformInterfaceInfo> queryInterfaceInfoList(QueryInterfaceDTO queryInterfaceDTO) {
+        String projectId = queryInterfaceDTO.getProjectId();
+        final String SUCCESS_CODE = "200";
+
+        if (!Objects.equals(queryInterfaceDTO.getProjectId(), "")) {
+            LambdaQueryWrapper<ATPlatformProject> atPlatformProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            atPlatformProjectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId, projectId);
+            ATPlatformProject atPlatformProject = atPlatformProjectMapper.selectOne(atPlatformProjectLambdaQueryWrapper);
+            if (atPlatformProject == null) {
+                log.error("project不存在");
+                ATPlatformException.exceptionCast("接口所属项目不存在");
+            }
+        }
+
+        LambdaQueryWrapper<ATPlatformInterfaceInfo> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(StringUtils.isNotEmpty(queryInterfaceDTO.getProjectId()),
+                        ATPlatformInterfaceInfo::getProjectId, projectId)
+                .eq(StringUtils.isNotEmpty(queryInterfaceDTO.getInterfaceUrl()),
+                        ATPlatformInterfaceInfo::getInterfaceUrl, queryInterfaceDTO.getInterfaceUrl())
+                .like(StringUtils.isNotEmpty(queryInterfaceDTO.getInterfaceName()),
+                        ATPlatformInterfaceInfo::getInterfaceName, queryInterfaceDTO.getInterfaceName())
+                .eq(StringUtils.isNotEmpty(queryInterfaceDTO.getInterfaceUrl()),
+                        ATPlatformInterfaceInfo::getInterfaceUrl, queryInterfaceDTO.getInterfaceUrl())
+                .orderByDesc(ATPlatformInterfaceInfo::getUpdateTime);
+
+        long pageNo = queryInterfaceDTO.getPageNo();
+        long pageSize = queryInterfaceDTO.getPageSize();
+        if (pageNo <= 0 || pageSize <= 0) {
+            ATPlatformException.exceptionCast(ExceptionEnum.PAGINATION_PARAM_ERROR);
+        }
+        Page<ATPlatformInterfaceInfo> page = new Page<>(pageNo, pageSize);
+        Page<ATPlatformInterfaceInfo> interfaceInfoPage = atPlatformInterfaceInfoMapper.selectPage(page, lambdaQueryWrapper);
+        List<ATPlatformInterfaceInfo> records = interfaceInfoPage.getRecords();
+        long total = interfaceInfoPage.getTotal();
+        log.info("查询到的记录总数:{}", total);
+        return new PageResult<>(records, total, pageNo, pageSize, SUCCESS_CODE);
+    }
+
+    @Override
     @Transactional
     public Map<String, String> updateInterface(String projectId, ATPlatformInterfaceInfo atPlatformInterfaceInfo) {
         boolean versionFlag = false;
