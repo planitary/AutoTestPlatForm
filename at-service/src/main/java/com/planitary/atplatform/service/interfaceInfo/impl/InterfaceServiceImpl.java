@@ -130,11 +130,11 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
     @Override
-    public PageResult<ATPlatformInterfaceInfo> queryInterfaceInfoList(QueryInterfaceDTO queryInterfaceDTO) {
+    public PageResult<InterfaceWithProjectDTO> queryInterfaceInfoList(QueryInterfaceDTO queryInterfaceDTO) {
         String projectId = queryInterfaceDTO.getProjectId();
         final String SUCCESS_CODE = "200";
 
-        if (!Objects.equals(queryInterfaceDTO.getProjectId(), "")) {
+        if (!Objects.equals(queryInterfaceDTO.getProjectId(), "") && queryInterfaceDTO.getProjectId() != null) {
             LambdaQueryWrapper<ATPlatformProject> atPlatformProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
             atPlatformProjectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId, projectId);
             ATPlatformProject atPlatformProject = atPlatformProjectMapper.selectOne(atPlatformProjectLambdaQueryWrapper);
@@ -160,9 +160,9 @@ public class InterfaceServiceImpl implements InterfaceService {
         if (pageNo <= 0 || pageSize <= 0) {
             ATPlatformException.exceptionCast(ExceptionEnum.PAGINATION_PARAM_ERROR);
         }
-        Page<ATPlatformInterfaceInfo> page = new Page<>(pageNo, pageSize);
-        Page<ATPlatformInterfaceInfo> interfaceInfoPage = atPlatformInterfaceInfoMapper.selectPage(page, lambdaQueryWrapper);
-        List<ATPlatformInterfaceInfo> records = interfaceInfoPage.getRecords();
+        Page<InterfaceWithProjectDTO> page = new Page<>(pageNo, pageSize);
+        Page<InterfaceWithProjectDTO> interfaceInfoPage = atPlatformInterfaceInfoMapper.getInterfaceWithProject(page);
+        List<InterfaceWithProjectDTO> records = interfaceInfoPage.getRecords();
         long total = interfaceInfoPage.getTotal();
         log.info("查询到的记录总数:{}", total);
         return new PageResult<>(records, total, pageNo, pageSize, SUCCESS_CODE);

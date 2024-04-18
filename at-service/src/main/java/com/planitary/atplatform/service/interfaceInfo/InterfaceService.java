@@ -1,11 +1,8 @@
 package com.planitary.atplatform.service.interfaceInfo;
 
 import com.planitary.atplatform.base.customResult.PageResult;
-import com.planitary.atplatform.model.dto.QueryInterfaceDTO;
+import com.planitary.atplatform.model.dto.*;
 import com.planitary.atplatform.model.po.PageParams;
-import com.planitary.atplatform.model.dto.AddInterfaceDTO;
-import com.planitary.atplatform.model.dto.ChosenParamDTO;
-import com.planitary.atplatform.model.dto.QueryInterfaceInfoDTO;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 
 import java.util.Map;
@@ -37,7 +34,7 @@ public interface InterfaceService {
      */
     PageResult<ATPlatformInterfaceInfo> queryInterfaceInfoList(PageParams pageParams, QueryInterfaceInfoDTO queryInterfaceInfoDTO);
 
-    PageResult<ATPlatformInterfaceInfo> queryInterfaceInfoList(QueryInterfaceDTO queryInterfaceDTO);
+    PageResult<InterfaceWithProjectDTO> queryInterfaceInfoList(QueryInterfaceDTO queryInterfaceDTO);
 
     /**
      * 更新接口

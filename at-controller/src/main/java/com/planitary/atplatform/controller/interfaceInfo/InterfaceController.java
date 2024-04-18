@@ -61,7 +61,7 @@ public class InterfaceController {
 
 
     @RequestMapping("/interface/interfaceList")
-    public PageResult<ATPlatformInterfaceInfo> getInterfaceList(@RequestBody QueryInterfaceDTO queryInterfaceInfoDTO){
+    public PageResult<InterfaceWithProjectDTO> getInterfaceList(@RequestBody QueryInterfaceDTO queryInterfaceInfoDTO){
         return interfaceService.queryInterfaceInfoList(queryInterfaceInfoDTO);
     }
 

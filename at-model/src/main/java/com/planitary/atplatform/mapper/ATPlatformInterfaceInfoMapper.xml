@@ -17,11 +17,36 @@
         <result column="update_time" property="updateTime" />
         <result column="update_user" property="updateUser" />
         <result column="remark" property="remark"/>
+
+    </resultMap>
+    
+    <resultMap id="interfaceWithProject" type="com.planitary.atplatform.model.dto.InterfaceWithProjectDTO">
+        <id column="id" property="id" />
+        <result column="interface_id" property="interfaceId" />
+        <result column="interface_name" property="interfaceName" />
+        <result column="interface_url" property="interfaceUrl" />
+        <result column="project_id" property="projectId" />
+        <result column="request_body" property="requestBody"/>
+        <result column="version" property="version" />
+        <result column="is_delete" property="isDelete" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user" property="createUser" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_user" property="updateUser" />
+        <result column="remark" property="remark"/>
+        <result column="project_name" property="projectName"/>
+        <result column="project_url" property="projectUrl"/>
+
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, interface_id, interface_name,request_body, interface_url, project_id, version, is_delete,create_time,create_user,update_time,update_user,remark
     </sql>
+
+    <select id="getInterfaceWithProject" resultMap="interfaceWithProject">
+        select a.*,p.project_name,p.project_url from at_platform_interface_info a,
+            at_platform_project p where  p.project_id = a.project_id order by a.create_time desc
+    </select>
 
 </mapper>
