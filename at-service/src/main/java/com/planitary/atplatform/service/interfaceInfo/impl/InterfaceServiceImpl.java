@@ -112,9 +112,7 @@ public class InterfaceServiceImpl implements InterfaceService {
                 .eq(StringUtils.isNotEmpty(queryInterfaceInfoDTO.getInterfaceUrl()),
                         ATPlatformInterfaceInfo::getInterfaceUrl, queryInterfaceInfoDTO.getInterfaceUrl())
                 .like(StringUtils.isNotEmpty(queryInterfaceInfoDTO.getInterfaceName()),
-                        ATPlatformInterfaceInfo::getInterfaceName, queryInterfaceInfoDTO.getInterfaceName())
-                .eq(StringUtils.isNotEmpty(queryInterfaceInfoDTO.getInterfaceUrl()),
-                        ATPlatformInterfaceInfo::getInterfaceUrl, queryInterfaceInfoDTO.getInterfaceUrl());
+                        ATPlatformInterfaceInfo::getInterfaceName, queryInterfaceInfoDTO.getInterfaceName());
 
         long pageNo = pageParams.getPageNo();
         long pageSize = pageParams.getPageSize();
@@ -144,24 +142,14 @@ public class InterfaceServiceImpl implements InterfaceService {
             }
         }
 
-        LambdaQueryWrapper<ATPlatformInterfaceInfo> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(StringUtils.isNotEmpty(queryInterfaceDTO.getProjectId()),
-                        ATPlatformInterfaceInfo::getProjectId, projectId)
-                .eq(StringUtils.isNotEmpty(queryInterfaceDTO.getInterfaceUrl()),
-                        ATPlatformInterfaceInfo::getInterfaceUrl, queryInterfaceDTO.getInterfaceUrl())
-                .like(StringUtils.isNotEmpty(queryInterfaceDTO.getInterfaceName()),
-                        ATPlatformInterfaceInfo::getInterfaceName, queryInterfaceDTO.getInterfaceName())
-                .eq(StringUtils.isNotEmpty(queryInterfaceDTO.getInterfaceUrl()),
-                        ATPlatformInterfaceInfo::getInterfaceUrl, queryInterfaceDTO.getInterfaceUrl())
-                .orderByDesc(ATPlatformInterfaceInfo::getUpdateTime);
-
         long pageNo = queryInterfaceDTO.getPageNo();
         long pageSize = queryInterfaceDTO.getPageSize();
         if (pageNo <= 0 || pageSize <= 0) {
             ATPlatformException.exceptionCast(ExceptionEnum.PAGINATION_PARAM_ERROR);
         }
         Page<InterfaceWithProjectDTO> page = new Page<>(pageNo, pageSize);
-        Page<InterfaceWithProjectDTO> interfaceInfoPage = atPlatformInterfaceInfoMapper.getInterfaceWithProject(page);
+        List<String> projectIds = queryInterfaceDTO.getProjectIds();
+        Page<InterfaceWithProjectDTO> interfaceInfoPage = atPlatformInterfaceInfoMapper.getInterfaceWithProject(page,projectIds);
         List<InterfaceWithProjectDTO> records = interfaceInfoPage.getRecords();
         long total = interfaceInfoPage.getTotal();
         log.info("查询到的记录总数:{}", total);
@@ -303,7 +291,6 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
 
-
     @Override
     @Async
     public CompletableFuture<Void> coreExecutor(String callableMethodCode) {
@@ -390,8 +377,6 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
 
-
-
     /**
      * 更新接口参数，因为interfaceInfo的requestBody字段也是一个json
      *
@@ -420,7 +405,6 @@ public class InterfaceServiceImpl implements InterfaceService {
             ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
         }
     }
-
 
 
 }

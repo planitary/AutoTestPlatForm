@@ -4,35 +4,35 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.planitary.atplatform.model.po.ATPlatformInterfaceInfo">
-        <id column="id" property="id" />
-        <result column="interface_id" property="interfaceId" />
-        <result column="interface_name" property="interfaceName" />
-        <result column="interface_url" property="interfaceUrl" />
-        <result column="project_id" property="projectId" />
+        <id column="id" property="id"/>
+        <result column="interface_id" property="interfaceId"/>
+        <result column="interface_name" property="interfaceName"/>
+        <result column="interface_url" property="interfaceUrl"/>
+        <result column="project_id" property="projectId"/>
         <result column="request_body" property="requestBody"/>
-        <result column="version" property="version" />
-        <result column="is_delete" property="isDelete" />
-        <result column="create_time" property="createTime" />
-        <result column="create_user" property="createUser" />
-        <result column="update_time" property="updateTime" />
-        <result column="update_user" property="updateUser" />
+        <result column="version" property="version"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
         <result column="remark" property="remark"/>
 
     </resultMap>
-    
+
     <resultMap id="interfaceWithProject" type="com.planitary.atplatform.model.dto.InterfaceWithProjectDTO">
-        <id column="id" property="id" />
-        <result column="interface_id" property="interfaceId" />
-        <result column="interface_name" property="interfaceName" />
-        <result column="interface_url" property="interfaceUrl" />
-        <result column="project_id" property="projectId" />
+        <id column="id" property="id"/>
+        <result column="interface_id" property="interfaceId"/>
+        <result column="interface_name" property="interfaceName"/>
+        <result column="interface_url" property="interfaceUrl"/>
+        <result column="project_id" property="projectId"/>
         <result column="request_body" property="requestBody"/>
-        <result column="version" property="version" />
-        <result column="is_delete" property="isDelete" />
-        <result column="create_time" property="createTime" />
-        <result column="create_user" property="createUser" />
-        <result column="update_time" property="updateTime" />
-        <result column="update_user" property="updateUser" />
+        <result column="version" property="version"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
         <result column="remark" property="remark"/>
         <result column="project_name" property="projectName"/>
         <result column="project_url" property="projectUrl"/>
@@ -46,7 +46,19 @@
 
     <select id="getInterfaceWithProject" resultMap="interfaceWithProject">
         select a.*,p.project_name,p.project_url from at_platform_interface_info a,
-            at_platform_project p where  p.project_id = a.project_id order by a.create_time desc
+        at_platform_project p
+        <where>
+            p.project_id = a.project_id
+            <if test="projectIds != null and projectIds.size() &gt; 0">
+                and a.project_id in
+                <foreach collection="projectIds" item="projectId" open="(" separator="," close=")">
+                    #{projectId}
+                </foreach>
+            </if>
+
+
+            order by a.create_time desc
+        </where>
     </select>
 
 </mapper>
