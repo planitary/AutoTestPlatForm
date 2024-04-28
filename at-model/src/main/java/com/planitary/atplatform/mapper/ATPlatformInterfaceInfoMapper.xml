@@ -44,18 +44,26 @@
         id, interface_id, interface_name,request_body, interface_url, project_id, version, is_delete,create_time,create_user,update_time,update_user,remark
     </sql>
 
-    <select id="getInterfaceWithProject" resultMap="interfaceWithProject">
+    <select id="getInterfaceWithProject" resultMap="interfaceWithProject" parameterType="com.planitary.atplatform.model.dto.QueryInterfaceDTO">
         select a.*,p.project_name,p.project_url from at_platform_interface_info a,
         at_platform_project p
         <where>
-            p.project_id = a.project_id
-            <if test="projectIds != null and projectIds.size() &gt; 0">
+            a.project_id = p.project_id
+           <!--接口名称(模糊)-->
+            <if test="queryParam.interfaceName != null and queryParam.interfaceName != ''">
+                and a.interface_name like concat ('%',#{queryParam.interfaceName},'%')
+            </if>
+            <!--接口url(精确)-->
+            <if test="queryParam.interfaceUrl != null and queryParam.interfaceUrl != ''">
+                and a.interface_url = #{queryParam.interfaceUrl}
+            </if>
+            <!-- projectId集合-->
+            <if test="queryParam.projectIds != null and queryParam.projectIds.size() &gt; 0">
                 and a.project_id in
-                <foreach collection="projectIds" item="projectId" open="(" separator="," close=")">
+                <foreach collection="queryParam.projectIds" item="projectId" open="(" separator="," close=")">
                     #{projectId}
                 </foreach>
             </if>
-
 
             order by a.create_time desc
         </where>

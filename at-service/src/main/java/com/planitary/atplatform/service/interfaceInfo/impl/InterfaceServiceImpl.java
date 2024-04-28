@@ -150,7 +150,7 @@ public class InterfaceServiceImpl implements InterfaceService {
         }
         Page<InterfaceWithProjectDTO> page = new Page<>(pageNo, pageSize);
         List<String> projectIds = queryInterfaceDTO.getProjectIds();
-        Page<InterfaceWithProjectDTO> interfaceInfoPage = atPlatformInterfaceInfoMapper.getInterfaceWithProject(page,projectIds);
+        Page<InterfaceWithProjectDTO> interfaceInfoPage = atPlatformInterfaceInfoMapper.getInterfaceWithProject(page,queryInterfaceDTO);
         List<InterfaceWithProjectDTO> records = interfaceInfoPage.getRecords();
         long total = interfaceInfoPage.getTotal();
         log.info("查询到的记录总数:{}", total);
