@@ -44,12 +44,13 @@
         id, interface_id, interface_name,request_body, interface_url, project_id, version, is_delete,create_time,create_user,update_time,update_user,remark
     </sql>
 
-    <select id="getInterfaceWithProject" resultMap="interfaceWithProject" parameterType="com.planitary.atplatform.model.dto.QueryInterfaceDTO">
+    <select id="getInterfaceWithProject" resultMap="interfaceWithProject"
+            parameterType="com.planitary.atplatform.model.dto.QueryInterfaceDTO">
         select a.*,p.project_name,p.project_url from at_platform_interface_info a,
         at_platform_project p
         <where>
             a.project_id = p.project_id
-           <!--接口名称(模糊)-->
+            <!--接口名称(模糊)-->
             <if test="queryParam.interfaceName != null and queryParam.interfaceName != ''">
                 and a.interface_name like concat ('%',#{queryParam.interfaceName},'%')
             </if>
@@ -64,6 +65,7 @@
                     #{projectId}
                 </foreach>
             </if>
+            and p.is_delete = 0
 
             order by a.create_time desc
         </where>
