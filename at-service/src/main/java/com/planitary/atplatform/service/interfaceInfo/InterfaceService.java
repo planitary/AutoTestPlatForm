@@ -37,6 +37,13 @@ public interface InterfaceService {
     PageResult<InterfaceWithProjectDTO> queryInterfaceInfoList(QueryInterfaceDTO queryInterfaceDTO);
 
     /**
+     *
+     * @param interfaceId       接口id
+     * @return
+     */
+    ATPlatformInterfaceInfo getInterfaceDetail(String interfaceId);
+
+    /**
      * 更新接口
      * @param projectId                 项目id
      * @param atPlatformInterfaceInfo   接口实体类

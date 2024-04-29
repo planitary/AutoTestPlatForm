@@ -158,6 +158,22 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
     @Override
+    public ATPlatformInterfaceInfo getInterfaceDetail(String interfaceId) {
+        if (interfaceId == null || interfaceId.equals("")){
+            log.error("接口id不能为空");
+            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
+        }
+        LambdaQueryWrapper<ATPlatformInterfaceInfo> interfaceInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        interfaceInfoLambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getInterfaceId,interfaceId);
+        ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.selectOne(interfaceInfoLambdaQueryWrapper);
+        if (atPlatformInterfaceInfo == null){
+            log.error("项目不存在");
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        return atPlatformInterfaceInfo;
+    }
+
+    @Override
     @Transactional
     public Map<String, String> updateInterface(String projectId, ATPlatformInterfaceInfo atPlatformInterfaceInfo) {
         boolean versionFlag = false;

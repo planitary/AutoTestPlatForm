@@ -5,7 +5,6 @@ import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
-import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.model.dto.*;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import com.planitary.atplatform.service.handler.ExecuteHandler;
@@ -73,6 +72,12 @@ public class InterfaceController {
         }
         Map<String, String> resMap = interfaceService.updateInterface(projectId, atPlatformInterfaceInfo);
         return PtResult.success(resMap);
+    }
+
+    @PostMapping("/interface/getInterfaceDetail")
+    public PtResult<ATPlatformInterfaceInfo> getInterfaceDetail(@RequestBody BaseInterfaceDTO interfaceDTO){
+        ATPlatformInterfaceInfo interfaceDetail = interfaceService.getInterfaceDetail(interfaceDTO.getInterfaceId());
+        return PtResult.success(interfaceDetail);
     }
 
     /**
