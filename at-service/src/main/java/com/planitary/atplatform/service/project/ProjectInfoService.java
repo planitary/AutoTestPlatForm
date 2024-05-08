@@ -53,4 +53,11 @@ public interface ProjectInfoService {
      * @return
      */
     String deleteProject(String projectId);
+
+    /**
+     * 根据id获取项目
+     * @param projectId
+     * @return
+     */
+    ATPlatformProject getProjectById(String projectId);
 }

@@ -127,7 +127,7 @@ public class InterfaceServiceImpl implements InterfaceService {
         return new PageResult<>(records, total, pageNo, pageSize, SUCCESS_CODE);
     }
 
-    // TODO: 2024/4/25 这里的sql需要额外增加其他条件的查询，不能只有in，需要手动sql完成 
+    // TODO: 2024/4/25 这里的sql需要额外增加其他条件的查询，不能只有in，需要手动sql完成
     @Override
     public PageResult<InterfaceWithProjectDTO> queryInterfaceInfoList(QueryInterfaceDTO queryInterfaceDTO) {
         String projectId = queryInterfaceDTO.getProjectId();
@@ -235,6 +235,11 @@ public class InterfaceServiceImpl implements InterfaceService {
         Map<String, String> resMap = new HashMap<>();
         resMap.put("interfaceId", interfaceId);
         return resMap;
+    }
+
+    @Override
+    public Map<String, String> updateInterfaceV2(ATPlatformInterfaceInfo atPlatformInterfaceInfo) {
+        return null;
     }
 
     /**

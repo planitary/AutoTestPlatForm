@@ -254,4 +254,22 @@ public class ProjectInfoImpl implements ProjectInfoService {
         }
         return "删除成功!";
     }
+
+    @Override
+    public ATPlatformProject getProjectById(String projectId) {
+        ATPlatformProject atPlatformProject = new ATPlatformProject();
+        if (projectId != null){
+            LambdaQueryWrapper<ATPlatformProject> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.eq(ATPlatformProject::getProjectId,projectId);
+            atPlatformProject = atPlatformProjectMapper.selectOne(lambdaQueryWrapper);
+            if (atPlatformProject == null){
+                ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+            }
+        }
+        else {
+            log.error("projectId为空");
+            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
+        }
+        return atPlatformProject;
+    }
 }

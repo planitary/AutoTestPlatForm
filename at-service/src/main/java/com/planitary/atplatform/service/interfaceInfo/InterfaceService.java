@@ -50,6 +50,7 @@ public interface InterfaceService {
      * @return
      */
     Map<String,String> updateInterface(String projectId,ATPlatformInterfaceInfo atPlatformInterfaceInfo);
+    Map<String,String> updateInterfaceV2(ATPlatformInterfaceInfo atPlatformInterfaceInfo);
 
     /**
      * 批量填充接口入参（异步封装请求)

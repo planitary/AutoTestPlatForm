@@ -84,4 +84,15 @@ public class ProjectController {
         String result = projectInfoService.deleteProject(baseProjectDTO.getProjectId());
         return PtResult.success(result);
     }
+
+    @PostMapping("/project/getProjectById")
+    public PtResult<ATPlatformProject> getProjectById(@RequestBody BaseProjectDTO baseProjectDTO){
+        ATPlatformProject projectById = new ATPlatformProject();
+        try {
+            projectById = projectInfoService.getProjectById(baseProjectDTO.getProjectId());
+        }catch (ATPlatformException e){
+            log.error("业务异常:{}",e.getMessage());
+        }
+        return PtResult.success(projectById);
+    }
 }

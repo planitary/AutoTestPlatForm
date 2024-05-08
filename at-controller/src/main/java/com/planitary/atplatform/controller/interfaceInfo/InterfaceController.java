@@ -64,13 +64,9 @@ public class InterfaceController {
         return interfaceService.queryInterfaceInfoList(queryInterfaceInfoDTO);
     }
 
-    @PostMapping("/interface/updateInterface")
-    public PtResult<Map<String,String>> updateInterface(String projectId, @RequestBody ATPlatformInterfaceInfo atPlatformInterfaceInfo){
-        if (projectId == null){
-            log.error("项目id为空");
-            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
-        }
-        Map<String, String> resMap = interfaceService.updateInterface(projectId, atPlatformInterfaceInfo);
+    @PostMapping("/interface/updateInterfaceV2")
+    public PtResult<Map<String,String>> updateInterface(@RequestBody ATPlatformInterfaceInfo atPlatformInterfaceInfo){
+        Map<String, String> resMap = interfaceService.updateInterfaceV2(atPlatformInterfaceInfo);
         return PtResult.success(resMap);
     }
 
