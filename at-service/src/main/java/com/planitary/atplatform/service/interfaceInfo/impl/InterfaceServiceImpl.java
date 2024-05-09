@@ -239,7 +239,75 @@ public class InterfaceServiceImpl implements InterfaceService {
 
     @Override
     public Map<String, String> updateInterfaceV2(ATPlatformInterfaceInfo atPlatformInterfaceInfo) {
-        return null;
+        boolean versionFlag = false;
+        String projectId = atPlatformInterfaceInfo.getProjectId();
+        // 校验projectId合法性以及与当前interface的关联性
+        LambdaQueryWrapper<ATPlatformProject> projectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        projectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,projectId);
+        ATPlatformProject projectByInterface = atPlatformProjectMapper.selectOne(projectLambdaQueryWrapper);
+        if (projectByInterface == null) {
+            log.error("项目:{}不存在", projectId);
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        if (projectByInterface.getIsDelete() == 1){
+            log.error("项目:{}已删除",projectId);
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        String interfaceId = atPlatformInterfaceInfo.getInterfaceId();
+        LambdaQueryWrapper<ATPlatformInterfaceInfo> interfaceInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        interfaceInfoLambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getInterfaceId, interfaceId);
+        ATPlatformInterfaceInfo interfaceInfo = atPlatformInterfaceInfoMapper.selectOne(interfaceInfoLambdaQueryWrapper);
+        if (interfaceInfo == null) {
+            log.error("接口:{}不存在", interfaceId);
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        if (!Objects.equals(projectId, interfaceInfo.getProjectId())) {
+            log.error("接口:{}与项目:{}不匹配", interfaceId, projectId);
+            ATPlatformException.exceptionCast("接口与项目不匹配!");
+        }
+
+        // 更新版本version（version只在字段更新时更新）
+        UpdateWrapper<ATPlatformInterfaceInfo> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("interface_id", interfaceId);
+        // 校验requestBody,使用json进行比较，不一致则发生了变更
+        JSONObject originalJSON = JSON.parseObject(interfaceInfo.getRequestBody());
+        JSONObject targetJSON = JSON.parseObject(atPlatformInterfaceInfo.getRequestBody());
+        String originalStandardJSON = JSON.toJSONString(originalJSON);
+        String targetStandardJSON = JSON.toJSONString(targetJSON);
+        if (!Objects.equals(originalStandardJSON, targetStandardJSON)) {
+            updateWrapper.set("request_body", atPlatformInterfaceInfo.getRequestBody());
+            versionFlag = true;
+        }
+        if (!Objects.equals(atPlatformInterfaceInfo.getInterfaceName(), interfaceInfo.getInterfaceName())) {
+            updateWrapper.set("interface_name", atPlatformInterfaceInfo.getInterfaceName());
+            versionFlag = true;
+        }
+        if (!Objects.equals(atPlatformInterfaceInfo.getInterfaceUrl(), interfaceInfo.getInterfaceUrl())) {
+            updateWrapper.set("interface_url", atPlatformInterfaceInfo.getInterfaceUrl());
+            versionFlag = true;
+        }
+        if (!Objects.equals(atPlatformInterfaceInfo.getRequestBody(), interfaceInfo.getRequestBody())) {
+            updateWrapper.set("request_body", atPlatformInterfaceInfo.getRequestBody());
+            versionFlag = true;
+        }
+        if (!Objects.equals(atPlatformInterfaceInfo.getRemark(), interfaceInfo.getRemark())) {
+            updateWrapper.set("remark", atPlatformInterfaceInfo.getRemark());
+            versionFlag = true;
+        }
+        if (versionFlag) {
+            updateWrapper.set("version", interfaceInfo.getVersion() + 1);
+            updateWrapper.set("update_time", LocalDateTime.now());
+            int updateCount = atPlatformInterfaceInfoMapper.update(null, updateWrapper);
+            if (updateCount <= 0) {
+                ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
+            }
+            log.info("更新接口成功");
+        } else {
+            log.info("接口无变化，无需变更");
+        }
+        Map<String, String> resMap = new HashMap<>();
+        resMap.put("interfaceId", interfaceId);
+        return resMap;
     }
 
     /**

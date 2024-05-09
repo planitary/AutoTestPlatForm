@@ -67,7 +67,7 @@
             </if>
             and p.is_delete = 0
 
-            order by a.create_time desc
+            order by a.update_time desc
         </where>
     </select>
 
