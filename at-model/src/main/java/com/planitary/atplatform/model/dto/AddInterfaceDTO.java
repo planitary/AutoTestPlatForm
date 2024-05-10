@@ -18,5 +18,6 @@ public class AddInterfaceDTO {
     private String projectId;
     private String remark;
     private String requestBody;
+    private String projectName;
 
 }

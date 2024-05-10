@@ -68,7 +68,10 @@ public class InterfaceServiceImpl implements InterfaceService {
     public Map<String, String> insertInterface(AddInterfaceDTO addInterfaceDTO) {
         // 校验项目的合法性
         LambdaQueryWrapper<ATPlatformProject> atTestProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        atTestProjectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId, addInterfaceDTO.getProjectId());
+        atTestProjectLambdaQueryWrapper.eq((StringUtils.isNotEmpty(addInterfaceDTO.getProjectId())),
+                ATPlatformProject::getProjectId, addInterfaceDTO.getProjectId())
+                .eq((StringUtils.isNotEmpty(addInterfaceDTO.getProjectName())),
+                        ATPlatformProject::getProjectName,addInterfaceDTO.getProjectName());
         ATPlatformProject atTestProject = atPlatformProjectMapper.selectOne(atTestProjectLambdaQueryWrapper);
         if (atTestProject == null) {
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
@@ -76,9 +79,12 @@ public class InterfaceServiceImpl implements InterfaceService {
         ATPlatformInterfaceInfo interfaceInfo = new ATPlatformInterfaceInfo();
         String interfaceId = uniqueStringIdGenerator.idGenerator();
         BeanUtils.copyProperties(addInterfaceDTO, interfaceInfo);
+        // 处理没有传projectId的情况
+        if (addInterfaceDTO.getProjectId() == null || Objects.equals(addInterfaceDTO.getProjectId(), "")){
+            interfaceInfo.setProjectId(atTestProject.getProjectId());
+        }
         interfaceInfo.setInterfaceId(interfaceId);
         interfaceInfo.setCreateUser("zane");
-        interfaceInfo.setProjectId(addInterfaceDTO.getProjectId());
         interfaceInfo.setVersion(1);
         int insert = atPlatformInterfaceInfoMapper.insert(interfaceInfo);
         if (insert <= 0) {

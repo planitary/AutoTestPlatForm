@@ -46,10 +46,10 @@
 
     <select id="getInterfaceWithProject" resultMap="interfaceWithProject"
             parameterType="com.planitary.atplatform.model.dto.QueryInterfaceDTO">
-        select a.*,p.project_name,p.project_url from at_platform_interface_info a,
-        at_platform_project p
+        select a.*,p.project_name,p.project_url from at_platform_interface_info a
+        left join at_platform_project p on a.project_id = p.project_id
         <where>
-            a.project_id = p.project_id
+
             <!--接口名称(模糊)-->
             <if test="queryParam.interfaceName != null and queryParam.interfaceName != ''">
                 and a.interface_name like concat ('%',#{queryParam.interfaceName},'%')
