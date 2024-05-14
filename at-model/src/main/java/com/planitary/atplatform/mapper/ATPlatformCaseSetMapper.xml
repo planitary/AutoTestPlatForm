@@ -4,17 +4,17 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.planitary.atplatform.model.po.ATPlatformCaseSet">
-        <id column="id" property="id" />
-        <result column="set_id" property="setId" />
-        <result column="set_name" property="setName" />
-        <result column="interface_ids" property="interfaceIds" />
-        <result column="set_weight" property="setWeight" />
-        <result column="parameter_list" property="parameterList" />
-        <result column="is_delete" property="isDelete" />
-        <result column="create_time" property="createTime" />
-        <result column="create_user" property="createUser" />
-        <result column="update_time" property="updateTime" />
-        <result column="update_user" property="updateUser" />
+        <id column="id" property="id"/>
+        <result column="set_id" property="setId"/>
+        <result column="set_name" property="setName"/>
+        <result column="interface_ids" property="interfaceIds"/>
+        <result column="set_weight" property="setWeight"/>
+        <result column="parameter_list" property="parameterList"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
         <result column="remark" property="remark"/>
         <result column="project_id" property="projectId"/>
     </resultMap>
@@ -23,5 +23,32 @@
     <sql id="Base_Column_List">
         id, set_id, set_name, interface_ids, set_weight,project_id, parameter_list, is_delete,create_time,create_user,update_time,update_user,remark
     </sql>
+
+
+    <select id="getCaseSetList" resultMap="BaseResultMap"
+            parameterType="com.planitary.atplatform.model.dto.QueryCaseSetListDTO">
+        select * from at_platform_test_case_set
+        <where>
+            <!--集合名称(模糊)-->
+            <if test="queryParam.setName != null and queryParam.setName != ''">
+                and set_name like concat ('%',#{queryParam.setName},'%')
+            </if>
+            <!--集合所含接口ids(模糊 )-->
+            <if test="queryParam.interfaceIds != null and !queryParam.interfaceIds.isEmpty()">
+                and
+                <foreach collection="queryParam.interfaceIds" item="interfaceId" separator="AND">
+                    interface_ids like concat ('%',#{interfaceId},'%')
+                </foreach>
+            </if>
+
+            <!-- projectId-->
+            <if test="queryParam.projectId != null and queryParam.projectId != ''">
+                and project_id = #{queryParam.projectId}
+            </if>
+            and is_delete = 0
+
+            order by update_time desc
+        </where>
+    </select>
 
 </mapper>

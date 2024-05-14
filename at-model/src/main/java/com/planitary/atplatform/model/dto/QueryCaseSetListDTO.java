@@ -1,6 +1,10 @@
 package com.planitary.atplatform.model.dto;
 
+import com.planitary.atplatform.model.po.PageParams;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 /**
  * @Author：planitary
@@ -10,9 +14,10 @@ import lombok.Data;
  * @Filename：QueryCaseSetListDTO
  * @description：
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class QueryCaseSetListDTO {
+public class QueryCaseSetListDTO extends PageParams {
     private String setName;
-    private String interfaceIds;
+    private List<String> interfaceIds;
     private String projectId;
 }

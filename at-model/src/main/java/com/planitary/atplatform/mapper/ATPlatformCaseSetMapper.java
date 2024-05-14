@@ -1,6 +1,8 @@
 package com.planitary.atplatform.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.planitary.atplatform.model.dto.QueryCaseSetListDTO;
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,5 +19,6 @@ import java.util.List;
  */
 @Mapper
 public interface ATPlatformCaseSetMapper extends BaseMapper<ATPlatformCaseSet> {
+    Page<ATPlatformCaseSet> getCaseSetList(Page<ATPlatformCaseSet> page, @Param("queryParam")QueryCaseSetListDTO queryCaseSetListDTO);
 
 }

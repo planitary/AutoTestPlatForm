@@ -155,7 +155,6 @@ public class InterfaceServiceImpl implements InterfaceService {
             ATPlatformException.exceptionCast(ExceptionEnum.PAGINATION_PARAM_ERROR);
         }
         Page<InterfaceWithProjectDTO> page = new Page<>(pageNo, pageSize);
-        List<String> projectIds = queryInterfaceDTO.getProjectIds();
         Page<InterfaceWithProjectDTO> interfaceInfoPage = atPlatformInterfaceInfoMapper.getInterfaceWithProject(page,queryInterfaceDTO);
         List<InterfaceWithProjectDTO> records = interfaceInfoPage.getRecords();
         long total = interfaceInfoPage.getTotal();

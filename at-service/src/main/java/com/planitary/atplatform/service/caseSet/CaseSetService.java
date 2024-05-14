@@ -38,7 +38,7 @@ public interface CaseSetService {
      * @param queryCaseSetListDTO
      * @return
      */
-    PageResult<ATPlatformCaseSet> queryCaseSetList(PageParams pageParams, QueryCaseSetListDTO queryCaseSetListDTO);
+    PageResult<ATPlatformCaseSet> queryCaseSetList(QueryCaseSetListDTO queryCaseSetListDTO);
 
     /**
      * 测试用例核心执行类

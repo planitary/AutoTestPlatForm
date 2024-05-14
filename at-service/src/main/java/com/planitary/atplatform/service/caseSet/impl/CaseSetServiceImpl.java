@@ -160,36 +160,32 @@ public class CaseSetServiceImpl implements CaseSetService {
     }
 
     @Override
-    public PageResult<ATPlatformCaseSet> queryCaseSetList(PageParams pageParams, QueryCaseSetListDTO queryCaseSetListDTO) {
+    public PageResult<ATPlatformCaseSet> queryCaseSetList(QueryCaseSetListDTO queryCaseSetListDTO) {
         String projectId = queryCaseSetListDTO.getProjectId();
-        if (projectId == null) {
-            log.error("projectId不能为空");
-            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
+        final String SUCCESS_CODE = "200";
+
+        if (!Objects.equals(queryCaseSetListDTO.getProjectId(), "") && queryCaseSetListDTO.getProjectId() != null) {
+            LambdaQueryWrapper<ATPlatformProject> atPlatformProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            atPlatformProjectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId, projectId);
+            ATPlatformProject atPlatformProject = atPlatformProjectMapper.selectOne(atPlatformProjectLambdaQueryWrapper);
+            if (atPlatformProject == null) {
+                log.error("project不存在");
+                ATPlatformException.exceptionCast("接口所属项目不存在");
+            }
         }
-        LambdaQueryWrapper<ATPlatformProject> atPlatformProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        atPlatformProjectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId, projectId);
-        ATPlatformProject atPlatformProject = atPlatformProjectMapper.selectOne(atPlatformProjectLambdaQueryWrapper);
-        if (atPlatformProject == null) {
-            log.error("project不存在");
-            ATPlatformException.exceptionCast("项目不存在");
-        }
-        LambdaQueryWrapper<ATPlatformCaseSet> atPlatformCaseSetLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        atPlatformCaseSetLambdaQueryWrapper
-                .like(StringUtils.isNotEmpty(queryCaseSetListDTO.getSetName()),
-                        ATPlatformCaseSet::getSetName, queryCaseSetListDTO.getSetName())
-                .like(StringUtils.isNotEmpty(queryCaseSetListDTO.getInterfaceIds()),
-                        ATPlatformCaseSet::getInterfaceIds, queryCaseSetListDTO.getInterfaceIds());
-        long pageNo = pageParams.getPageNo();
-        long pageSize = pageParams.getPageSize();
-        if (pageNo <= 0 || pageSize <= 0) {
+
+        long pageNo = queryCaseSetListDTO.getPageNo();
+        long pageSize = queryCaseSetListDTO.getPageSize();
+        if (pageNo<= 0 || pageSize <= 0){
             ATPlatformException.exceptionCast(ExceptionEnum.PAGINATION_PARAM_ERROR);
         }
-        Page<ATPlatformCaseSet> page = new Page<>(pageNo, pageSize);
-        Page<ATPlatformCaseSet> caseSetPage = atPlatformCaseSetMapper.selectPage(page, atPlatformCaseSetLambdaQueryWrapper);
+        Page<ATPlatformCaseSet> page = new Page<>(pageNo,pageSize);
+        Page<ATPlatformCaseSet> caseSetPage = atPlatformCaseSetMapper.getCaseSetList(page,queryCaseSetListDTO);
         List<ATPlatformCaseSet> records = caseSetPage.getRecords();
         long total = caseSetPage.getTotal();
-        log.info("查询到的记录总数:{}", total);
-        return new PageResult<>(records, total, pageNo, pageSize, "200");
+        log.info("查询到的casesetList总数:{}",total);
+        return new PageResult<>(records,total,pageNo,pageSize,SUCCESS_CODE);
+
     }
 
     @Override

@@ -51,8 +51,8 @@ public class CaseSetController {
     }
 
     @GetMapping("/caseSet/caseSetList")
-    public PageResult<ATPlatformCaseSet> getCaseSetList(PageParams pageParams, @RequestBody QueryCaseSetListDTO queryCaseSetListDTO) {
-        return caseSetService.queryCaseSetList(pageParams, queryCaseSetListDTO);
+    public PageResult<ATPlatformCaseSet> getCaseSetList(@RequestBody QueryCaseSetListDTO queryCaseSetListDTO) {
+        return caseSetService.queryCaseSetList(queryCaseSetListDTO);
     }
 
     @PostMapping("/caseSet/executeSet")
