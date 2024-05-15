@@ -88,7 +88,7 @@ public class CaseSetServiceImpl implements CaseSetService {
         }
 
         ATPlatformCaseSet atPlatformCaseSet = new ATPlatformCaseSet();
-        String setId = uniqueStringIdGenerator.idGenerator().substring(2, 4) + uniqueStringIdGenerator.idGenerator();
+        String setId = '5' + uniqueStringIdGenerator.idGenerator().substring(2, 4) + uniqueStringIdGenerator.idGenerator();
 
         // 封装interfaceIds和parameterList为json
 //        String interfaceIdsJSON = JSON.toJSONString(interfaceIds);
@@ -160,7 +160,7 @@ public class CaseSetServiceImpl implements CaseSetService {
     }
 
     @Override
-    public PageResult<ATPlatformCaseSet> queryCaseSetList(QueryCaseSetListDTO queryCaseSetListDTO) {
+    public PageResult<CaseSetWithProjectDTO> queryCaseSetList(QueryCaseSetListDTO queryCaseSetListDTO) {
         String projectId = queryCaseSetListDTO.getProjectId();
         final String SUCCESS_CODE = "200";
 
@@ -179,9 +179,9 @@ public class CaseSetServiceImpl implements CaseSetService {
         if (pageNo<= 0 || pageSize <= 0){
             ATPlatformException.exceptionCast(ExceptionEnum.PAGINATION_PARAM_ERROR);
         }
-        Page<ATPlatformCaseSet> page = new Page<>(pageNo,pageSize);
-        Page<ATPlatformCaseSet> caseSetPage = atPlatformCaseSetMapper.getCaseSetList(page,queryCaseSetListDTO);
-        List<ATPlatformCaseSet> records = caseSetPage.getRecords();
+        Page<CaseSetWithProjectDTO> page = new Page<>(pageNo,pageSize);
+        Page<CaseSetWithProjectDTO> caseSetPage = atPlatformCaseSetMapper.getCaseSetList(page,queryCaseSetListDTO);
+        List<CaseSetWithProjectDTO> records = caseSetPage.getRecords();
         long total = caseSetPage.getTotal();
         log.info("查询到的casesetList总数:{}",total);
         return new PageResult<>(records,total,pageNo,pageSize,SUCCESS_CODE);

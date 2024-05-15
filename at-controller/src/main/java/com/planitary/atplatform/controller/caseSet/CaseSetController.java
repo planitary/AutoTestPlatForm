@@ -4,6 +4,7 @@ import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
+import com.planitary.atplatform.model.dto.CaseSetWithProjectDTO;
 import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.model.dto.AddCaseSetDTO;
 import com.planitary.atplatform.model.dto.CaseSetExecuteDTO;
@@ -50,8 +51,8 @@ public class CaseSetController {
         return PtResult.success(caseSetId);
     }
 
-    @GetMapping("/caseSet/caseSetList")
-    public PageResult<ATPlatformCaseSet> getCaseSetList(@RequestBody QueryCaseSetListDTO queryCaseSetListDTO) {
+    @PostMapping("/caseSet/caseSetList")
+    public PageResult<CaseSetWithProjectDTO> getCaseSetList(@RequestBody QueryCaseSetListDTO queryCaseSetListDTO) {
         return caseSetService.queryCaseSetList(queryCaseSetListDTO);
     }
 

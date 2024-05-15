@@ -1,6 +1,7 @@
 package com.planitary.atplatform.service.caseSet;
 
 import com.planitary.atplatform.base.customResult.PageResult;
+import com.planitary.atplatform.model.dto.CaseSetWithProjectDTO;
 import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.model.dto.AddCaseSetDTO;
 import com.planitary.atplatform.model.dto.QueryCaseSetListDTO;
@@ -34,11 +35,10 @@ public interface CaseSetService {
 
     /**
      * 查询测试集合列表
-     * @param pageParams
-     * @param queryCaseSetListDTO
+     * @param queryCaseSetListDTO       查询DTO
      * @return
      */
-    PageResult<ATPlatformCaseSet> queryCaseSetList(QueryCaseSetListDTO queryCaseSetListDTO);
+    PageResult<CaseSetWithProjectDTO> queryCaseSetList(QueryCaseSetListDTO queryCaseSetListDTO);
 
     /**
      * 测试用例核心执行类
