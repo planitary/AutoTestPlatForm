@@ -9,25 +9,26 @@ import com.jayway.jsonpath.JsonPath;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
-import com.planitary.atplatform.model.po.PageParams;
+import com.planitary.atplatform.mapper.ATPlatformTCSInterfaceMapper;
+import com.planitary.atplatform.model.po.*;
 import com.planitary.atplatform.base.utils.UniqueStringIdGenerator;
 import com.planitary.atplatform.mapper.ATPlatformCaseSetMapper;
 import com.planitary.atplatform.mapper.ATPlatformInterfaceInfoMapper;
 import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.*;
-import com.planitary.atplatform.model.po.ATPlatformCaseSet;
-import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
-import com.planitary.atplatform.model.po.ATPlatformProject;
 import com.planitary.atplatform.service.caseSet.CaseSetService;
 import com.planitary.atplatform.service.handler.ExecuteHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author：planitary
@@ -46,6 +47,9 @@ public class CaseSetServiceImpl implements CaseSetService {
     private ATPlatformProjectMapper atPlatformProjectMapper;
 
     @Resource
+    private ATPlatformTCSInterfaceMapper atPlatformTCSInterfaceMapper;
+
+    @Resource
     private ATPlatformInterfaceInfoMapper atPlatformInterfaceInfoMapper;
 
     @Resource
@@ -55,6 +59,7 @@ public class CaseSetServiceImpl implements CaseSetService {
     private ExecuteHandler executeHandler;
 
     @Override
+    @Transactional
     public String addCaseSet(AddCaseSetDTO addCaseSetDTO) {
         // 校验接口的合法性(数据库in出来的count和列表的size比较）
         // 反序列化interfaceIds
@@ -88,22 +93,29 @@ public class CaseSetServiceImpl implements CaseSetService {
         }
 
         ATPlatformCaseSet atPlatformCaseSet = new ATPlatformCaseSet();
-        String setId = '5' + uniqueStringIdGenerator.idGenerator().substring(2, 4) + uniqueStringIdGenerator.idGenerator();
+        String setId = '5' + uniqueStringIdGenerator.idGenerator();
 
-        // 封装interfaceIds和parameterList为json
-//        String interfaceIdsJSON = JSON.toJSONString(interfaceIds);
-//        String parameterListJSON = JSON.toJSONString(addCaseSetDTO.getParameterList());
+        // 插入set主表
         BeanUtils.copyProperties(addCaseSetDTO, atPlatformCaseSet);
-//        atPlatformCaseSet.setSetName(addCaseSetDTO.getSetName());
-//        atPlatformCaseSet.setSetWeight(addCaseSetDTO.getWeight());
-//        atPlatformCaseSet.setInterfaceIds(interfaceIdsJSON);
-//        atPlatformCaseSet.setParameterList(parameterListJSON);
         List<ExtractParamDTO> extractParamDTOS = addCaseSetDTO.getExtractParamDTOS();
         String extractParamDTOJson = JSON.toJSONString(extractParamDTOS);
         atPlatformCaseSet.setParameterList(extractParamDTOJson);
         atPlatformCaseSet.setSetId(setId);
         atPlatformCaseSet.setCreateUser(addCaseSetDTO.getOwner());
         atPlatformCaseSet.setUpdateUser(addCaseSetDTO.getOwner());
+        // 插入set-interface关联表
+        // 创建关联关系记录
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        List<ATPlatformTCSInterface> tcsInterfaces = interfaceIds.stream().map(interfaceId -> {
+                    ATPlatformTCSInterface atPlatformTCSInterface = new ATPlatformTCSInterface();
+                    atPlatformTCSInterface.setSetId(setId);
+                    atPlatformTCSInterface.setInterfaceId(interfaceId);
+                    atPlatformTCSInterface.setCreateTime(LocalDateTime.now().format(formatter));
+                    return atPlatformTCSInterface;
+                })
+                .collect(Collectors.toList());
+        Integer batchInsertCount = atPlatformTCSInterfaceMapper.insertBatchTCSInterface(tcsInterfaces);
+        log.info("批量插入tcs-interface表,条数:{}",batchInsertCount);
 
         int insertCount = atPlatformCaseSetMapper.insert(atPlatformCaseSet);
         if (insertCount <= 0) {
@@ -176,15 +188,15 @@ public class CaseSetServiceImpl implements CaseSetService {
 
         long pageNo = queryCaseSetListDTO.getPageNo();
         long pageSize = queryCaseSetListDTO.getPageSize();
-        if (pageNo<= 0 || pageSize <= 0){
+        if (pageNo <= 0 || pageSize <= 0) {
             ATPlatformException.exceptionCast(ExceptionEnum.PAGINATION_PARAM_ERROR);
         }
-        Page<CaseSetWithProjectDTO> page = new Page<>(pageNo,pageSize);
-        Page<CaseSetWithProjectDTO> caseSetPage = atPlatformCaseSetMapper.getCaseSetList(page,queryCaseSetListDTO);
+        Page<CaseSetWithProjectDTO> page = new Page<>(pageNo, pageSize);
+        Page<CaseSetWithProjectDTO> caseSetPage = atPlatformCaseSetMapper.getCaseSetList(page, queryCaseSetListDTO);
         List<CaseSetWithProjectDTO> records = caseSetPage.getRecords();
         long total = caseSetPage.getTotal();
-        log.info("查询到的casesetList总数:{}",total);
-        return new PageResult<>(records,total,pageNo,pageSize,SUCCESS_CODE);
+        log.info("查询到的casesetList总数:{}", total);
+        return new PageResult<>(records, total, pageNo, pageSize, SUCCESS_CODE);
 
     }
 
@@ -257,9 +269,14 @@ public class CaseSetServiceImpl implements CaseSetService {
                 log.error("接口调用失败");
                 e.printStackTrace();
             }
-            log.info("当前接口{}执行完毕",interfaceId);
+            log.info("当前接口{}执行完毕", interfaceId);
         }
         log.info("=========调用结束=========");
+    }
+
+    @Override
+    public void getCaseSetDetail(String setId) {
+
     }
 
 }

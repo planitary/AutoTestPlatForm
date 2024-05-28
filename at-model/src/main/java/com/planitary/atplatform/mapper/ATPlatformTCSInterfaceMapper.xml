@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planitary.atplatform.mapper.ATPlatformTCSInterfaceMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.planitary.atplatform.model.po.ATPlatformTCSInterface">
+        <id column="id" property="id"/>
+        <result column="set_id" property="setId"/>
+        <result column="interface_id" property="interfaceId"/>
+        <result column="create_user" property="createUser"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="interface_status" property="interfaceStatus"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, set_id, interface_id, create_user, is_deleted, interface_status,create_time
+    </sql>
+
+    <insert id="insertBatchTCSInterface">
+        insert into at_platform_tcs_interface (set_id, interface_id,create_time)
+        values
+        <foreach collection="interfaceList" item="item" separator=",">
+            (#{item.setId},#{item.interfaceId},#{item.createTime})
+        </foreach>
+    </insert>
+</mapper>

@@ -46,4 +46,10 @@ public interface CaseSetService {
      * @param caseSetId            集合id
      */
     void doCaseSetCore(String caseSetId);
+
+    /**
+     * 获取集合详情
+     * @param setId             测试集合id
+     */
+    void getCaseSetDetail(String setId);
 }
