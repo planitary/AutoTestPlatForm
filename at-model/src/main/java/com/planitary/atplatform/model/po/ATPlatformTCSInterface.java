@@ -38,4 +38,6 @@ public class ATPlatformTCSInterface {
     private Integer isDeleted;
 
     private Integer interfaceStatus;
+
+    private String setName;
 }

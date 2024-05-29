@@ -10,18 +10,45 @@
         <result column="is_deleted" property="isDeleted"/>
         <result column="interface_status" property="interfaceStatus"/>
         <result column="create_time" property="createTime"/>
+        <result column="set_name" property="setName"/>
+    </resultMap>
+
+    <resultMap id="TCSWithInterface" type="com.planitary.atplatform.model.dto.TCSDetailDTO">
+        <result column="set_id" property="setId"/>
+        <result column="set_name" property="setName"/>
+        <result column="interface_id" property="interfaceId"/>
+        <result column="interface_name" property="interfaceName"/>
+        <result column="interface_url" property="interfaceUrl"/>
+        <result column="i_remark" property="interfaceRemark"/>
+        <result column="request_body" property="requestBody"/>
+        <result column="tcs_remark" property="remark"/>
+        <result column="project_id" property="projectId"/>
+        <result column="set_weight" property="setWeight"/>
+        <result column="owner" property="owner"/>
+        <result column="parameter_list" property="parameterList"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, set_id, interface_id, create_user, is_deleted, interface_status,create_time
+        id, set_id, interface_id, create_user, is_deleted, interface_status,create_time,set_name
     </sql>
 
     <insert id="insertBatchTCSInterface">
-        insert into at_platform_tcs_interface (set_id, interface_id,create_time)
+        insert into at_platform_tcs_interface (set_id, interface_id,create_time,set_name)
         values
         <foreach collection="interfaceList" item="item" separator=",">
-            (#{item.setId},#{item.interfaceId},#{item.createTime})
+            (#{item.setId},#{item.interfaceId},#{item.createTime},#{item.setName})
         </foreach>
     </insert>
+
+    <select id="getTCSDetail" resultMap="TCSWithInterface" parameterType="String">
+        select ti.set_id, ti.set_name, ii.interface_id, ii.interface_name, ii.interface_url, ii.remark i_remark, ii.request_body,
+               tcs.remark tcs_remark,tcs.project_id,tcs.set_weight,tcs.owner,tcs.parameter_list
+        from at_platform_tcs_interface ti
+        left join at_platform_interface_info ii on ti.interface_id = ii.interface_id
+        left join at_platform_test_case_set tcs on ti.set_id = tcs.set_id
+        <where>
+            and ti.set_id = #{setId}
+        </where>
+    </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.planitary.atplatform.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.planitary.atplatform.model.dto.TCSDetailDTO;
 import com.planitary.atplatform.model.po.ATPlatformTCSInterface;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -25,4 +26,6 @@ public interface ATPlatformTCSInterfaceMapper extends BaseMapper<ATPlatformTCSIn
 //            "</foreach>" +
 //            "</script>")
     Integer insertBatchTCSInterface(@Param("interfaceList") List<ATPlatformTCSInterface> list);
+
+    List<TCSDetailDTO> getTCSDetail(@Param("setId") String setId);
 }

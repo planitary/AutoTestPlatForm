@@ -2,10 +2,13 @@ package com.planitary.atplatform.service.caseSet;
 
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.model.dto.CaseSetWithProjectDTO;
+import com.planitary.atplatform.model.dto.TCSDetailDTO;
 import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.model.dto.AddCaseSetDTO;
 import com.planitary.atplatform.model.dto.QueryCaseSetListDTO;
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
+
+import java.util.List;
 
 /**
  * @Author：planitary
@@ -51,5 +54,5 @@ public interface CaseSetService {
      * 获取集合详情
      * @param setId             测试集合id
      */
-    void getCaseSetDetail(String setId);
+    TCSDetailDTO getCaseSetDetail(String setId);
 }

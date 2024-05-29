@@ -4,11 +4,8 @@ import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
-import com.planitary.atplatform.model.dto.CaseSetWithProjectDTO;
+import com.planitary.atplatform.model.dto.*;
 import com.planitary.atplatform.model.po.PageParams;
-import com.planitary.atplatform.model.dto.AddCaseSetDTO;
-import com.planitary.atplatform.model.dto.CaseSetExecuteDTO;
-import com.planitary.atplatform.model.dto.QueryCaseSetListDTO;
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
 import com.planitary.atplatform.service.caseSet.CaseSetService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author：planitary
@@ -67,17 +65,23 @@ public class CaseSetController {
         try {
             caseSetService.doCaseSetCore(caseSetId);
             isSuccess = true;
-        }catch (ATPlatformException e){
+        } catch (ATPlatformException e) {
             e.printStackTrace();
             isSuccess = false;
             log.error(e.getMessage());
         }
-        if (Boolean.TRUE.equals(isSuccess)){
+        if (Boolean.TRUE.equals(isSuccess)) {
             return PtResult.success("execute success!");
-        }else {
-            return PtResult.error("execute failed!!",ExceptionEnum.CALL_FAILED.getErrCode());
+        } else {
+            return PtResult.error("execute failed!!", ExceptionEnum.CALL_FAILED.getErrCode());
         }
 
+    }
+
+    @GetMapping("/caseSet/getCaseSetDetail")
+    public PtResult<TCSDetailDTO> getCaseSetDetail(String setId) {
+        TCSDetailDTO caseSetDetail = caseSetService.getCaseSetDetail(setId);
+        return PtResult.success(caseSetDetail);
     }
 
 //    @PostMapping("/caseSet/test")

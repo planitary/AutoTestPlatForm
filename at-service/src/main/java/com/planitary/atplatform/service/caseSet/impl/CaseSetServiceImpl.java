@@ -109,6 +109,7 @@ public class CaseSetServiceImpl implements CaseSetService {
         List<ATPlatformTCSInterface> tcsInterfaces = interfaceIds.stream().map(interfaceId -> {
                     ATPlatformTCSInterface atPlatformTCSInterface = new ATPlatformTCSInterface();
                     atPlatformTCSInterface.setSetId(setId);
+                    atPlatformTCSInterface.setSetName(addCaseSetDTO.getSetName());
                     atPlatformTCSInterface.setInterfaceId(interfaceId);
                     atPlatformTCSInterface.setCreateTime(LocalDateTime.now().format(formatter));
                     return atPlatformTCSInterface;
@@ -275,8 +276,29 @@ public class CaseSetServiceImpl implements CaseSetService {
     }
 
     @Override
-    public void getCaseSetDetail(String setId) {
+    public TCSDetailDTO getCaseSetDetail(String setId) {
+        if (Objects.equals(null,setId) || Objects.equals("",setId)){
+            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
+        }
 
+        List<TCSDetailDTO> tcsDetails = atPlatformTCSInterfaceMapper.getTCSDetail(setId);
+        TCSDetailDTO tcsDetailDTO = new TCSDetailDTO();
+        BeanUtils.copyProperties(tcsDetails.get(0),tcsDetailDTO);
+//        tcsDetailDTO.setSetId(setId);
+//        tcsDetailDTO.setSetName(tcsDetails.get(0).getSetName());
+
+        List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS =  tcsDetails.stream().map(tcsDetail -> {
+            InterfaceInfoSIPDTO interfaceInfoSIPDTO = new InterfaceInfoSIPDTO();
+            interfaceInfoSIPDTO.setInterfaceId(tcsDetail.getInterfaceId());
+            interfaceInfoSIPDTO.setInterfaceName(tcsDetail.getInterfaceName());
+            interfaceInfoSIPDTO.setInterfaceUrl(tcsDetail.getInterfaceUrl());
+            interfaceInfoSIPDTO.setRequestBody(tcsDetail.getRequestBody());
+            interfaceInfoSIPDTO.setRemark(tcsDetail.getRemark());
+            return interfaceInfoSIPDTO;
+        }).collect(Collectors.toList());
+
+        tcsDetailDTO.setInterfaceInfoSIPDTOS(interfaceInfoSIPDTOS);
+        return tcsDetailDTO;
     }
 
 }
