@@ -287,6 +287,14 @@ public class CaseSetServiceImpl implements CaseSetService {
 //        tcsDetailDTO.setSetId(setId);
 //        tcsDetailDTO.setSetName(tcsDetails.get(0).getSetName());
 
+        LambdaQueryWrapper<ATPlatformProject> projectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        projectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,tcsDetails.get(0).getProjectId());
+        ATPlatformProject atPlatformProject = atPlatformProjectMapper.selectOne(projectLambdaQueryWrapper);
+        if (atPlatformProject == null){
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        tcsDetailDTO.setProjectName(atPlatformProject.getProjectName());
+
         List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS =  tcsDetails.stream().map(tcsDetail -> {
             InterfaceInfoSIPDTO interfaceInfoSIPDTO = new InterfaceInfoSIPDTO();
             interfaceInfoSIPDTO.setInterfaceId(tcsDetail.getInterfaceId());
