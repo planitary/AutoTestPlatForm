@@ -19,4 +19,5 @@ public class InterfaceInfoSIPDTO {
     private String interfaceUrl;
     private String remark;
     private String requestBody;
+    private String interfaceStatus;
 }

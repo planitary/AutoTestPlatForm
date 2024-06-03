@@ -128,6 +128,7 @@ public class CaseSetServiceImpl implements CaseSetService {
     }
 
     @Override
+    @Transactional
     public String updateCaseSet(AddCaseSetDTO addCaseSetDTO) {
         if (addCaseSetDTO.getSetId() == null) {
             log.error("集合id为空!");
@@ -144,8 +145,12 @@ public class CaseSetServiceImpl implements CaseSetService {
             ATPlatformException.exceptionCast("集合不存在!", ExceptionEnum.BIZ_ERROR.getErrCode());
         }
         UpdateWrapper<ATPlatformCaseSet> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("set_id", setId);
+        UpdateWrapper<ATPlatformTCSInterface> tcsDetailDTOUpdateWrapper = new UpdateWrapper<>();
 
+        updateWrapper.eq("set_id", setId);
+        tcsDetailDTOUpdateWrapper.eq("set_id",setId);
+
+        // 先更新主表
         if (addCaseSetDTO.getSetName() != null) {
             updateWrapper.set("set_name", addCaseSetDTO.getSetName());
         }
@@ -162,9 +167,28 @@ public class CaseSetServiceImpl implements CaseSetService {
         if (addCaseSetDTO.getRemark() != null) {
             updateWrapper.set("remark", addCaseSetDTO.getRemark());
         }
+        if (addCaseSetDTO.getOwner() != null){
+            updateWrapper.set("owner", addCaseSetDTO.getOwner());
+        }
         updateWrapper.set("update_time", LocalDateTime.now());
+        // 再更新关联表（注意这里需要更新接口）
+        //todo 注意这里更新的表是atplatform_tcs_interface,但是实际的update操作需要再mapper中自己实现
+//        List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS = addCaseSetDTO.getInterfaceInfoSIPDTOS().stream().
+//                map(interfaceSIPDTO -> {
+//            InterfaceInfoSIPDTO interfaceInfoSIPDTO = new InterfaceInfoSIPDTO();
+//            interfaceInfoSIPDTO.setInterfaceStatus(interfaceSIPDTO.getInterfaceStatus());
+//            interfaceInfoSIPDTO.setInterfaceId(interfaceSIPDTO.getInterfaceId());
+//            interfaceInfoSIPDTO.setInterfaceUrl(interfaceSIPDTO.getInterfaceUrl());
+//            interfaceInfoSIPDTO.setInterfaceName(interfaceSIPDTO.getInterfaceName());
+//            interfaceInfoSIPDTO.setRemark(interfaceSIPDTO.getRemark());
+//            interfaceInfoSIPDTO.setRequestBody(interfaceSIPDTO.getRequestBody());
+//            return interfaceInfoSIPDTO;
+//        }).collect(Collectors.toList());
+//        tcsDetailDTOUpdateWrapper.set("")
+        tcsDetailDTOUpdateWrapper.set("set_name",addCaseSetDTO.getSetName());
 
         int updateCount = atPlatformCaseSetMapper.update(null, updateWrapper);
+        int tcsUpdateCount = atPlatformTCSInterfaceMapper.update(null,tcsDetailDTOUpdateWrapper);
         if (updateCount <= 0) {
             ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
         }
@@ -219,7 +243,6 @@ public class CaseSetServiceImpl implements CaseSetService {
         log.info(parameterList);
         List<ExtractParamDTO> extractParamDTOS = JSON.parseArray(parameterList, ExtractParamDTO.class);
         // 接口列表依次发起调用，然后根据提取参数，对该接口的返回值进行jsonPath读取
-        // TODO: 2024/1/22 bug ：for的循环不能取extractParamDTO的长度，应该取intetfaceIds的长度，interfaceIds需要序列化一下
         String interfaceIdsJson = atPlatformCaseSet.getInterfaceIds();
         log.debug(interfaceIdsJson);
         List<String> interfaceIds = JSON.parseArray(interfaceIdsJson, String.class);

@@ -40,4 +40,5 @@ public class ATPlatformTCSInterface {
     private Integer interfaceStatus;
 
     private String setName;
+
 }

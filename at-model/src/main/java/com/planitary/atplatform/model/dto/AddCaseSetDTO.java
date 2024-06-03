@@ -23,6 +23,7 @@ public class AddCaseSetDTO {
     private String parameterList;
     private String projectId;
     private String owner;
+    private List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS;
 
     /** 各个接口提取的参数集合
      * {"extractParamDTOS":[{
