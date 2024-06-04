@@ -38,14 +38,15 @@ public class CaseSetController {
             log.error("参数为空!");
             ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
         }
-        String setId = caseSetService.addCaseSet(addCaseSetDTO);
+//        String setId = caseSetService.addCaseSet(addCaseSetDTO);
+        String setId = caseSetService.addCaseSetV1(addCaseSetDTO);
         return PtResult.success(setId);
     }
 
     @PostMapping("/caseSet/updateCaseSet")
     public PtResult<String> updateCaseSet(@RequestBody AddCaseSetDTO addCaseSetDTO) {
 
-        String caseSetId = caseSetService.updateCaseSet(addCaseSetDTO);
+        String caseSetId = caseSetService.updateCaseSetV1(addCaseSetDTO);
         return PtResult.success(caseSetId);
     }
 
@@ -80,7 +81,7 @@ public class CaseSetController {
 
     @GetMapping("/caseSet/getCaseSetDetail")
     public PtResult<TCSDetailDTO> getCaseSetDetail(String setId) {
-        TCSDetailDTO caseSetDetail = caseSetService.getCaseSetDetail(setId);
+        TCSDetailDTO caseSetDetail = caseSetService.getCaseSetDetailV1(setId);
         return PtResult.success(caseSetDetail);
     }
 

@@ -1,6 +1,7 @@
 package com.planitary.atplatform.service.caseSet.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -18,6 +19,7 @@ import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.*;
 import com.planitary.atplatform.service.caseSet.CaseSetService;
 import com.planitary.atplatform.service.handler.ExecuteHandler;
+import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -50,6 +52,9 @@ public class CaseSetServiceImpl implements CaseSetService {
     private ATPlatformTCSInterfaceMapper atPlatformTCSInterfaceMapper;
 
     @Resource
+    private InterfaceService interfaceService;
+
+    @Resource
     private ATPlatformInterfaceInfoMapper atPlatformInterfaceInfoMapper;
 
     @Resource
@@ -60,10 +65,65 @@ public class CaseSetServiceImpl implements CaseSetService {
 
     @Override
     @Transactional
+    public String addCaseSetV1(AddCaseSetDTO addCaseSetDTO) {
+        // 校验接口的合法性(数据库in出来的count和列表的size比较）
+        // 反序列化interfaceIds
+        List<String> interfaceIds = addCaseSetDTO.getInterfaceIds();
+        QueryWrapper<ATPlatformInterfaceInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("interface_id", interfaceIds);
+
+        // 校验项目的合法性
+        String projectId = addCaseSetDTO.getProjectId();
+        LambdaQueryWrapper<ATPlatformProject> projectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        projectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId, projectId);
+        ATPlatformProject project = atPlatformProjectMapper.selectOne(projectLambdaQueryWrapper);
+        if (project == null) {
+            log.error("项目:{}不存在", projectId);
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+
+        List<ATPlatformInterfaceInfo> atPlatformInterfaceInfos = atPlatformInterfaceInfoMapper.selectList(queryWrapper);
+        if (atPlatformInterfaceInfos.size() != interfaceIds.size()) {
+            log.error("接口数量不一致!");
+            ATPlatformException.exceptionCast("接口有缺失,请核对!");
+        }
+        if (addCaseSetDTO.getSetWeight() < 0) {
+            log.error("权重设置异常");
+            ATPlatformException.exceptionCast("权重不能为负!", ExceptionEnum.BIZ_ERROR.getErrCode());
+        }
+
+        if (interfaceIds.size() == 0) {
+            log.error("无接口");
+            ATPlatformException.exceptionCast("无接口信息", ExceptionEnum.BIZ_ERROR.getErrCode());
+        }
+
+        ATPlatformCaseSet atPlatformCaseSet = new ATPlatformCaseSet();
+        String setId = '5' + uniqueStringIdGenerator.idGenerator();
+
+        // 插入set主表
+        BeanUtils.copyProperties(addCaseSetDTO, atPlatformCaseSet);
+        List<ExtractParamDTO> extractParamDTOS = addCaseSetDTO.getExtractParamDTOS();
+        String extractParamDTOJson = JSON.toJSONString(extractParamDTOS);
+        atPlatformCaseSet.setParameterList(extractParamDTOJson);
+        atPlatformCaseSet.setSetId(setId);
+        atPlatformCaseSet.setCreateUser(addCaseSetDTO.getOwner());
+        atPlatformCaseSet.setUpdateUser(addCaseSetDTO.getOwner());
+        atPlatformCaseSet.setInterfaceIds(addCaseSetDTO.getInterfaceIds().toString());
+        int insertCount = atPlatformCaseSetMapper.insert(atPlatformCaseSet);
+        if (insertCount <= 0) {
+            log.error("执行失败:{}", ExceptionEnum.INSERT_FAILED.getErrMessage());
+            ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);
+        }
+        log.debug("插入集合成功");
+        return setId;
+    }
+
+    @Override
+    @Transactional
     public String addCaseSet(AddCaseSetDTO addCaseSetDTO) {
         // 校验接口的合法性(数据库in出来的count和列表的size比较）
         // 反序列化interfaceIds
-        List<String> interfaceIds = JSON.parseArray(addCaseSetDTO.getInterfaceIds(), String.class);
+        List<String> interfaceIds = addCaseSetDTO.getInterfaceIds();
         QueryWrapper<ATPlatformInterfaceInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("interface_id", interfaceIds);
 
@@ -116,7 +176,7 @@ public class CaseSetServiceImpl implements CaseSetService {
                 })
                 .collect(Collectors.toList());
         Integer batchInsertCount = atPlatformTCSInterfaceMapper.insertBatchTCSInterface(tcsInterfaces);
-        log.info("批量插入tcs-interface表,条数:{}",batchInsertCount);
+        log.info("批量插入tcs-interface表,条数:{}", batchInsertCount);
 
         int insertCount = atPlatformCaseSetMapper.insert(atPlatformCaseSet);
         if (insertCount <= 0) {
@@ -124,6 +184,73 @@ public class CaseSetServiceImpl implements CaseSetService {
             ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);
         }
         log.debug("插入集合成功");
+        return setId;
+    }
+
+    @Override
+    @Transactional
+    public String updateCaseSetV1(AddCaseSetDTO addCaseSetDTO) {
+        if (addCaseSetDTO.getSetId() == null) {
+            log.error("集合id为空!");
+            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
+        }
+        // 校验集合是否存在
+        String setId = addCaseSetDTO.getSetId();
+        LambdaQueryWrapper<ATPlatformCaseSet> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(ATPlatformCaseSet::getSetId, setId);
+
+        ATPlatformCaseSet caseSet = atPlatformCaseSetMapper.selectOne(lambdaQueryWrapper);
+        if (caseSet == null) {
+            log.error("集合id错误!");
+            ATPlatformException.exceptionCast("集合不存在!", ExceptionEnum.BIZ_ERROR.getErrCode());
+        }
+        UpdateWrapper<ATPlatformCaseSet> updateWrapper = new UpdateWrapper<>();
+        UpdateWrapper<ATPlatformTCSInterface> tcsDetailDTOUpdateWrapper = new UpdateWrapper<>();
+
+        updateWrapper.eq("set_id", setId);
+        tcsDetailDTOUpdateWrapper.eq("set_id", setId);
+
+        // 先更新主表
+        if (addCaseSetDTO.getSetName() != null) {
+            updateWrapper.set("set_name", addCaseSetDTO.getSetName());
+        }
+        if (addCaseSetDTO.getInterfaceIds() != null) {
+            updateWrapper.set("interface_ids", addCaseSetDTO.getInterfaceIds().toString());
+        }
+        if (addCaseSetDTO.getSetWeight() != null) {
+            updateWrapper.set("set_weight", addCaseSetDTO.getSetWeight());
+        }
+        if (addCaseSetDTO.getExtractParamDTOS() != null) {
+            String extractParamDTOJson = JSON.toJSONString(addCaseSetDTO.getExtractParamDTOS());
+            updateWrapper.set("parameter_list", extractParamDTOJson);
+        }
+        if (addCaseSetDTO.getRemark() != null) {
+            updateWrapper.set("remark", addCaseSetDTO.getRemark());
+        }
+        if (addCaseSetDTO.getOwner() != null) {
+            updateWrapper.set("owner", addCaseSetDTO.getOwner());
+        }
+        updateWrapper.set("update_time", LocalDateTime.now());
+        // 再更新接口表，首先拿到接口对象
+        List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS = addCaseSetDTO.getInterfaceInfoSIPDTOS();
+        // 接口更新标记
+        boolean interfaceBatchUpdateFlag = true;
+        if (interfaceInfoSIPDTOS.size() > 0) {
+            for (InterfaceInfoSIPDTO interfaceInfoSIPDTO : interfaceInfoSIPDTOS) {
+                ATPlatformInterfaceInfo atPlatformInterfaceInfo = new ATPlatformInterfaceInfo();
+                BeanUtils.copyProperties(interfaceInfoSIPDTO, atPlatformInterfaceInfo);
+                atPlatformInterfaceInfo.setProjectId(addCaseSetDTO.getProjectId());
+                Map<String, String> resMap = interfaceService.updateInterfaceV2(atPlatformInterfaceInfo);
+                if (!Objects.equals(resMap.get("status"), "success")) {
+                    interfaceBatchUpdateFlag = false;
+                }
+            }
+        }
+        int updateCount = atPlatformCaseSetMapper.update(null, updateWrapper);
+        if (updateCount <= 0 && !interfaceBatchUpdateFlag) {
+            ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
+        }
+        log.info("更新用例集合成功");
         return setId;
     }
 
@@ -148,7 +275,7 @@ public class CaseSetServiceImpl implements CaseSetService {
         UpdateWrapper<ATPlatformTCSInterface> tcsDetailDTOUpdateWrapper = new UpdateWrapper<>();
 
         updateWrapper.eq("set_id", setId);
-        tcsDetailDTOUpdateWrapper.eq("set_id",setId);
+        tcsDetailDTOUpdateWrapper.eq("set_id", setId);
 
         // 先更新主表
         if (addCaseSetDTO.getSetName() != null) {
@@ -167,10 +294,16 @@ public class CaseSetServiceImpl implements CaseSetService {
         if (addCaseSetDTO.getRemark() != null) {
             updateWrapper.set("remark", addCaseSetDTO.getRemark());
         }
-        if (addCaseSetDTO.getOwner() != null){
+        if (addCaseSetDTO.getOwner() != null) {
             updateWrapper.set("owner", addCaseSetDTO.getOwner());
         }
         updateWrapper.set("update_time", LocalDateTime.now());
+
+        /* 先计算前端传递的interfaceIds和db的结果，根据结果的不同处理不同：
+        1、存在差集，且前端传递的列表 > db的列表，说明页面有新增接口，此时先插入，再更新剩余的
+        2、存在差集，且前端传递的列表 < db的列表，说明页面有删减接口，此时先删除，再更新剩余的
+        3、存在差集，且
+         */
         // 再更新关联表（注意这里需要更新接口）
         //todo 注意这里更新的表是atplatform_tcs_interface,但是实际的update操作需要再mapper中自己实现
 //        List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS = addCaseSetDTO.getInterfaceInfoSIPDTOS().stream().
@@ -185,10 +318,10 @@ public class CaseSetServiceImpl implements CaseSetService {
 //            return interfaceInfoSIPDTO;
 //        }).collect(Collectors.toList());
 //        tcsDetailDTOUpdateWrapper.set("")
-        tcsDetailDTOUpdateWrapper.set("set_name",addCaseSetDTO.getSetName());
+        tcsDetailDTOUpdateWrapper.set("set_name", addCaseSetDTO.getSetName());
 
         int updateCount = atPlatformCaseSetMapper.update(null, updateWrapper);
-        int tcsUpdateCount = atPlatformTCSInterfaceMapper.update(null,tcsDetailDTOUpdateWrapper);
+        int tcsUpdateCount = atPlatformTCSInterfaceMapper.update(null, tcsDetailDTOUpdateWrapper);
         if (updateCount <= 0) {
             ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
         }
@@ -300,25 +433,25 @@ public class CaseSetServiceImpl implements CaseSetService {
 
     @Override
     public TCSDetailDTO getCaseSetDetail(String setId) {
-        if (Objects.equals(null,setId) || Objects.equals("",setId)){
+        if (Objects.equals(null, setId) || Objects.equals("", setId)) {
             ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
         }
 
         List<TCSDetailDTO> tcsDetails = atPlatformTCSInterfaceMapper.getTCSDetail(setId);
         TCSDetailDTO tcsDetailDTO = new TCSDetailDTO();
-        BeanUtils.copyProperties(tcsDetails.get(0),tcsDetailDTO);
+        BeanUtils.copyProperties(tcsDetails.get(0), tcsDetailDTO);
 //        tcsDetailDTO.setSetId(setId);
 //        tcsDetailDTO.setSetName(tcsDetails.get(0).getSetName());
 
         LambdaQueryWrapper<ATPlatformProject> projectLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        projectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,tcsDetails.get(0).getProjectId());
+        projectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId, tcsDetails.get(0).getProjectId());
         ATPlatformProject atPlatformProject = atPlatformProjectMapper.selectOne(projectLambdaQueryWrapper);
-        if (atPlatformProject == null){
+        if (atPlatformProject == null) {
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
         tcsDetailDTO.setProjectName(atPlatformProject.getProjectName());
 
-        List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS =  tcsDetails.stream().map(tcsDetail -> {
+        List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS = tcsDetails.stream().map(tcsDetail -> {
             InterfaceInfoSIPDTO interfaceInfoSIPDTO = new InterfaceInfoSIPDTO();
             interfaceInfoSIPDTO.setInterfaceId(tcsDetail.getInterfaceId());
             interfaceInfoSIPDTO.setInterfaceName(tcsDetail.getInterfaceName());
@@ -331,5 +464,62 @@ public class CaseSetServiceImpl implements CaseSetService {
         tcsDetailDTO.setInterfaceInfoSIPDTOS(interfaceInfoSIPDTOS);
         return tcsDetailDTO;
     }
+
+    @Override
+    public TCSDetailDTO getCaseSetDetailV1(String setId) {
+        if (Objects.equals(null, setId) || Objects.equals("", setId)) {
+            ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
+        }
+        LambdaQueryWrapper<ATPlatformCaseSet> caseSetLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<ATPlatformInterfaceInfo> interfaceInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<ATPlatformProject> projectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+
+        //先找到集合
+        caseSetLambdaQueryWrapper.eq(ATPlatformCaseSet::getSetId, setId);
+        ATPlatformCaseSet atPlatformCaseSet = atPlatformCaseSetMapper.selectOne(caseSetLambdaQueryWrapper);
+        if (atPlatformCaseSet == null) {
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        // 提取集合的接口id列表
+        String interfaceIds = atPlatformCaseSet.getInterfaceIds();
+        List<String> iidList = JSON.parseObject(interfaceIds, new TypeReference<>() {
+        });
+        TCSDetailDTO tcsDetailDTO = new TCSDetailDTO();
+        // 查找项目数据
+        projectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId, atPlatformCaseSet.getProjectId());
+        ATPlatformProject atPlatformProject = atPlatformProjectMapper.selectOne(projectLambdaQueryWrapper);
+        if (atPlatformProject == null) {
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        tcsDetailDTO.setProjectName(atPlatformProject.getProjectName());
+        // 拷贝tcs的值
+        BeanUtils.copyProperties(atPlatformCaseSet, tcsDetailDTO);
+
+        if (!Objects.equals(null,iidList) && iidList.size() > 0) {
+            // 根据接口id，批量查询接口数据
+            interfaceInfoLambdaQueryWrapper.in(ATPlatformInterfaceInfo::getInterfaceId, iidList);
+            List<ATPlatformInterfaceInfo> atPlatformInterfaceInfos = atPlatformInterfaceInfoMapper.selectList(interfaceInfoLambdaQueryWrapper);
+            log.info("找到了接口{}条", atPlatformInterfaceInfos.size());
+
+            // 单独处理接口数据
+            List<InterfaceInfoSIPDTO> iiSIPs = atPlatformInterfaceInfos.stream().map(atPlatformInterfaceInfo -> {
+                InterfaceInfoSIPDTO interfaceInfoSIPDTO = new InterfaceInfoSIPDTO();
+                interfaceInfoSIPDTO.setInterfaceStatus("0");
+                interfaceInfoSIPDTO.setInterfaceId(atPlatformInterfaceInfo.getInterfaceId());
+                interfaceInfoSIPDTO.setInterfaceUrl(atPlatformInterfaceInfo.getInterfaceUrl());
+                interfaceInfoSIPDTO.setInterfaceName(atPlatformInterfaceInfo.getInterfaceName());
+                interfaceInfoSIPDTO.setRemark(atPlatformInterfaceInfo.getRemark());
+                interfaceInfoSIPDTO.setRequestBody(atPlatformInterfaceInfo.getRequestBody());
+                return interfaceInfoSIPDTO;
+            }).collect(Collectors.toList());
+            tcsDetailDTO.setInterfaceInfoSIPDTOS(iiSIPs);
+            log.info("tcs详情:{}", tcsDetailDTO);
+        }
+        else {
+            tcsDetailDTO.setInterfaceInfoSIPDTOS(null);
+        }
+        return tcsDetailDTO;
+    }
+
 
 }

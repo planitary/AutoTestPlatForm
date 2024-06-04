@@ -17,7 +17,7 @@ import java.util.Map;
 public class AddCaseSetDTO {
     private String setId;
     private String setName;
-    private String interfaceIds;
+    private List<String> interfaceIds;
     private String remark;
     private Integer setWeight;
     private String parameterList;

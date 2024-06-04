@@ -37,6 +37,13 @@ public interface CaseSetService {
     String updateCaseSet(AddCaseSetDTO addCaseSetDTO);
 
     /**
+     * 不使用关联表的更新
+     * @param addCaseSetDTO
+     * @return
+     */
+    String updateCaseSetV1(AddCaseSetDTO addCaseSetDTO);
+
+    /**
      * 查询测试集合列表
      * @param queryCaseSetListDTO       查询DTO
      * @return
@@ -55,4 +62,19 @@ public interface CaseSetService {
      * @param setId             测试集合id
      */
     TCSDetailDTO getCaseSetDetail(String setId);
+
+    /**
+     * 不使用关联关系表查询，分别查询tcs表和interface表，聚合展示结果
+     * @param setId
+     * @return
+     */
+    TCSDetailDTO getCaseSetDetailV1(String setId);
+
+    /**
+     * 不使用关联关系表的新增
+     * @param addCaseSetDTO
+     * @return
+     */
+    String addCaseSetV1(AddCaseSetDTO addCaseSetDTO);
+
 }

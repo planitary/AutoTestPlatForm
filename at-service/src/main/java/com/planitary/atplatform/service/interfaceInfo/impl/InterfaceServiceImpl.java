@@ -312,6 +312,7 @@ public class InterfaceServiceImpl implements InterfaceService {
         }
         Map<String, String> resMap = new HashMap<>();
         resMap.put("interfaceId", interfaceId);
+        resMap.put("status","success");
         return resMap;
     }
 
