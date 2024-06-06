@@ -163,7 +163,8 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
     @Override
-    public ATPlatformInterfaceInfo getInterfaceDetail(String interfaceId) {
+    public ATPlatformInterfaceInfo getInterfaceDetail(BaseInterfaceDTO baseInterfaceDTO) {
+        String interfaceId = baseInterfaceDTO.getInterfaceId();
         if (interfaceId == null || interfaceId.equals("")){
             log.error("接口id不能为空");
             ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
@@ -176,6 +177,14 @@ public class InterfaceServiceImpl implements InterfaceService {
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
         return atPlatformInterfaceInfo;
+    }
+
+    @Override
+    public List<ATPlatformInterfaceInfo> getInterfaceDetailByName(BaseInterfaceDTO baseInterfaceDTO){
+        String interfaceName = baseInterfaceDTO.getInterfaceName();
+        LambdaQueryWrapper<ATPlatformInterfaceInfo> interfaceInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        interfaceInfoLambdaQueryWrapper.like(ATPlatformInterfaceInfo::getInterfaceName,interfaceName);
+        return atPlatformInterfaceInfoMapper.selectList(interfaceInfoLambdaQueryWrapper);
     }
 
     @Override

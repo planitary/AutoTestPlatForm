@@ -13,4 +13,5 @@ import lombok.Data;
 @Data
 public class BaseInterfaceDTO {
     private String interfaceId;
+    private String interfaceName;
 }

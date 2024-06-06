@@ -5,6 +5,7 @@ import com.planitary.atplatform.model.dto.*;
 import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -41,7 +42,9 @@ public interface InterfaceService {
      * @param interfaceId       接口id
      * @return
      */
-    ATPlatformInterfaceInfo getInterfaceDetail(String interfaceId);
+    ATPlatformInterfaceInfo getInterfaceDetail(BaseInterfaceDTO baseInterfaceDTO);
+
+    List<ATPlatformInterfaceInfo> getInterfaceDetailByName(BaseInterfaceDTO baseInterfaceDTO);
 
     /**
      * 更新接口
