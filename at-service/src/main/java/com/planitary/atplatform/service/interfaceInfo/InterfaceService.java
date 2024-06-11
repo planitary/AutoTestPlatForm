@@ -44,6 +44,12 @@ public interface InterfaceService {
      */
     ATPlatformInterfaceInfo getInterfaceDetail(BaseInterfaceDTO baseInterfaceDTO);
 
+    /**
+     * 通过接口名搜索接口
+     * @param baseInterfaceDTO
+     * @return
+     */
+
     List<ATPlatformInterfaceInfo> getInterfaceDetailByName(BaseInterfaceDTO baseInterfaceDTO);
 
     /**
