@@ -69,9 +69,9 @@ public class InterfaceServiceImpl implements InterfaceService {
         // 校验项目的合法性
         LambdaQueryWrapper<ATPlatformProject> atTestProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
         atTestProjectLambdaQueryWrapper.eq((StringUtils.isNotEmpty(addInterfaceDTO.getProjectId())),
-                ATPlatformProject::getProjectId, addInterfaceDTO.getProjectId())
+                        ATPlatformProject::getProjectId, addInterfaceDTO.getProjectId())
                 .eq((StringUtils.isNotEmpty(addInterfaceDTO.getProjectName())),
-                        ATPlatformProject::getProjectName,addInterfaceDTO.getProjectName());
+                        ATPlatformProject::getProjectName, addInterfaceDTO.getProjectName());
         ATPlatformProject atTestProject = atPlatformProjectMapper.selectOne(atTestProjectLambdaQueryWrapper);
         if (atTestProject == null) {
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
@@ -80,7 +80,7 @@ public class InterfaceServiceImpl implements InterfaceService {
         String interfaceId = uniqueStringIdGenerator.idGenerator();
         BeanUtils.copyProperties(addInterfaceDTO, interfaceInfo);
         // 处理没有传projectId的情况
-        if (addInterfaceDTO.getProjectId() == null || Objects.equals(addInterfaceDTO.getProjectId(), "")){
+        if (addInterfaceDTO.getProjectId() == null || Objects.equals(addInterfaceDTO.getProjectId(), "")) {
             interfaceInfo.setProjectId(atTestProject.getProjectId());
         }
         interfaceInfo.setInterfaceId(interfaceId);
@@ -155,7 +155,7 @@ public class InterfaceServiceImpl implements InterfaceService {
             ATPlatformException.exceptionCast(ExceptionEnum.PAGINATION_PARAM_ERROR);
         }
         Page<InterfaceWithProjectDTO> page = new Page<>(pageNo, pageSize);
-        Page<InterfaceWithProjectDTO> interfaceInfoPage = atPlatformInterfaceInfoMapper.getInterfaceWithProject(page,queryInterfaceDTO);
+        Page<InterfaceWithProjectDTO> interfaceInfoPage = atPlatformInterfaceInfoMapper.getInterfaceWithProject(page, queryInterfaceDTO);
         List<InterfaceWithProjectDTO> records = interfaceInfoPage.getRecords();
         long total = interfaceInfoPage.getTotal();
         log.info("查询到的记录总数:{}", total);
@@ -165,14 +165,14 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Override
     public ATPlatformInterfaceInfo getInterfaceDetail(BaseInterfaceDTO baseInterfaceDTO) {
         String interfaceId = baseInterfaceDTO.getInterfaceId();
-        if (interfaceId == null || interfaceId.equals("")){
+        if (interfaceId == null || interfaceId.equals("")) {
             log.error("接口id不能为空");
             ATPlatformException.exceptionCast(ExceptionEnum.PARAMETER_ERROR);
         }
         LambdaQueryWrapper<ATPlatformInterfaceInfo> interfaceInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        interfaceInfoLambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getInterfaceId,interfaceId);
+        interfaceInfoLambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getInterfaceId, interfaceId);
         ATPlatformInterfaceInfo atPlatformInterfaceInfo = atPlatformInterfaceInfoMapper.selectOne(interfaceInfoLambdaQueryWrapper);
-        if (atPlatformInterfaceInfo == null){
+        if (atPlatformInterfaceInfo == null) {
             log.error("项目不存在");
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
@@ -180,10 +180,12 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
     @Override
-    public List<ATPlatformInterfaceInfo> getInterfaceDetailByName(BaseInterfaceDTO baseInterfaceDTO){
+    public List<ATPlatformInterfaceInfo> getInterfaceDetailByName(BaseInterfaceDTO baseInterfaceDTO) {
         String interfaceName = baseInterfaceDTO.getInterfaceName();
         LambdaQueryWrapper<ATPlatformInterfaceInfo> interfaceInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        interfaceInfoLambdaQueryWrapper.like(ATPlatformInterfaceInfo::getInterfaceName,interfaceName);
+        interfaceInfoLambdaQueryWrapper
+                .eq((StringUtils.isNotEmpty(baseInterfaceDTO.getProjectId())),ATPlatformInterfaceInfo::getProjectId, baseInterfaceDTO.getProjectId())
+                .like(ATPlatformInterfaceInfo::getInterfaceName, interfaceName);
         return atPlatformInterfaceInfoMapper.selectList(interfaceInfoLambdaQueryWrapper);
     }
 
@@ -257,14 +259,14 @@ public class InterfaceServiceImpl implements InterfaceService {
         String projectId = atPlatformInterfaceInfo.getProjectId();
         // 校验projectId合法性以及与当前interface的关联性
         LambdaQueryWrapper<ATPlatformProject> projectLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        projectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,projectId);
+        projectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId, projectId);
         ATPlatformProject projectByInterface = atPlatformProjectMapper.selectOne(projectLambdaQueryWrapper);
         if (projectByInterface == null) {
             log.error("项目:{}不存在", projectId);
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
-        if (projectByInterface.getIsDelete() == 1){
-            log.error("项目:{}已删除",projectId);
+        if (projectByInterface.getIsDelete() == 1) {
+            log.error("项目:{}已删除", projectId);
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
         String interfaceId = atPlatformInterfaceInfo.getInterfaceId();
@@ -321,7 +323,7 @@ public class InterfaceServiceImpl implements InterfaceService {
         }
         Map<String, String> resMap = new HashMap<>();
         resMap.put("interfaceId", interfaceId);
-        resMap.put("status","success");
+        resMap.put("status", "success");
         return resMap;
     }
 

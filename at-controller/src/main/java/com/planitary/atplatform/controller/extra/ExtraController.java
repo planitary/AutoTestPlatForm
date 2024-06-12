@@ -70,7 +70,7 @@ public class ExtraController {
         Workbook workbook = excelReaderHandler.createExcelTemplate();
         String fileName = TEST_CASE_TEMPLATE_FILENAME + System.currentTimeMillis() + ".xlsx";
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition","attachment; filename=" + fileName);
+        headers.add("Content-Disposition","filename=" + fileName);
         log.info("模板文件名:{}",fileName);
         return ResponseEntity.ok()
                 .headers(headers)
