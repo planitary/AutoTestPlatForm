@@ -1,6 +1,7 @@
 package com.planitary.atplatform.service.handler;
 
 import com.planitary.atplatform.model.dto.ExcelParseDTO;
+import com.planitary.atplatform.model.po.WorkbookTemplate;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,6 +42,12 @@ public interface ExcelReaderHandler {
     Workbook createExcelTemplate();
 
     /**
+     * 通用模板生成项
+     * @return
+     */
+    Workbook createExcelTemplateCommon(WorkbookTemplate workbookTemplate);
+
+    /**
      * workbook转为字节流供下载
      * @param workbook          模板文件
      * @return
@@ -48,4 +55,11 @@ public interface ExcelReaderHandler {
     byte[] workbook2ByteArray(Workbook workbook);
 
     List<ExcelParseDTO> parseExcel(FileInputStream inputStream) throws IOException, InvalidFormatException;
+
+    /**
+     * 根据业务类型，生成对应的模板填充对象
+     * @param bizCode
+     * @return
+     */
+    WorkbookTemplate getWorkTemplateByBizCode(String bizCode);
 }

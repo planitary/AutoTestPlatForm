@@ -24,7 +24,14 @@ public enum BizCodeEnum {
      * 异步调用方法
      */
     UPDATE_CURRENT_INTERFACE_INFO("更新当前接口信息","CM001"),
-    EXTERNAL_INTERFACE_CALL("外部接口调用","CM002");
+    EXTERNAL_INTERFACE_CALL("外部接口调用","CM002"),
+
+    /**
+     * excel模板创建来源
+     */
+    BATCH_ADD_INTERFACE("BATCH_ADD_INTERFACE","EX001"),
+    BATCH_ADD_TCS("BATCH_ADD_TCS","EX002"),
+    BATCH_ADD_PROJECT("BATCH_ADD_PROJECT","EX003");
 
     private final String bizMsg;
     private final String bizCode;

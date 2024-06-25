@@ -2,9 +2,12 @@ package com.planitary.atplatform.service.handler.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.microsoft.schemas.office.visio.x2012.main.CellType;
+import com.planitary.atplatform.base.commonEnum.BizCodeEnum;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.model.dto.ExcelParseDTO;
+import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
+import com.planitary.atplatform.model.po.WorkbookTemplate;
 import com.planitary.atplatform.service.handler.ExcelReaderHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.EncryptedDocumentException;
@@ -19,6 +22,7 @@ import org.apache.poi.ss.usermodel.FillPatternType;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author：planitary
@@ -83,8 +87,9 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
 
     /**
      * excel解析类
-     * @param inputStream                   excel的文件输入流
-     * @return                              excel文件解析数据
+     *
+     * @param inputStream excel的文件输入流
+     * @return excel文件解析数据
      * @throws IOException
      * @throws InvalidFormatException
      */
@@ -100,16 +105,14 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
             Cell cell0 = row.getCell(0);
             if (cell0 != null && cell0.getCellType() == Cell.CELL_TYPE_STRING) {
                 excelParseDTO.setInterfaceUrl(cell0.getStringCellValue());
-            }
-            else {
+            } else {
                 ATPlatformException.exceptionCast("接口url不能为空");
             }
 
             Cell cell1 = row.getCell(1);
             if (cell1 != null && cell1.getCellType() == Cell.CELL_TYPE_STRING) {
                 excelParseDTO.setRequestBody(cell1.getStringCellValue());
-            }
-            else {
+            } else {
                 ATPlatformException.exceptionCast("接口入参不能为空");
             }
 
@@ -124,6 +127,28 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
     }
 
     @Override
+    public WorkbookTemplate getWorkTemplateByBizCode(String bizCode) {
+        if (null == bizCode) {
+            ATPlatformException.exceptionCast(ExceptionEnum.BIZ_ERROR, "模板参数为空");
+        }
+        WorkbookTemplate workbookTemplate = new WorkbookTemplate();
+        // 批量生成接口
+        if (Objects.equals("EX001", bizCode)) {
+            String bizName = BizCodeEnum.BATCH_ADD_INTERFACE.getBizMsg();
+            workbookTemplate.setHeaders(List.of("接口名", "接口url", "接口入参", "备注"));
+            Map<String, Object> exampleValue = new HashMap<>();
+            exampleValue.put("接口名", "样例接口");
+            exampleValue.put("接口url", "/exe/exe1");
+            exampleValue.put("接口入参", "{\"id\":\"1122\"}");
+            exampleValue.put("备注", "这个是样例接口");
+            workbookTemplate.setParams(List.of(exampleValue));
+
+            workbookTemplate.setName(this.underScore2Camel(bizName));
+        }
+        return workbookTemplate;
+    }
+
+    @Override
     public Workbook createExcelTemplate() {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("sheet1");
@@ -135,13 +160,13 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
         unitStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
         unitStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
         String[] headers = {"接口url(*)", "入参requestBody(*)", "维护人"};
-        Map<String,String> exampleMap = new HashMap<>();
+        Map<String, String> exampleMap = new HashMap<>();
         // 设置样例
-        exampleMap.put("id","100");
-        exampleMap.put("param1","abc");
-        exampleMap.put("param2","[1,5,7]");
+        exampleMap.put("id", "100");
+        exampleMap.put("param1", "abc");
+        exampleMap.put("param2", "[1,5,7]");
         String exampleJSON = JSON.toJSONString(exampleMap);
-        String[] exampleValue = {"/test/getList",exampleJSON,"planitary"};
+        String[] exampleValue = {"/test/getList", exampleJSON, "planitary"};
         // 循环往单元格中填入字段
         for (int i = 0; i < headers.length; i++) {
             Cell cell = headerRow.createCell(i);
@@ -149,12 +174,51 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
             cell.setCellStyle(unitStyle);
         }
 
-        for (int i = 0;i < exampleValue.length;i++){
+        for (int i = 0; i < exampleValue.length; i++) {
             Cell cell = exampleRow.createCell(i);
             cell.setCellValue(exampleValue[i]);
         }
 
         log.info("模板文件生成成功");
+        return workbook;
+    }
+
+    @Override
+    public Workbook createExcelTemplateCommon(WorkbookTemplate workbookTemplate) {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("sheet1");
+
+        Row headerRow = sheet.createRow(0);
+        Row exampleRow = sheet.createRow(1);
+        // 设置单元格样式
+        CellStyle unitStyle = workbook.createCellStyle();
+        unitStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        unitStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        // 先拿到表头
+        String[] headers = workbookTemplate.getHeaders().toArray(new String[0]);
+        List<String> exampleValues = new ArrayList<>();
+//        Map<String,String> exampleMap = new HashMap<>();
+        // 设置样例(由于每个样例保存在map中，map的value是一个object，需要转换为String的数组
+        for (Map<String, Object> param : workbookTemplate.getParams()) {
+            exampleValues.addAll(param.values().stream()
+                    .filter(Objects::nonNull)  // 过滤空值
+                    .map(Object::toString)  // 转换为String，因为每个value都是Object
+                    .collect(Collectors.toList()));
+        }
+
+        // 循环往单元格中填入字段
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+            cell.setCellStyle(unitStyle);
+        }
+
+        for (int i = 0; i < exampleValues.size(); i++) {
+            Cell cell = exampleRow.createCell(i);
+            cell.setCellValue(exampleValues.get(i));
+        }
+        String name = workbookTemplate.getName();
+        log.info("用于{}的模板文件生成成功", name);
         return workbook;
     }
 
@@ -199,5 +263,17 @@ public class ExcelReaderHandlerImpl implements ExcelReaderHandler {
         if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
             cell.setCellType(Cell.CELL_TYPE_STRING);
         }
+    }
+
+    // 下划线字符串转驼峰
+    private String underScore2Camel(String str) {
+        String[] strings = str.split("_");
+        StringBuilder camelString = new StringBuilder();
+        for (String part : strings) {
+            String newPart = part.charAt(0) + part.substring(1).toLowerCase();
+            camelString.append(newPart);
+        }
+        log.info("bizName:{}",camelString.toString());
+        return camelString.toString();
     }
 }

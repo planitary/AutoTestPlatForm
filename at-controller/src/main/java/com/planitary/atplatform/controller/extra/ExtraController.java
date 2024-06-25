@@ -4,6 +4,7 @@ import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.model.dto.ExcelParseDTO;
+import com.planitary.atplatform.model.po.WorkbookTemplate;
 import com.planitary.atplatform.service.handler.ExcelReaderHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -69,6 +70,20 @@ public class ExtraController {
     public ResponseEntity<InputStreamResource> downloadTestCaseTemplate(){
         Workbook workbook = excelReaderHandler.createExcelTemplate();
         String fileName = TEST_CASE_TEMPLATE_FILENAME + System.currentTimeMillis() + ".xlsx";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition","filename=" + fileName);
+        log.info("模板文件名:{}",fileName);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.parseMediaType(EXCEL_MIME))
+                .body(new InputStreamResource(new ByteArrayInputStream(excelReaderHandler.workbook2ByteArray(workbook))));
+    }
+
+    @RequestMapping("/exe/excel/getTestCaseTemplateCommon")
+    public ResponseEntity<InputStreamResource> downloadTemplateCommon(String bizCode){
+        WorkbookTemplate workTemplateByBizCode = excelReaderHandler.getWorkTemplateByBizCode(bizCode);
+        Workbook workbook = excelReaderHandler.createExcelTemplateCommon(workTemplateByBizCode);
+        String fileName = workTemplateByBizCode.getName() + System.currentTimeMillis() + ".xlsx";
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition","filename=" + fileName);
         log.info("模板文件名:{}",fileName);

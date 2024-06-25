@@ -38,7 +38,7 @@ public interface InterfaceService {
     PageResult<InterfaceWithProjectDTO> queryInterfaceInfoList(QueryInterfaceDTO queryInterfaceDTO);
 
     /**
-     *
+     *  获取接口详情
      * @param interfaceId       接口id
      * @return
      */
@@ -72,6 +72,7 @@ public interface InterfaceService {
      * 填充后的接口执行发起请求
      */
     CompletableFuture<Void> coreExecutor(String callableMethodCode);
+
 
 
 
