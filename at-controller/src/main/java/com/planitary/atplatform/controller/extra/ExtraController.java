@@ -4,6 +4,7 @@ import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.model.dto.ExcelParseDTO;
+import com.planitary.atplatform.model.dto.GetTemplateDTO;
 import com.planitary.atplatform.model.po.WorkbookTemplate;
 import com.planitary.atplatform.service.handler.ExcelReaderHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -79,13 +80,13 @@ public class ExtraController {
                 .body(new InputStreamResource(new ByteArrayInputStream(excelReaderHandler.workbook2ByteArray(workbook))));
     }
 
-    @RequestMapping("/exe/excel/getTestCaseTemplateCommon")
-    public ResponseEntity<InputStreamResource> downloadTemplateCommon(String bizCode){
-        WorkbookTemplate workTemplateByBizCode = excelReaderHandler.getWorkTemplateByBizCode(bizCode);
+    @PostMapping("/exe/excel/getTestCaseTemplateCommon")
+    public ResponseEntity<InputStreamResource> downloadTemplateCommon(@RequestBody GetTemplateDTO getTemplateDTO){
+        WorkbookTemplate workTemplateByBizCode = excelReaderHandler.getWorkTemplateByBizCode(getTemplateDTO.getBizCode());
         Workbook workbook = excelReaderHandler.createExcelTemplateCommon(workTemplateByBizCode);
-        String fileName = workTemplateByBizCode.getName() + System.currentTimeMillis() + ".xlsx";
+        String fileName = workTemplateByBizCode.getName() + "_" + System.currentTimeMillis() + ".xlsx";
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition","filename=" + fileName);
+        headers.add("Content-Disposition", "attachment; filename=" + fileName);
         log.info("模板文件名:{}",fileName);
         return ResponseEntity.ok()
                 .headers(headers)
