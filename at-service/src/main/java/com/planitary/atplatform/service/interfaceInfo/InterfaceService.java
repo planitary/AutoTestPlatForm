@@ -4,7 +4,9 @@ import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.model.dto.*;
 import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -60,6 +62,19 @@ public interface InterfaceService {
      */
     Map<String,String> updateInterface(String projectId,ATPlatformInterfaceInfo atPlatformInterfaceInfo);
     Map<String,String> updateInterfaceV2(ATPlatformInterfaceInfo atPlatformInterfaceInfo);
+
+    /**
+     * 解析批量添加接口的Excel
+     * @param file          上传的Excel文件
+     * @return
+     */
+    List<String> parseBatchAddExcelFile(MultipartFile file) throws IOException;
+
+
+    /**
+     * 解析excel，并根据excel批量添加解耦
+     */
+    void batchAddInterfaceByExcel();
 
     /**
      * 批量填充接口入参（异步封装请求)

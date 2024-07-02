@@ -19,13 +19,17 @@ import com.planitary.atplatform.service.handler.ExecuteHandler;
 import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.MDC;
 import org.springframework.beans.BeanUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -327,6 +331,29 @@ public class InterfaceServiceImpl implements InterfaceService {
         return resMap;
     }
 
+    @Override
+    public List<String> parseBatchAddExcelFile(MultipartFile file) throws IOException {
+        List<String> data = new ArrayList<>();
+
+        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
+            Sheet sheet = workbook.getSheetAt(0); // Assuming we are only dealing with the first sheet
+
+            for (Row row : sheet) {
+                StringBuilder rowData = new StringBuilder();
+                for (Cell cell : row) {
+                    rowData.append(getCellValue(cell)).append(" ");
+                }
+                data.add(rowData.toString().trim());
+            }
+        }
+        return data;
+    }
+
+    @Override
+    public void batchAddInterfaceByExcel() {
+
+    }
+
     /**
      * 异步解析封装数据
      * 这里的逻辑，先通过导入接口导入excel，然后用户会选择接口url，并选择需要执行的接口字段
@@ -510,6 +537,25 @@ public class InterfaceServiceImpl implements InterfaceService {
         int update = atPlatformInterfaceInfoMapper.update(null, updateWrapper);
         if (update <= 0) {
             ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
+        }
+    }
+
+    private String getCellValue(Cell cell) {
+        switch (cell.getCellType()) {
+            case Cell.CELL_TYPE_STRING:
+                return cell.getStringCellValue();
+            case Cell.CELL_TYPE_NUMERIC:
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    return cell.getDateCellValue().toString();
+                } else {
+                    return String.valueOf(cell.getNumericCellValue());
+                }
+            case Cell.CELL_TYPE_BOOLEAN:
+                return String.valueOf(cell.getBooleanCellValue());
+            case Cell.CELL_TYPE_FORMULA:
+                return cell.getCellFormula();
+            default:
+                return "";
         }
     }
 

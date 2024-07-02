@@ -10,9 +10,13 @@ import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import com.planitary.atplatform.service.handler.ExecuteHandler;
 import com.planitary.atplatform.service.interfaceInfo.InterfaceService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +45,21 @@ public class InterfaceController {
     public PtResult<?> addInterface(@RequestBody AddInterfaceDTO addInterfaceDTO) {
         Map<String, String> map = interfaceService.insertInterface(addInterfaceDTO);
         return PtResult.success(map);
+    }
+
+    @PostMapping("/interface/batchAddInterface")
+    public ResponseEntity<?> handleFileUpload(@RequestParam("file")MultipartFile file){
+        if (file.isEmpty()){
+            return new ResponseEntity<>("文件为空", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            List<String> data = interfaceService.parseBatchAddExcelFile(file);
+            data.forEach(System.out::println);
+            return new ResponseEntity<>(data,HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Error!",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/mock/addInterface")
