@@ -48,17 +48,16 @@ public class InterfaceController {
     }
 
     @PostMapping("/interface/batchAddInterface")
-    public ResponseEntity<?> handleFileUpload(@RequestParam("file")MultipartFile file){
+    public PtResult<?> handleFileUpload(@RequestParam("file")MultipartFile file,@RequestParam("projectId") String projectId){
         if (file.isEmpty()){
-            return new ResponseEntity<>("文件为空", HttpStatus.BAD_REQUEST);
+            return PtResult.error("文件为空!",ExceptionEnum.BIZ_ERROR.getErrCode());
         }
         try {
-            List<String> data = interfaceService.parseBatchAddExcelFile(file);
-            data.forEach(System.out::println);
-            return new ResponseEntity<>(data,HttpStatus.OK);
+            List<AddInterfaceDTO> addInterfaceDTOS = interfaceService.parseBatchAddExcelFile(file,projectId);
+            return PtResult.success(addInterfaceDTOS);
         } catch (IOException e) {
             e.printStackTrace();
-            return new ResponseEntity<>("Error!",HttpStatus.INTERNAL_SERVER_ERROR);
+            return PtResult.error(ExceptionEnum.SYSTEM_ERROR.getErrMessage(),ExceptionEnum.SYSTEM_ERROR.getErrCode());
         }
     }
 

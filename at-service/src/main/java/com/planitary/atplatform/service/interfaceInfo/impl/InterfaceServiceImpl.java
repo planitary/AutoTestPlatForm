@@ -332,21 +332,47 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
     @Override
-    public List<String> parseBatchAddExcelFile(MultipartFile file) throws IOException {
-        List<String> data = new ArrayList<>();
+    public List<AddInterfaceDTO> parseBatchAddExcelFile(MultipartFile file,String projectId) throws IOException {
+        List<AddInterfaceDTO> addInterfaceDTOS = new ArrayList<>();
+
+        if (null == projectId || projectId.equals("")){
+            ATPlatformException.exceptionCast("projectId为空!");
+        }
 
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
             Sheet sheet = workbook.getSheetAt(0); // Assuming we are only dealing with the first sheet
 
-            for (Row row : sheet) {
-                StringBuilder rowData = new StringBuilder();
-                for (Cell cell : row) {
-                    rowData.append(getCellValue(cell)).append(" ");
+            for (int i = 1;i < sheet.getPhysicalNumberOfRows(); i++){
+                Row row = sheet.getRow(i);
+                AddInterfaceDTO addInterfaceDTO = new AddInterfaceDTO();
+                // 取出2:1的单元格（2行1列)
+                Cell cell0 = row.getCell(0);
+                if(cell0 != null){
+                    addInterfaceDTO.setInterfaceName(this.getCellValue(cell0));
                 }
-                data.add(rowData.toString().trim());
+                else {
+                    ATPlatformException.exceptionCast("接口名为空!");
+                }
+                // 2:2
+                Cell cell1 = row.getCell(1);
+                if (cell1 != null){
+                    addInterfaceDTO.setInterfaceUrl(this.getCellValue(cell1));
+                }
+                else {
+                    ATPlatformException.exceptionCast("接口Url为空!");
+                }
+                // 2:3
+                Cell cell2 = row.getCell(2);
+                addInterfaceDTO.setRequestBody(this.getCellValue(cell2));
+                // 2:4
+                Cell cell3 = row.getCell(3);
+                addInterfaceDTO.setRemark(this.getCellValue(cell3));
+                addInterfaceDTO.setProjectId(projectId);
+                log.info("解析出的接口DTO为:{}",addInterfaceDTO);
+                addInterfaceDTOS.add(addInterfaceDTO);
             }
         }
-        return data;
+        return addInterfaceDTOS;
     }
 
     @Override

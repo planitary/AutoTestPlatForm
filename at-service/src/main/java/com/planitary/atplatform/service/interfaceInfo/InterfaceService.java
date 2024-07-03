@@ -68,7 +68,7 @@ public interface InterfaceService {
      * @param file          上传的Excel文件
      * @return
      */
-    List<String> parseBatchAddExcelFile(MultipartFile file) throws IOException;
+    List<AddInterfaceDTO> parseBatchAddExcelFile(MultipartFile file,String projectId) throws IOException;
 
 
     /**
