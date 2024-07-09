@@ -5,6 +5,7 @@ import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.customResult.PtResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
+import com.planitary.atplatform.base.utils.MD5Utils;
 import com.planitary.atplatform.model.dto.*;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import com.planitary.atplatform.service.handler.ExecuteHandler;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,18 +49,34 @@ public class InterfaceController {
         return PtResult.success(map);
     }
 
-    @PostMapping("/interface/batchAddInterface")
+    @PostMapping("/interface/uploadInterfaceByExcel")
     public PtResult<?> handleFileUpload(@RequestParam("file")MultipartFile file,@RequestParam("projectId") String projectId){
         if (file.isEmpty()){
             return PtResult.error("文件为空!",ExceptionEnum.BIZ_ERROR.getErrCode());
         }
         try {
             List<AddInterfaceDTO> addInterfaceDTOS = interfaceService.parseBatchAddExcelFile(file,projectId);
-            return PtResult.success(addInterfaceDTOS);
+            if (addInterfaceDTOS.size() != 0) {
+//                return PtResult.success(MD5Utils.calculateMD5(addInterfaceDTOS.toString()));
+                return PtResult.success(addInterfaceDTOS);
+            }
+            else {
+                return PtResult.error("文件上传失败!",ExceptionEnum.BIZ_ERROR.getErrCode());
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return PtResult.error(ExceptionEnum.SYSTEM_ERROR.getErrMessage(),ExceptionEnum.SYSTEM_ERROR.getErrCode());
         }
+    }
+
+    @PostMapping("/interface/batchAddInterface")
+    public PtResult<?> batchAddInterface(@RequestBody List<AddInterfaceDTO> addInterfaceDTOS){
+        Map<String, Object> stringStringMap = interfaceService.batchAddInterfaceByExcel(addInterfaceDTOS);
+        if (stringStringMap == null){
+            log.error("插入对象为空!");
+            ATPlatformException.exceptionCast(ExceptionEnum.BIZ_ERROR);
+        }
+        return PtResult.success(stringStringMap);
     }
 
     @PostMapping("/mock/addInterface")

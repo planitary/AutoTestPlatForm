@@ -376,8 +376,36 @@ public class InterfaceServiceImpl implements InterfaceService {
     }
 
     @Override
-    public void batchAddInterfaceByExcel() {
-
+    @Transactional
+    public Map<String, Object> batchAddInterfaceByExcel(List<AddInterfaceDTO> addInterfaceDTOS) {
+        Map<String, Object> res = new HashMap<>();
+        List<String> interfaceIds = new ArrayList<>();
+        for (AddInterfaceDTO addDTO : addInterfaceDTOS) {
+            // 校验项目的合法性
+            LambdaQueryWrapper<ATPlatformProject> atPlatformProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            atPlatformProjectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,addDTO.getProjectId());
+            ATPlatformProject atPlatformProject = atPlatformProjectMapper.selectOne(atPlatformProjectLambdaQueryWrapper);
+            if (atPlatformProject == null){
+                ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+            }
+            else {
+                ATPlatformInterfaceInfo interfaceInfo = new ATPlatformInterfaceInfo();
+                String interfaceId = uniqueStringIdGenerator.idGenerator();
+                BeanUtils.copyProperties(addDTO,interfaceInfo);
+                interfaceInfo.setInterfaceId(interfaceId);
+                interfaceInfo.setCreateUser("Zane");
+                interfaceInfo.setVersion(1);
+                int insert = atPlatformInterfaceInfoMapper.insert(interfaceInfo);
+                if (insert <= 0) {
+                    log.error("执行失败:{}", ExceptionEnum.INSERT_FAILED.getErrMessage());
+                    ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);
+                }
+                log.debug("插入成功");
+                interfaceIds.add(interfaceId);
+            }
+        }
+        res.put("interfaceIds",interfaceIds);
+        return res;
     }
 
     /**

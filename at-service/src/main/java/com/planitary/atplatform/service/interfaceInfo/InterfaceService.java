@@ -72,9 +72,9 @@ public interface InterfaceService {
 
 
     /**
-     * 解析excel，并根据excel批量添加解耦
+     * 解析excel，并根据excel批量添加接口
      */
-    void batchAddInterfaceByExcel();
+    Map<String,Object> batchAddInterfaceByExcel(List<AddInterfaceDTO> addInterfaceDTOS);
 
     /**
      * 批量填充接口入参（异步封装请求)
