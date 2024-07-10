@@ -368,7 +368,7 @@ public class InterfaceServiceImpl implements InterfaceService {
                 Cell cell3 = row.getCell(3);
                 addInterfaceDTO.setRemark(this.getCellValue(cell3));
                 addInterfaceDTO.setProjectId(projectId);
-                log.info("解析出的接口DTO为:{}",addInterfaceDTO);
+                log.info("解析出的接口DTO为:{}.",addInterfaceDTO);
                 addInterfaceDTOS.add(addInterfaceDTO);
             }
         }
