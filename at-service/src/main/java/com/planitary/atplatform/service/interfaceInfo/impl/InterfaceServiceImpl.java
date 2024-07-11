@@ -408,6 +408,27 @@ public class InterfaceServiceImpl implements InterfaceService {
         return res;
     }
 
+    @Override
+    public String deleteInterface(String interfaceId) {
+        LambdaQueryWrapper<ATPlatformInterfaceInfo> atPlatformInterfaceInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        atPlatformInterfaceInfoLambdaQueryWrapper.eq(ATPlatformInterfaceInfo::getInterfaceId,interfaceId);
+        ATPlatformInterfaceInfo interfaceInfo = atPlatformInterfaceInfoMapper.selectOne(atPlatformInterfaceInfoLambdaQueryWrapper);
+        if (interfaceInfo == null){
+            log.error("接口:{}不存在",interfaceId);
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        // 逻辑删除后打上del标签
+        UpdateWrapper<ATPlatformInterfaceInfo> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("interface_id",interfaceId).set("is_delete",1)
+                .set("interface_name",interfaceInfo.getInterfaceName() + "_del");
+        int updateCount = atPlatformInterfaceInfoMapper.update(null, updateWrapper);
+        if (updateCount <= 0){
+            ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
+        }
+        return "删除接口成功!";
+
+    }
+
     /**
      * 异步解析封装数据
      * 这里的逻辑，先通过导入接口导入excel，然后用户会选择接口url，并选择需要执行的接口字段

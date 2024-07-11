@@ -144,6 +144,18 @@ public class InterfaceController {
         return PtResult.success("Success");
     }
 
+    @PostMapping("/interface/deleteInterfaceById")
+    public PtResult<String> deleteInterfaceById(@RequestBody BaseInterfaceDTO baseInterfaceDTO){
+        if (Objects.isNull(baseInterfaceDTO.getInterfaceId())){
+            ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+        }
+        String res = interfaceService.deleteInterface(baseInterfaceDTO.getInterfaceId());
+        if (Objects.isNull(res)){
+            ATPlatformException.exceptionCast(ExceptionEnum.BIZ_ERROR);
+        }
+        return PtResult.success(res);
+    }
+
     @PostMapping("/external/testInterface")
     public PtResult<Map<String, Object>> testInterface(@RequestBody Map<String, Object> param) {
         Map<String, Object> res = new HashMap<>();

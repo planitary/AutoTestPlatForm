@@ -65,7 +65,7 @@
                     #{projectId}
                 </foreach>
             </if>
-            and p.is_delete = 0
+            and p.is_delete = 0 and a.is_delete = 0
 
             order by a.update_time desc
         </where>

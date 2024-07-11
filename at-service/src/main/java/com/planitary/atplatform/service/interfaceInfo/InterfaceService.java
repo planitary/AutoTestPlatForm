@@ -77,6 +77,13 @@ public interface InterfaceService {
     Map<String,Object> batchAddInterfaceByExcel(List<AddInterfaceDTO> addInterfaceDTOS);
 
     /**
+     * 删除接口
+     * @param interfaceId           接口id
+     * @return
+     */
+    String deleteInterface(String interfaceId);
+
+    /**
      * 批量填充接口入参（异步封装请求)
      * @param chosenParamMap       选中的参数集合
      * @return
