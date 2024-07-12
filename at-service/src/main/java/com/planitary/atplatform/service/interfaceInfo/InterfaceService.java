@@ -68,6 +68,8 @@ public interface InterfaceService {
      * @param file          上传的Excel文件
      * @return
      */
+    // TODO: 2024/7/12 这里要调整，上传文件由前端来完成，后端只需要接受前端创建的文件流即可
+    //  可能与下方的batchAddInterfaceByExcel合并为一个接口
     List<AddInterfaceDTO> parseBatchAddExcelFile(MultipartFile file,String projectId) throws IOException;
 
 

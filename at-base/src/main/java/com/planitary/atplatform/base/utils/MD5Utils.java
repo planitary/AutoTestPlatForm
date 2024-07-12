@@ -3,6 +3,7 @@ package com.planitary.atplatform.base.utils;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 /**
  * @Author：planitary
@@ -23,6 +24,7 @@ public class MD5Utils {
         }
         return stringBuilder.toString();
     }
+
 
     public static void main(String[] args) throws NoSuchAlgorithmException {
         String s = "{\"page\": 1, \"size\": 20, \"res\": [12, 23, 33]}";
