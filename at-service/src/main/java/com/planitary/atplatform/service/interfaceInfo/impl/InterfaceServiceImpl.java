@@ -420,7 +420,8 @@ public class InterfaceServiceImpl implements InterfaceService {
         // 逻辑删除后打上del标签
         UpdateWrapper<ATPlatformInterfaceInfo> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("interface_id",interfaceId).set("is_delete",1)
-                .set("interface_name",interfaceInfo.getInterfaceName() + "_del");
+                .set("interface_name",interfaceInfo.getInterfaceName() + "_del")
+                .set("update_time",LocalDateTime.now());
         int updateCount = atPlatformInterfaceInfoMapper.update(null, updateWrapper);
         if (updateCount <= 0){
             ATPlatformException.exceptionCast(ExceptionEnum.UPDATE_FAILED);
