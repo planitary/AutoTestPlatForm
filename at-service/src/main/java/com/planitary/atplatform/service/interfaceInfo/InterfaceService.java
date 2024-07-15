@@ -64,18 +64,28 @@ public interface InterfaceService {
     Map<String,String> updateInterfaceV2(ATPlatformInterfaceInfo atPlatformInterfaceInfo);
 
     /**
-     * 解析批量添加接口的Excel
+     * 解析批量添加接口的Excel,已在batchAddInterfaceByExcelV2接口中合并
      * @param file          上传的Excel文件
      * @return
      */
-    // TODO: 2024/7/12 这里要调整，上传文件由前端来完成，后端只需要接受前端创建的文件流即可
-    //  可能与下方的batchAddInterfaceByExcel合并为一个接口
+    @Deprecated
     List<AddInterfaceDTO> parseBatchAddExcelFile(MultipartFile file,String projectId) throws IOException;
 
 
     /**
-     * 解析excel，并根据excel批量添加接口
+     * 上传文件+解析文件二合一接口
+     * @param file
+     * @param projectId
+     * @return
+     * @throws IOException
      */
+    Map<String,Object> batchAddInterfaceByExcelV2(MultipartFile file,String projectId) throws IOException;
+
+
+    /**
+     * 解析excel，并根据excel批量添加接口，已在batchAddInterfaceByExcelV2接口中合并
+     */
+    @Deprecated
     Map<String,Object> batchAddInterfaceByExcel(List<AddInterfaceDTO> addInterfaceDTOS);
 
     /**

@@ -50,26 +50,28 @@ public class InterfaceController {
     }
 
     @PostMapping("/interface/uploadInterfaceByExcel")
-    public PtResult<?> handleFileUpload(@RequestParam("file")MultipartFile file,@RequestParam("projectId") String projectId){
-        if (file.isEmpty()){
-            return PtResult.error("文件为空!",ExceptionEnum.BIZ_ERROR.getErrCode());
+    public PtResult<?> handleFileUpload(@RequestParam("file")MultipartFile file,@RequestParam("projectId") String projectId) {
+        Map<String,Object> resMap = new HashMap<>();
+        if (file.isEmpty()) {
+            return PtResult.error("文件为空!", ExceptionEnum.BIZ_ERROR.getErrCode());
         }
         try {
-            List<AddInterfaceDTO> addInterfaceDTOS = interfaceService.parseBatchAddExcelFile(file,projectId);
-            if (addInterfaceDTOS.size() != 0) {
-//                return PtResult.success(MD5Utils.calculateMD5(addInterfaceDTOS.toString()));
-                return PtResult.success(addInterfaceDTOS);
+            if (projectId == null){
+                ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
             }
-            else {
-                return PtResult.error("文件上传失败!",ExceptionEnum.BIZ_ERROR.getErrCode());
-            }
+            resMap = interfaceService.batchAddInterfaceByExcelV2(file, projectId);
+
         } catch (IOException e) {
             e.printStackTrace();
-            return PtResult.error(ExceptionEnum.SYSTEM_ERROR.getErrMessage(),ExceptionEnum.SYSTEM_ERROR.getErrCode());
         }
+        if (resMap == null){
+            return PtResult.error(ExceptionEnum.BIZ_ERROR.getErrMessage(), ExceptionEnum.BIZ_ERROR.getErrCode());
+        }
+        return PtResult.success(resMap);
     }
 
     @PostMapping("/interface/batchAddInterface")
+    @Deprecated
     public PtResult<?> batchAddInterface(@RequestBody List<AddInterfaceDTO> addInterfaceDTOS){
         Map<String, Object> stringStringMap = interfaceService.batchAddInterfaceByExcel(addInterfaceDTOS);
         if (stringStringMap == null){

@@ -377,6 +377,77 @@ public class InterfaceServiceImpl implements InterfaceService {
 
     @Override
     @Transactional
+    public Map<String,Object> batchAddInterfaceByExcelV2(MultipartFile file, String projectId) throws IOException {
+        List<AddInterfaceDTO> addInterfaceDTOS = new ArrayList<>();
+        Map<String, Object> res = new HashMap<>();
+        if (null == projectId || projectId.equals("")){
+            ATPlatformException.exceptionCast("projectId为空!");
+        }
+
+        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
+            Sheet sheet = workbook.getSheetAt(0); // Assuming we are only dealing with the first sheet
+
+            for (int i = 1;i < sheet.getPhysicalNumberOfRows(); i++){
+                Row row = sheet.getRow(i);
+                AddInterfaceDTO addInterfaceDTO = new AddInterfaceDTO();
+                // 取出2:1的单元格（2行1列)
+                Cell cell0 = row.getCell(0);
+                if(cell0 != null){
+                    addInterfaceDTO.setInterfaceName(this.getCellValue(cell0));
+                }
+                else {
+                    ATPlatformException.exceptionCast("接口名为空!");
+                }
+                // 2:2
+                Cell cell1 = row.getCell(1);
+                if (cell1 != null){
+                    addInterfaceDTO.setInterfaceUrl(this.getCellValue(cell1));
+                }
+                else {
+                    ATPlatformException.exceptionCast("接口Url为空!");
+                }
+                // 2:3
+                Cell cell2 = row.getCell(2);
+                addInterfaceDTO.setRequestBody(this.getCellValue(cell2));
+                // 2:4
+                Cell cell3 = row.getCell(3);
+                addInterfaceDTO.setRemark(this.getCellValue(cell3));
+                addInterfaceDTO.setProjectId(projectId);
+                log.info("解析出的接口DTO为:{}.",addInterfaceDTO);
+                addInterfaceDTOS.add(addInterfaceDTO);
+            }
+            List<String> interfaceIds = new ArrayList<>();
+            for (AddInterfaceDTO addDTO : addInterfaceDTOS) {
+                // 校验项目的合法性
+                LambdaQueryWrapper<ATPlatformProject> atPlatformProjectLambdaQueryWrapper = new LambdaQueryWrapper<>();
+                atPlatformProjectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,addDTO.getProjectId());
+                ATPlatformProject atPlatformProject = atPlatformProjectMapper.selectOne(atPlatformProjectLambdaQueryWrapper);
+                if (atPlatformProject == null){
+                    ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
+                }
+                else {
+                    ATPlatformInterfaceInfo interfaceInfo = new ATPlatformInterfaceInfo();
+                    String interfaceId = uniqueStringIdGenerator.idGenerator();
+                    BeanUtils.copyProperties(addDTO,interfaceInfo);
+                    interfaceInfo.setInterfaceId(interfaceId);
+                    interfaceInfo.setCreateUser("Zane");
+                    interfaceInfo.setVersion(1);
+                    int insert = atPlatformInterfaceInfoMapper.insert(interfaceInfo);
+                    if (insert <= 0) {
+                        log.error("执行失败:{}", ExceptionEnum.INSERT_FAILED.getErrMessage());
+                        ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);
+                    }
+                    log.debug("插入成功");
+                    interfaceIds.add(interfaceId);
+                }
+            }
+            res.put("interfaceIds",interfaceIds);
+        }
+        return res;
+    }
+
+    @Override
+    @Transactional
     public Map<String, Object> batchAddInterfaceByExcel(List<AddInterfaceDTO> addInterfaceDTOS) {
         Map<String, Object> res = new HashMap<>();
         List<String> interfaceIds = new ArrayList<>();
