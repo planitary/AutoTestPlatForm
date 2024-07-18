@@ -21,12 +21,13 @@ import java.util.List;
 public interface CaseSetService {
 
     /**
-     * 新增一个集合，集合中包含了一个接口id的列表，通过接口id的列表来确定一个唯一的集合
+     * (已弃用，在V1版本中重构)新增一个集合，集合中包含了一个接口id的列表，通过接口id的列表来确定一个唯一的集合
      * 这里的逻辑是新建测试集合的时候，每一条接口会附带一个要提取的参数值（如果有的话）
      *      * 点击新建提交的时候，会按照维护的接口顺序维护参数
      * @param addCaseSetDTO
      * @return
      */
+    @Deprecated
     String addCaseSet(AddCaseSetDTO addCaseSetDTO);
 
     /**

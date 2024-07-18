@@ -47,6 +47,11 @@ public class ATPlatformCaseSet implements Serializable {
     private Integer setWeight;
 
     /**
+     * 步骤数
+     */
+    private Integer steps;
+
+    /**
      * 提取参数的列表
      */
     private String parameterList;

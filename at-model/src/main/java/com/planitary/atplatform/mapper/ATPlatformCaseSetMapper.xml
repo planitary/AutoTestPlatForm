@@ -18,6 +18,8 @@
         <result column="remark" property="remark"/>
         <result column="project_id" property="projectId"/>
         <result column="owner" property="owner"/>
+        <result column="steps" property="steps"/>
+
     </resultMap>
 
     <!-- 附带project结果的DTO-->
@@ -33,6 +35,7 @@
         <result column="create_user" property="createUser"/>
         <result column="update_time" property="updateTime"/>
         <result column="update_user" property="updateUser"/>
+        <<result column="steps" property="steps"/>
         <result column="remark" property="remark"/>
         <result column="project_id" property="projectId"/>
         <result column="owner" property="owner"/>
@@ -42,7 +45,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, set_id, set_name, interface_ids, owner,set_weight,project_id, parameter_list, is_delete,create_time,create_user,update_time,update_user,remark
+        id, set_id, set_name, interface_ids, steps,owner,set_weight,project_id, parameter_list, is_delete,create_time,create_user,update_time,update_user,remark
     </sql>
 
 

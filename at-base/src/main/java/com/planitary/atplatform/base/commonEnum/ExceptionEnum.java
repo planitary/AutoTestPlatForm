@@ -33,19 +33,19 @@ public enum ExceptionEnum {
     DELETE_FAILED("删除失败","-3004"),
     CONNECTION_FAILED("数据库链接异常","-3009"),
 
-    // 接口调用相关
-    CALL_FAILED("接口调用失败","-8001"),
-    CALL_BACK_FAILED("获取接口回调失败","-8002"),
-
-    // 业务通用异常
-    BIZ_ERROR("业务异常","-9009"),
-
     // 文件读取相关
     FILE_LOAD_FAILED("文件读取失败","-4000"),
     FILE_NOT_EXIST("文件不存在","-4001"),
     PERMISSION_DENIED("无权访问","-4002"),
     SUFFIX_NAME_IS_INVALID("后缀名非法","-4003"),
-    PARSE_FAILED("解析失败","-4004");
+    PARSE_FAILED("解析失败","-4004"),
+
+    // 接口调用相关
+    CALL_FAILED("接口调用失败","-8001"),
+    CALL_BACK_FAILED("获取接口回调失败","-8002"),
+
+    // 业务通用异常
+    BIZ_ERROR("业务异常","-9009");
 
     private final String errMessage;
     private final String errCode;

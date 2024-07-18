@@ -92,7 +92,7 @@ public class CaseSetServiceImpl implements CaseSetService {
             ATPlatformException.exceptionCast("权重不能为负!", ExceptionEnum.BIZ_ERROR.getErrCode());
         }
 
-        if (interfaceIds.size() == 0) {
+        if (interfaceIds.isEmpty()) {
             log.error("无接口");
             ATPlatformException.exceptionCast("无接口信息", ExceptionEnum.BIZ_ERROR.getErrCode());
         }
@@ -109,6 +109,9 @@ public class CaseSetServiceImpl implements CaseSetService {
         atPlatformCaseSet.setCreateUser(addCaseSetDTO.getOwner());
         atPlatformCaseSet.setUpdateUser(addCaseSetDTO.getOwner());
         atPlatformCaseSet.setInterfaceIds(addCaseSetDTO.getInterfaceIds().toString());
+        // 通过接口id来计算steps数
+        atPlatformCaseSet.setSteps(interfaceIds.size());
+
         int insertCount = atPlatformCaseSetMapper.insert(atPlatformCaseSet);
         if (insertCount <= 0) {
             log.error("执行失败:{}", ExceptionEnum.INSERT_FAILED.getErrMessage());
@@ -216,6 +219,11 @@ public class CaseSetServiceImpl implements CaseSetService {
         }
         if (addCaseSetDTO.getInterfaceIds() != null) {
             updateWrapper.set("interface_ids", addCaseSetDTO.getInterfaceIds().toString());
+            Integer originalSteps = caseSet.getSteps();
+            // steps不一致时，更新
+            if (addCaseSetDTO.getInterfaceIds().size() != originalSteps){
+                updateWrapper.set("steps",addCaseSetDTO.getInterfaceIds().size());
+            }
         }
         if (addCaseSetDTO.getSetWeight() != null) {
             updateWrapper.set("set_weight", addCaseSetDTO.getSetWeight());
@@ -235,7 +243,7 @@ public class CaseSetServiceImpl implements CaseSetService {
         List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS = addCaseSetDTO.getInterfaceInfoSIPDTOS();
         // 接口更新标记
         boolean interfaceBatchUpdateFlag = true;
-        if (interfaceInfoSIPDTOS.size() > 0) {
+        if (!interfaceInfoSIPDTOS.isEmpty()) {
             for (InterfaceInfoSIPDTO interfaceInfoSIPDTO : interfaceInfoSIPDTOS) {
                 ATPlatformInterfaceInfo atPlatformInterfaceInfo = new ATPlatformInterfaceInfo();
                 BeanUtils.copyProperties(interfaceInfoSIPDTO, atPlatformInterfaceInfo);
