@@ -1,5 +1,7 @@
 package com.planitary.atplatform.base.utils;
 
+import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
+import com.planitary.atplatform.base.exception.ATPlatformException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +25,9 @@ public class UniqueStringIdGenerator {
         // 当前时间戳是否小于上一个时间戳，若是，则抛出异常（时钟回拨）
         if (currentTimeStamp < lastTimestamp) {
 //            XueChengPlusException.exceptionCast("时钟回拨，无法生成id");
-            log.error("报错!");
+            log.error("时钟回拨，无法生成id!");
+            ATPlatformException.exceptionCast(ExceptionEnum.UNKNOWN_ERROR);
+
         }
         // 当前时间戳等于上一个时间戳，说明为同一毫秒内生成的订单，此时对序列进行自增
         if (currentTimeStamp == lastTimestamp) {

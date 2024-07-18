@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @name：GeneralIdGenerator
  * @Date：2023/12/1 10:56 下午
  * @Filename：GeneralIdGenerator
- * @description：
+ * @description：        通用id生成器
  */
 public class GeneralIdGenerator {
     private static final Random random = new Random();
