@@ -35,7 +35,7 @@
         <result column="create_user" property="createUser"/>
         <result column="update_time" property="updateTime"/>
         <result column="update_user" property="updateUser"/>
-        <<result column="steps" property="steps"/>
+        <result column="steps" property="steps"/>
         <result column="remark" property="remark"/>
         <result column="project_id" property="projectId"/>
         <result column="owner" property="owner"/>
