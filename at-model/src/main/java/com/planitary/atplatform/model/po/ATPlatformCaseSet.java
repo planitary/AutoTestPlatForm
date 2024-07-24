@@ -19,7 +19,7 @@ import java.util.List;
 @TableName("at_platform_test_case_set")
 public class ATPlatformCaseSet implements Serializable {
     @TableId(value = "id",type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 集合id

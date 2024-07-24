@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class ATPlatformInterfaceInfo {
 
     @TableId(value = "id",type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 接口id
