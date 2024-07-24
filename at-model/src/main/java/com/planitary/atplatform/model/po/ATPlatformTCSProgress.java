@@ -1,6 +1,8 @@
 package com.planitary.atplatform.model.po;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -62,5 +64,10 @@ public class ATPlatformTCSProgress {
      * step4的json(额外配置)
      */
     private String step4Content;
+
+    private Integer isDelete;
+
+    @TableField(fill = FieldFill.INSERT)
+    private String createTime;
 
 }
