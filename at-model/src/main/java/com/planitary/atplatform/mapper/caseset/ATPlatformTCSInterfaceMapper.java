@@ -1,4 +1,4 @@
-package com.planitary.atplatform.mapper;
+package com.planitary.atplatform.mapper.caseset;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.planitary.atplatform.model.dto.TCSDetailDTO;

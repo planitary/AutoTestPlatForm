@@ -1,4 +1,4 @@
-package com.planitary.atplatform.mapper;
+package com.planitary.atplatform.mapper.project;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.planitary.atplatform.model.po.ATPlatformProject;

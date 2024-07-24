@@ -1,18 +1,14 @@
-package com.planitary.atplatform.mapper;
+package com.planitary.atplatform.mapper.tcsProgress;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.planitary.atplatform.model.dto.CaseSetWithProjectDTO;
-import com.planitary.atplatform.model.dto.QueryCaseSetListDTO;
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * @Author：planitary
  * @Package：com.planitary.atplatform.mapper
  * @name：ATPlatformCaseSetMapper
- * @Date：2023/12/14 9:57 下午
+ * @Date：2024/07/24 5:22 下午
  * @Filename：ATPlatformCaseSetMapper
  * @description：
  */

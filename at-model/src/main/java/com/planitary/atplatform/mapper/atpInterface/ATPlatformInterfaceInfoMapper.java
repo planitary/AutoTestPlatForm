@@ -1,16 +1,12 @@
-package com.planitary.atplatform.mapper;
+package com.planitary.atplatform.mapper.atpInterface;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.planitary.atplatform.model.dto.InterfaceWithProjectDTO;
-import com.planitary.atplatform.model.dto.ParamDTO;
 import com.planitary.atplatform.model.dto.QueryInterfaceDTO;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @Author：planitary

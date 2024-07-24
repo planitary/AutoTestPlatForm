@@ -8,7 +8,7 @@ import com.planitary.atplatform.base.customResult.PageResult;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.model.po.PageParams;
 import com.planitary.atplatform.base.utils.GeneralIdGenerator;
-import com.planitary.atplatform.mapper.ATPlatformProjectMapper;
+import com.planitary.atplatform.mapper.project.ATPlatformProjectMapper;
 import com.planitary.atplatform.model.dto.AddProjectDTO;
 import com.planitary.atplatform.model.dto.QueryProjectDTO;
 import com.planitary.atplatform.model.po.ATPlatformProject;
