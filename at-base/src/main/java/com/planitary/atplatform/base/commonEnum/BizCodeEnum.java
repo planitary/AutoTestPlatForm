@@ -27,6 +27,15 @@ public enum BizCodeEnum {
     EXTERNAL_INTERFACE_CALL("外部接口调用","CM002"),
 
     /**
+     * 用例步骤执行方式
+     */
+    INTERFACE_CALL("接口调用","OT001"),
+    DB_OPERATION("数据库操作","OT002"),
+    REDIS_OPERATION("Redis操作","OT003"),
+    RPC_INTERFACE_CALL("RPC接口调用","OT004"),
+
+
+    /**
      * excel模板创建来源
      */
     BATCH_ADD_INTERFACE("BATCH_ADD_INTERFACE","EX001"),

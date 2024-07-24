@@ -67,6 +67,11 @@ public class ATPlatformTCSProgress {
 
     private Integer isDelete;
 
+    /**
+     * 步骤哈希
+     */
+    private String progressHash;
+
     @TableField(fill = FieldFill.INSERT)
     private String createTime;
 
