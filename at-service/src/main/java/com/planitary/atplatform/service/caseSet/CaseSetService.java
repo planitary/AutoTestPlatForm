@@ -31,10 +31,11 @@ public interface CaseSetService {
     String addCaseSet(AddCaseSetDTO addCaseSetDTO);
 
     /**
-     * 编辑测试用例集合
+     * 编辑测试用例集合(已弃用)
      * @param addCaseSetDTO         caseSetDTO类
      * @return
      */
+    @Deprecated
     String updateCaseSet(AddCaseSetDTO addCaseSetDTO);
 
     /**
@@ -59,9 +60,10 @@ public interface CaseSetService {
     void doCaseSetCore(String caseSetId);
 
     /**
-     * 获取集合详情
+     * 获取集合详情(已弃用)
      * @param setId             测试集合id
      */
+    @Deprecated
     TCSDetailDTO getCaseSetDetail(String setId);
 
     /**

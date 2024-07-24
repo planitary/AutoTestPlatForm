@@ -46,6 +46,8 @@ public class TCSDetailDTO extends ATPlatformCaseSet {
     private String interfaceName;
     private String interfaceUrl;
     private String interfaceRemark;
+    // 接口请求方式
+    private String methodType;
     private String requestBody;
     private String projectName;
     private List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS;

@@ -45,6 +45,11 @@ public class ATPlatformInterfaceInfo {
      */
     private String projectId;
 
+    /**
+     * 接口请求方式
+     */
+    private String methodType;
+
     private Integer version;
 
     @TableLogic

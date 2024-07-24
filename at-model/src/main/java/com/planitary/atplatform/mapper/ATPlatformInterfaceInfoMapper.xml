@@ -36,12 +36,13 @@
         <result column="remark" property="remark"/>
         <result column="project_name" property="projectName"/>
         <result column="project_url" property="projectUrl"/>
+        <result column="method_type" property="methodType"/>
 
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, interface_id, interface_name,request_body, interface_url, project_id, version, is_delete,create_time,create_user,update_time,update_user,remark
+        id, interface_id, interface_name,request_body, interface_url,method_type, project_id, version, is_delete,create_time,create_user,update_time,update_user,remark
     </sql>
 
     <select id="getInterfaceWithProject" resultMap="interfaceWithProject"

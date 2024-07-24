@@ -123,6 +123,7 @@ public class CaseSetServiceImpl implements CaseSetService {
 
     @Override
     @Transactional
+    @Deprecated
     public String addCaseSet(AddCaseSetDTO addCaseSetDTO) {
         // 校验接口的合法性(数据库in出来的count和列表的size比较）
         // 反序列化interfaceIds
