@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planitary.atplatform.mapper.caseset.ATPlatformTCSInterfaceMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.planitary.atplatform.model.po.ATPlatformTCSProgress">
+        <id column="id" property="id"/>
+        <result column="caseset_id" property="casesetId"/>
+        <result column="progress_id" property="progressId"/>
+        <result column="progress_seq" property="progressSeq"/>
+        <result column="progress_name" property="progressName"/>
+        <result column="operation_type" property="operationType"/>
+        <result column="step1_content" property="step1Content"/>
+        <result column="step2_content" property="step2Content"/>
+
+        <result column="step3_content" property="step3Content"/>
+        <result column="step4_content" property="step4Content"/>
+        <result column="is_delete" property="isDelete"/>
+
+        <result column="progress_hash" property="progressHash"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, caseset_id, progress_id, progress_seq, progress_name,operation_type,step1_content,step2_content,
+        step3_content,step4_content,is_delete,progress_hash,create_time
+    </sql>
+</mapper>
