@@ -75,12 +75,12 @@ public class CommonHttpPost {
     /**
      * 通用请求-json
      * @param body      请求体
-     * @param headers   请求头
+     * @param headers   请求头  必须有Content-Type字段
      * @param url       url
      * @return
      */
     @Transactional
-    public String doCommonHttpPostJson(Map<String,Object> body,Map<String,String> headers,String url) {
+    public String doCommonHttpPostJson(Object body,Map<String,String> headers,String url) {
         String responseJSON = null;
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
