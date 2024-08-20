@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planitary.atplatform.mapper.caseset.ATPlatformTCSStepMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.planitary.atplatform.model.po.ATPlatformTCSStep">
+        <id column="id" property="id"/>
+        <result column="step_id" property="stepId"/>
+        <result column="step_name" property="stepName"/>
+        <result column="case_id" property="caseId"/>
+        <result column="operation_type" property="operationType"/>
+        <result column="remark" property="remark"/>
+        <result column="interface_id" property="interfaceId"/>
+        <result column="step_seq" property="stepSeq"/>
+        <result column="asserts" property="asserts"/>
+        <result column="extra_type" property="extraType"/>
+        <result column="extra_value" property="extraValue"/>
+        <result column="business_key" property="businessKey"/>
+        <result column="extra_desc" property="extraDesc"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, step_id, step_name, case_id, operation_type, remark,interface_id,step_seq,asserts,extra_type,extra_value,
+business_key,extra_desc,is_delete,create_user,create_time,update_user,update_time
+    </sql>
+
+</mapper>
