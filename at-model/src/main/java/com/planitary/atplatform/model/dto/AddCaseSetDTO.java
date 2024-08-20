@@ -17,13 +17,14 @@ import java.util.Map;
 public class AddCaseSetDTO {
     private String setId;
     private String setName;
-    private List<String> interfaceIds;
+//    private List<String> interfaceIds;
     private String remark;
     private Integer setWeight;
-    private String parameterList;
+//    private String parameterList;
     private String projectId;
     private String owner;
-    private List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS;
+    private Integer steps;
+//    private List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS;
 
     /** 各个接口提取的参数集合
      * {"extractParamDTOS":[{

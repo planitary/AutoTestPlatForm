@@ -1,9 +1,6 @@
 package com.planitary.atplatform.model.po;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 /**
@@ -15,6 +12,7 @@ import lombok.Data;
  * @description：
  */
 @Data
+@TableName("at_platform_test_case_set_step")
 public class ATPlatformTCSStep {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

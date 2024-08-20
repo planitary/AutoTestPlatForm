@@ -2,6 +2,7 @@ package com.planitary.atplatform.model.dto;
 
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
 import com.planitary.atplatform.model.po.ATPlatformInterfaceInfo;
+import com.planitary.atplatform.model.po.ATPlatformTCSStep;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -50,5 +51,6 @@ public class TCSDetailDTO extends ATPlatformCaseSet {
     private String methodType;
     private String requestBody;
     private String projectName;
-    private List<InterfaceInfoSIPDTO> interfaceInfoSIPDTOS;
+    // 步骤详情
+    private List<ATPlatformTCSStep> stepsData;
 }
