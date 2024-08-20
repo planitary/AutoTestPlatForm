@@ -481,6 +481,7 @@ public class CaseSetServiceImpl implements CaseSetService {
         tcsStepLambdaQueryWrapper.eq(ATPlatformTCSStep::getCaseId,setId);
         List<ATPlatformTCSStep> atPlatformTCSSteps = atPlatformTCSStepMapper.selectList(tcsStepLambdaQueryWrapper);
         tcsDetailDTO.setStepsData(atPlatformTCSSteps);
+        return tcsDetailDTO;
 //
 //        if (!Objects.equals(null,iidList) && iidList.size() > 0) {
 //            // 根据接口id，批量查询接口数据
@@ -505,7 +506,6 @@ public class CaseSetServiceImpl implements CaseSetService {
 //        else {
 //            tcsDetailDTO.setInterfaceInfoSIPDTOS(null);
 //        }
-        return tcsDetailDTO;
     }
 
 
