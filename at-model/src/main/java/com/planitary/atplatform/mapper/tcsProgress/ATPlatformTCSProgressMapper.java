@@ -2,6 +2,7 @@ package com.planitary.atplatform.mapper.tcsProgress;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.planitary.atplatform.model.po.ATPlatformCaseSet;
+import com.planitary.atplatform.model.po.ATPlatformTCSStep;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,6 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @description：
  */
 @Mapper
-public interface ATPlatformTCSProgressMapper extends BaseMapper<ATPlatformCaseSet> {
+public interface ATPlatformTCSProgressMapper extends BaseMapper<ATPlatformTCSStep> {
 
 }
