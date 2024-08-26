@@ -8,7 +8,7 @@ import lombok.Getter;
  * @name：ExceptionEnum
  * @Date：2023/11/28 10:43 下午
  * @Filename：ExceptionEnum
- * @description：    常用错误枚举类
+ * @description：常用错误枚举类
  */
 @Getter
 public enum ExceptionEnum {

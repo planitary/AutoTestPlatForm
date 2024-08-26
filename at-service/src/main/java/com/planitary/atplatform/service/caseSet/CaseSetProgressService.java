@@ -15,8 +15,8 @@ import java.util.List;
 public interface CaseSetProgressService {
 
     /**
-     * 添加
-     * @param addTCSProgressDTO
+     * 添加TCS的步骤
+     * @param addTCSProgressDTOs
      * @return
      */
     public String addTCSProgress(List<AddTCSProgressDTO> addTCSProgressDTOs);

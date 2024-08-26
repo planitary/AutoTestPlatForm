@@ -8,8 +8,7 @@ import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
  * @name：ATPlatformException
  * @Date：2023/11/28 10:39 下午
  * @Filename：ATPlatformException
- * @description：
- * 自定义异常类
+ * @description：自定义异常类
  */
 public class ATPlatformException extends RuntimeException {
     private String errCode;

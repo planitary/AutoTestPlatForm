@@ -56,7 +56,7 @@ public class CaseSetProgressServiceImpl implements CaseSetProgressService {
                 ATPlatformTCSStep atPlatformTCSStep = new ATPlatformTCSStep();
 //                TCSProgressAsserts tcsProgressAsserts = new TCSProgressAsserts();
                 BeanUtils.copyProperties(addTCSProgressDTO,atPlatformTCSStep);
-                String stepId = "6" + uniqueStringIdGenerator.idGenerator();
+                String stepId = "51" + uniqueStringIdGenerator.idGenerator();
                 atPlatformTCSStep.setStepId(stepId);
                 int insert = atPlatformTCSProgressMapper.insert(atPlatformTCSStep);
                 if (insert <= 0) {
