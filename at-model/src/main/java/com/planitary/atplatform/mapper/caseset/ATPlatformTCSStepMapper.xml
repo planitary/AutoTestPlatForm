@@ -16,6 +16,7 @@
         <result column="extra_type" property="extraType"/>
         <result column="extra_value" property="extraValue"/>
         <result column="business_key" property="businessKey"/>
+        <result column="db_content" property="dbContent"/>
         <result column="extra_desc" property="extraDesc"/>
         <result column="is_delete" property="isDelete"/>
         <result column="create_user" property="createUser"/>

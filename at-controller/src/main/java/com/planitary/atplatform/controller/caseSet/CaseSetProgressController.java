@@ -22,18 +22,19 @@ public class CaseSetProgressController {
         this.caseSetProgressService = caseSetProgressService;
     }
 
+    // TODO: 2024/8/27 部分值无法映射出来 
     @PostMapping("/caseset/progress/addProgress")
-    public PtResult<String> addProgress(@RequestBody AddTCSProgressDTO addTCSProgressDTO){
+    public PtResult<List<String>> addProgress(@RequestBody AddTCSProgressDTO addTCSProgressDTO){
         if (addTCSProgressDTO == null){
             log.error("详情为空!");
             ATPlatformException.exceptionCast(ExceptionEnum.BIZ_ERROR);
         }
-        if (addTCSProgressDTO.getProjectDTO() == null){
-            log.error("项目信息不存在!");
+        if (addTCSProgressDTO.getProjectInfo() == null){
+            log.error("项目不存在!");
             ATPlatformException.exceptionCast(ExceptionEnum.BIZ_ERROR);
         }
-        String stepId = caseSetProgressService.addTCSProgress(addTCSProgressDTO);
-        return PtResult.success(stepId);
+        List<String> stepIds = caseSetProgressService.addTCSProgress(addTCSProgressDTO);
+        return PtResult.success(stepIds);
     }
 }
 

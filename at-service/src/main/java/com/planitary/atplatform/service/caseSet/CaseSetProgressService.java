@@ -20,5 +20,5 @@ public interface CaseSetProgressService {
      * @param addTCSProgressInfoDTOS
      * @return
      */
-    public String addTCSProgress(AddTCSProgressDTO addTCSProgressInfoDTOS);
+    public List<String> addTCSProgress(AddTCSProgressDTO addTCSProgressInfoDTOS);
 }

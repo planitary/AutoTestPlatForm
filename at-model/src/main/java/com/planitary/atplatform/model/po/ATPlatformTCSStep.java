@@ -42,6 +42,10 @@ public class ATPlatformTCSStep {
     private String interfaceId;
 
     /**
+     * 数据库语句
+     */
+    private String dbContent;
+    /**
      * 步骤序位
      */
     private Integer stepSeq;

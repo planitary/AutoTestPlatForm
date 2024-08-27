@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public class CaseSetProgressServiceImpl implements CaseSetProgressService {
 
 
     @Override
-    public String addTCSProgress(AddTCSProgressDTO addTCSProgressDTO) {
+    public List<String> addTCSProgress(AddTCSProgressDTO addTCSProgressDTO) {
         if (addTCSProgressDTO.getSetId() == null){
             log.error("集合用例不存在");
             ATPlatformException.exceptionCast(ExceptionEnum.BIZ_ERROR);
@@ -58,6 +59,7 @@ public class CaseSetProgressServiceImpl implements CaseSetProgressService {
 //        projectLambdaQueryWrapper.eq(ATPlatformProject::getProjectId,addTCSProgressDTO.getProjectDTO());
 
         List<AddTCSProgressInfoDTO> addTCSProgressList = addTCSProgressDTO.getProgressList();
+        List<String> progressIds = new ArrayList<>();
         for (AddTCSProgressInfoDTO addTCSProgressInfoDTO : addTCSProgressList){
             if (addTCSProgressInfoDTO.getStepName() == null) {
                 log.error("stepName为空");
@@ -69,15 +71,18 @@ public class CaseSetProgressServiceImpl implements CaseSetProgressService {
 //                TCSProgressAsserts tcsProgressAsserts = new TCSProgressAsserts();
                 BeanUtils.copyProperties(addTCSProgressInfoDTO,atPlatformTCSStep);
                 String stepId = "51" + uniqueStringIdGenerator.idGenerator();
+
+                atPlatformTCSStep.setCaseId(addTCSProgressDTO.getSetId());
                 atPlatformTCSStep.setStepId(stepId);
+                atPlatformTCSStep.setDbContent(addTCSProgressInfoDTO.getDBContent());
                 int insert = atPlatformTCSProgressMapper.insert(atPlatformTCSStep);
                 if (insert <= 0) {
                     log.error("执行失败:{}", ExceptionEnum.INSERT_FAILED.getErrMessage());
                     ATPlatformException.exceptionCast(ExceptionEnum.INSERT_FAILED);
                 }
-                return stepId;
+                progressIds.add(stepId);
             }
         }
-        return null;
+        return progressIds;
     }
 }

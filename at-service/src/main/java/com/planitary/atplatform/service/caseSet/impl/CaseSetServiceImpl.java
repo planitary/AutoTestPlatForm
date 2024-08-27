@@ -475,6 +475,8 @@ public class CaseSetServiceImpl implements CaseSetService {
             ATPlatformException.exceptionCast(ExceptionEnum.OBJECT_NULL);
         }
         tcsDetailDTO.setProjectName(atPlatformProject.getProjectName());
+        tcsDetailDTO.setProjectId(atPlatformProject.getProjectId());
+        tcsDetailDTO.setProjectUrl(atPlatformProject.getProjectUrl());
         // 拷贝tcs的值
         BeanUtils.copyProperties(atPlatformCaseSet, tcsDetailDTO);
         // 查找当前集合的step数据

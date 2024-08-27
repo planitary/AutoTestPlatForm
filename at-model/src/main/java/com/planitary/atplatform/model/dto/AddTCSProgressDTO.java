@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class AddTCSProgressDTO {
     private List<AddTCSProgressInfoDTO> progressList;
-    private AddProjectDTO projectDTO;
+    private AddProjectDTO projectInfo;
     private String setId;
 
 }

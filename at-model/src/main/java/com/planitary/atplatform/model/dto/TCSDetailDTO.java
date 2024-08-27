@@ -51,6 +51,8 @@ public class TCSDetailDTO extends ATPlatformCaseSet {
     private String methodType;
     private String requestBody;
     private String projectName;
+    private String projectId;
+    private String projectUrl;
     // 步骤详情
     private List<ATPlatformTCSStep> stepsData;
 }
