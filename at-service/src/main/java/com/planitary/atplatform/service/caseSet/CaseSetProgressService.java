@@ -1,6 +1,7 @@
 package com.planitary.atplatform.service.caseSet;
 
 import com.planitary.atplatform.model.dto.AddTCSProgressDTO;
+import com.planitary.atplatform.model.dto.AddTCSProgressInfoDTO;
 
 import java.util.List;
 
@@ -16,8 +17,8 @@ public interface CaseSetProgressService {
 
     /**
      * 添加TCS的步骤
-     * @param addTCSProgressDTOs
+     * @param addTCSProgressInfoDTOS
      * @return
      */
-    public String addTCSProgress(List<AddTCSProgressDTO> addTCSProgressDTOs);
+    public String addTCSProgress(AddTCSProgressDTO addTCSProgressInfoDTOS);
 }
