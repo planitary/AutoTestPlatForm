@@ -75,7 +75,7 @@ public class CaseSetProgressServiceImpl implements CaseSetProgressService {
 
                 atPlatformTCSStep.setCaseId(addTCSProgressDTO.getSetId());
                 atPlatformTCSStep.setStepId(stepId);
-                atPlatformTCSStep.setDbContent(addTCSProgressInfoDTO.getDBContent());
+                atPlatformTCSStep.setDbContent(addTCSProgressInfoDTO.getDbContent());
                 // 拿到对应的extraValueDesc
                 String bizMsgByCode = BizCodeEnum.getBizMsgByCode(addTCSProgressInfoDTO.getExtraType());
                 atPlatformTCSStep.setExtraDesc(bizMsgByCode);

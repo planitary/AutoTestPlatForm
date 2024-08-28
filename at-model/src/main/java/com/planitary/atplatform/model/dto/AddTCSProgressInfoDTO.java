@@ -19,7 +19,7 @@ import java.util.List;
 public class AddTCSProgressInfoDTO extends BaseInterfaceDTO {
     private String stepName;
 
-    private String DBContent;
+    private String dbContent;
     private String operationType;
     private String requestBody;
     private String remark;
