@@ -79,8 +79,8 @@ public class ATPlatformTCSStep {
     private String createUser;
     @TableField(fill = FieldFill.INSERT)
     private String createTime;
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateUser;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateTime;
 
 }

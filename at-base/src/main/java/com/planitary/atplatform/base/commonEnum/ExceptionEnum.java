@@ -18,6 +18,7 @@ public enum ExceptionEnum {
     UNKNOWN_ERROR("未知异常,请稍后","-1001"),
     PARAMETER_ERROR("参数错误","-1002"),
     OBJECT_NULL("对象为空","-1003"),
+    ENUM_NOT_EXIST("枚举不存在","-1004"),
 
     // 分页相关异常
     PAGINATION_ERROR("分页异常","-2000"),

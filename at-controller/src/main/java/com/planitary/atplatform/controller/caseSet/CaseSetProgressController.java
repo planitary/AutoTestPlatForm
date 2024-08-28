@@ -22,9 +22,9 @@ public class CaseSetProgressController {
         this.caseSetProgressService = caseSetProgressService;
     }
 
-    // TODO: 2024/8/27 部分值无法映射出来 
+    // TODO: 2024/8/27 部分值无法映射出来
     @PostMapping("/caseset/progress/addProgress")
-    public PtResult<List<String>> addProgress(@RequestBody AddTCSProgressDTO addTCSProgressDTO){
+    public PtResult<List<String>> addProgress(@RequestBody AddTCSProgressDTO addTCSProgressDTO) throws IllegalAccessException {
         if (addTCSProgressDTO == null){
             log.error("详情为空!");
             ATPlatformException.exceptionCast(ExceptionEnum.BIZ_ERROR);

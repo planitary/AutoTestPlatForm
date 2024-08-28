@@ -1,6 +1,7 @@
 package com.planitary.atplatform.service.caseSet.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.planitary.atplatform.base.commonEnum.BizCodeEnum;
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
 import com.planitary.atplatform.base.exception.ATPlatformException;
 import com.planitary.atplatform.base.utils.UniqueStringIdGenerator;
@@ -45,7 +46,7 @@ public class CaseSetProgressServiceImpl implements CaseSetProgressService {
 
 
     @Override
-    public List<String> addTCSProgress(AddTCSProgressDTO addTCSProgressDTO) {
+    public List<String> addTCSProgress(AddTCSProgressDTO addTCSProgressDTO) throws IllegalAccessException {
         if (addTCSProgressDTO.getSetId() == null){
             log.error("集合用例不存在");
             ATPlatformException.exceptionCast(ExceptionEnum.BIZ_ERROR);
@@ -75,6 +76,10 @@ public class CaseSetProgressServiceImpl implements CaseSetProgressService {
                 atPlatformTCSStep.setCaseId(addTCSProgressDTO.getSetId());
                 atPlatformTCSStep.setStepId(stepId);
                 atPlatformTCSStep.setDbContent(addTCSProgressInfoDTO.getDBContent());
+                // 拿到对应的extraValueDesc
+                String bizMsgByCode = BizCodeEnum.getBizMsgByCode(addTCSProgressInfoDTO.getExtraType());
+                atPlatformTCSStep.setExtraDesc(bizMsgByCode);
+
                 int insert = atPlatformTCSProgressMapper.insert(atPlatformTCSStep);
                 if (insert <= 0) {
                     log.error("执行失败:{}", ExceptionEnum.INSERT_FAILED.getErrMessage());

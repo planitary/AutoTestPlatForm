@@ -1,5 +1,6 @@
 package com.planitary.atplatform.base.commonEnum;
 
+import com.planitary.atplatform.base.exception.ATPlatformException;
 import lombok.Getter;
 
 /**
@@ -34,6 +35,14 @@ public enum BizCodeEnum {
     REDIS_OPERATION("Redis操作","OT003"),
     RPC_INTERFACE_CALL("RPC接口调用","OT004"),
 
+    /**
+     * TCS步骤额外下拉框枚举
+     */
+    INTERFACE_RES_TIMEOUT("接口响应超时时间","InterfaceResTimeout"),
+    SQL_EXE_TIMEOUT("Sql执行超时时间","SqlExeTimeout"),
+    CONNECT_TIMEOUT("连接超时时间","ConnectTimeout"),
+    WAIT_TIMEOUT("等待时间","WaitTimeout"),
+
 
     /**
      * excel模板创建来源
@@ -48,5 +57,18 @@ public enum BizCodeEnum {
     BizCodeEnum(String bizMsg,String bizCode){
         this.bizMsg = bizMsg;
         this.bizCode = bizCode;
+    }
+
+    // 通过bizCode,获得bizMsg
+    public static String getBizMsgByCode(String bizCode) throws IllegalAccessException {
+        String bizValue = "";
+        for (BizCodeEnum value: BizCodeEnum.values()){
+            if (value.getBizCode().equals(bizCode)) {
+                bizValue = value.getBizMsg();
+                return bizValue;
+            }
+        }
+        // 没有找到，抛出异常
+        throw new IllegalAccessException("枚举不存在!");
     }
 }

@@ -20,5 +20,5 @@ public interface CaseSetProgressService {
      * @param addTCSProgressInfoDTOS
      * @return
      */
-    public List<String> addTCSProgress(AddTCSProgressDTO addTCSProgressInfoDTOS);
+    public List<String> addTCSProgress(AddTCSProgressDTO addTCSProgressInfoDTOS) throws IllegalAccessException;
 }
