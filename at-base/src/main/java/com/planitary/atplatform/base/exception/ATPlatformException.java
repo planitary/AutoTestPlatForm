@@ -1,6 +1,7 @@
 package com.planitary.atplatform.base.exception;
 
 import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
+import lombok.Getter;
 
 /**
  * @Author：planitary
@@ -10,6 +11,7 @@ import com.planitary.atplatform.base.commonEnum.ExceptionEnum;
  * @Filename：ATPlatformException
  * @description：自定义异常类
  */
+@Getter
 public class ATPlatformException extends RuntimeException {
     private String errCode;
 
@@ -41,10 +43,6 @@ public class ATPlatformException extends RuntimeException {
     // 系统支持的错误参数
     public static void exceptionCast(ExceptionEnum exceptionEnum){
         throw new ATPlatformException(exceptionEnum.getErrMessage(),exceptionEnum.getErrCode());
-    }
-
-    public String getErrCode(){
-        return this.errCode;
     }
 
 }
